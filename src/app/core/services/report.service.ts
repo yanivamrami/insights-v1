@@ -231,7 +231,7 @@ export class ReportService {
                         label: labels[i] ?? `Topic ${i + 1}`,
                         messageCount: c.messages.length,
                         percentage: (c.messages.length / report.cleanMessages) * 100,
-                        trend: this.computeTrend(i, clustersByTf),
+                        trend: this.computeTrend(c, tf, clustersByTf),
                         sentimentScore: sentimentScores[i],
                         centroidMessageText: c.centroidMessage.text,
                     }));
@@ -259,10 +259,20 @@ export class ReportService {
                 } catch { /* keep defaults */ }
 
                 const cost = this.estimateCost(report.cleanMessages);
+
+                // Re-run insights now that topic labels are available
+                const labeledInsights = this.buildInsights(
+                    anomaliesByTf[tf],
+                    report.authors,
+                    clustersByTf[tf],
+                    topics.map(t => t.label)
+                );
+
                 const updated = {
                     ...report, topics, overallSentimentScore: overallScore,
                     overallVibeEmoji: vibeEmoji, overallVibeLabel: vibeLabel,
-                    overallVibeDescription: vibeDesc, estimatedCostUsd: cost
+                    overallVibeDescription: vibeDesc, estimatedCostUsd: cost,
+                    insights: labeledInsights,
                 };
                 (partials as Record<string, Report | null>)[tf] = updated;
                 this.updateCache({ [tf]: updated } as Partial<ReportCache>);
@@ -370,13 +380,35 @@ Return ONLY valid JSON. No markdown. No extra text.`;
 
 Write the summary now.`;
 
-        const execSystemPrompt = `You write concise executive summaries for C-level leaders.
-Use plain language. Focus on business risk, churn signals, and recommended actions.
-3–4 sentences maximum. No jargon. No bullet points.`;
+        //         const execSystemPrompt = `You are a senior business intelligence analyst briefing a C-level executive.
+        // Your job is to tell them what is happening, why it matters to the business, and what to do about it — in that order.
+        // Always reflect the actual data. If things are going well, say so clearly. If there is risk, name it directly.
+        // Never bury the headline. Lead with the single most important takeaway.
+        // Sentiment scores range from -1.0 (extremely negative) to +1.0 (extremely positive). 0.0 is neutral. Positive scores indicate positive sentiment.
+        // Write in plain English. No jargon, no bullet points, no hedging language like "it appears" or "it seems".
+        // Maximum 4 sentences. Every sentence must earn its place.`;
 
-        const analystSystemPrompt = `You write technical data summaries for data analysts.
-Include: message counts, filtering ratios, cluster distribution, sentiment scores, anomaly details, and data quality notes.
-4–5 sentences. Use precise numeric language.`;
+        const execSystemPrompt = `You are a senior business intelligence analyst briefing a C-level executive.
+Your job is to tell them what is happening, why it matters to the business, and what to do about it — in that order.
+Always reflect the actual data. If things are going well, say so clearly. If there is risk, name it directly.
+Never bury the headline. Lead with the single most important takeaway.
+Sentiment scores range from -1.0 (extremely negative) to +1.0 (extremely positive). 0.0 is neutral. Positive scores indicate positive sentiment, negative scores indicate negative sentiment.
+Write in plain English. No jargon, no bullet points, no hedging language like "it appears" or "it seems".
+Maximum 4 sentences. Every sentence must earn its place.`;
+
+        //         const analystSystemPrompt = `You are a data engineer writing a technical audit summary for a fellow analyst.
+        // Your job is to report exactly what the pipeline produced — counts, ratios, scores, distributions — so the analyst can verify and reproduce the results.
+        // Structure your response in this order: (1) ingestion and filtering stats, (2) cluster distribution, (3) sentiment score with methodology note, (4) anomaly details, (5) any data quality flags worth investigating.
+        // Sentiment scores use a -1.0 to +1.0 scale computed via cosine similarity against embedded anchor vectors. Report the raw score, do not interpret it qualitatively.
+        // Only include values that are present in the input. If a field is missing, skip it entirely — do not estimate or infer.
+        // Use precise numeric language throughout. 4–6 sentences maximum.`;
+
+        const analystSystemPrompt = `You are a data engineer writing a technical audit summary for a fellow analyst.
+Your job is to report exactly what the pipeline produced — counts, ratios, scores, distributions — so the analyst can verify and reproduce the results.
+Structure your response in this order: (1) ingestion and filtering stats, (2) cluster distribution, (3) sentiment score with methodology note, (4) anomaly details, (5) any data quality flags worth investigating.
+Sentiment scores use a -1.0 to +1.0 scale computed via cosine similarity against embedded anchor vectors. Report the raw score, do not interpret it qualitatively.
+Only include values that are present in the input. If a field is missing, skip it entirely — do not estimate or infer.
+Use precise numeric language throughout. 4–6 sentences maximum.`;
 
         return Promise.all([
             this.ai.complete(userPrompt, execSystemPrompt),
@@ -384,7 +416,7 @@ Include: message counts, filtering ratios, cluster distribution, sentiment score
         ]);
     }
 
-    private buildInsights(anomalies: Message[], authors: AuthorStat[], clusters: Cluster[]): Insight[] {
+    private buildInsights(anomalies: Message[], authors: AuthorStat[], clusters: Cluster[], topicLabels: string[] = []): Insight[] {
         const insights: Insight[] = [];
         const now = new Date();
         const timeLabel = `${now.toLocaleDateString('en-US', { weekday: 'long' })}`;
@@ -401,14 +433,15 @@ Include: message counts, filtering ratios, cluster distribution, sentiment score
             });
         }
 
-        // 2. New or rising topics
-        const risers = clusters.filter((_, i) => i < 3);
-        if (clusters.length > 0) {
+        // 2. Dominant cluster concentration — only flag if top cluster holds > 50% of messages
+        const totalMsgs = clusters.reduce((sum, c) => sum + c.messages.length, 0);
+        const topClusterShare = totalMsgs > 0 ? (clusters[0]?.messages.length ?? 0) / totalMsgs : 0;
+        if (clusters.length > 0 && topClusterShare > 0.5) {
             insights.push({
                 type: 'warning',
                 icon: '⚠️',
-                headline: `${clusters.length} Topic Cluster(s) Emerged`,
-                body: `Top cluster contains ${clusters[0]?.messages.length ?? 0} messages. Pattern may signal an emerging issue.`,
+                headline: 'Dominant Topic: Conversation Is Highly Concentrated',
+                body: `${Math.round(topClusterShare * 100)}% of messages belong to a single topic cluster${topicLabels[0] ? ` ("${topicLabels[0]}")` : ''} (${clusters[0]?.messages.length ?? 0} of ${totalMsgs} messages). Low topic diversity may indicate a focused issue.`,
                 timeLabel,
             });
         }
@@ -445,18 +478,43 @@ Include: message counts, filtering ratios, cluster distribution, sentiment score
         return insights;
     }
 
-    private computeTrend(idx: number, _clusters: Record<Timeframe, Cluster[]>): 'up' | 'down' | 'new' | 'stable' {
-        if (idx === 0) return 'up';
-        if (idx === 1) return 'new';
+    private computeTrend(
+        currentCluster: Cluster,
+        currentTf: Timeframe,
+        allClusters: Record<Timeframe, Cluster[]>
+    ): 'up' | 'down' | 'new' | 'stable' {
+        const prevTf: Timeframe | null = currentTf === 'today' ? 'yesterday' : currentTf === 'yesterday' ? '7days' : null;
+        if (!prevTf) return 'stable';
+
+        const prevClusters = allClusters[prevTf];
+        if (!prevClusters.length) return 'new';
+
+        // Find most similar cluster in previous timeframe by centroid cosine similarity
+        let bestSim = -Infinity;
+        let bestPrevCluster: Cluster | null = null;
+        for (const pc of prevClusters) {
+            const sim = this.embedding.cosineSimilarity(currentCluster.centroidVector, pc.centroidVector);
+            if (sim > bestSim) { bestSim = sim; bestPrevCluster = pc; }
+        }
+
+        // Below threshold → topic didn't exist before
+        if (bestSim < 0.75 || !bestPrevCluster) return 'new';
+
+        const delta = currentCluster.messages.length - bestPrevCluster.messages.length;
+        if (delta > 2) return 'up';
+        if (delta < -2) return 'down';
         return 'stable';
     }
 
     private estimateCost(cleanCount: number): number {
-        // OpenAI: text-embedding-3-small $0.02/1M + gpt-4o-mini $0.15/$0.60 per 1M
+        // Gemini: gemini-embedding-001 $0.025/1M tokens
+        // gemini-2.5-flash-lite: $0.075 input / $0.30 output per 1M tokens
         const tokensPerMsg = 15;
-        const embCost = cleanCount * tokensPerMsg / 1_000_000 * 0.02;
-        const genCallsEstimate = 6; // ~2 per timeframe × 3 timeframes
-        const genCost = genCallsEstimate * (600 * 0.15 + 250 * 0.60) / 1_000_000;
+        const embCost = cleanCount * tokensPerMsg / 1_000_000 * 0.025;
+        const genCallsEstimate = 6; // ~2 per timeframe × 3 timeframes (label + vibe + summaries)
+        const avgInputTokens = 600;
+        const avgOutputTokens = 250;
+        const genCost = genCallsEstimate * (avgInputTokens * 0.075 + avgOutputTokens * 0.30) / 1_000_000;
         return Math.round((embCost + genCost) * 100000) / 100000;
     }
 }

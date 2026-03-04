@@ -1,0 +1,35 @@
+<div class="card-header">
+    <div class="card-title">📈 Activity Pulse
+        <app-section-help title="Activity Pulse"
+            content="Bar chart of message volume over time.\n\nToday / Yesterday: 24 hourly bars (0–23h). Each bar = total messages sent in that hour.\n\nLast 7 days: 7 daily bars (Mon–Sun). Each bar = total messages on that calendar day.\n\nPeak hour is the single hour with the highest message count. Comparison arrow shows change vs. the previous equivalent period (yesterday vs. day before, 7d vs. prior 7d).\n\nAll computed in pure TypeScript — no AI calls." />
+    </div>
+    <div class="header-right">
+        <span class="method-badge ts">Pure TS</span>
+        <span class="chart-hint">messages per {{ report.timeframe === '7days' ? 'day' : 'hour' }}</span>
+    </div>
+</div>
+<div class="card-body">
+    <div class="chart-container">
+        <canvas #chartCanvas></canvas>
+    </div>
+    <div class="chart-stats-row">
+        <div class="chart-stat">
+            <span class="chart-stat-val accent">{{ report.cleanMessages }}</span>
+            <span class="chart-stat-lbl">Messages</span>
+        </div>
+        <div class="chart-stat">
+            <span class="chart-stat-val">{{ report.peakHour }}</span>
+            <span class="chart-stat-lbl">Peak Hour</span>
+        </div>
+        <div class="chart-stat">
+            <span class="chart-stat-val" [class]="vsYesterdayClass">
+                {{ report.volumeVsPrevious > 0 ? '+' : '' }}{{ report.volumeVsPrevious }}%
+            </span>
+            <span class="chart-stat-lbl">vs Yesterday</span>
+        </div>
+        <div class="chart-stat">
+            <span class="chart-stat-val">{{ report.activeAuthorCount }}</span>
+            <span class="chart-stat-lbl">Authors</span>
+        </div>
+    </div>
+</div>

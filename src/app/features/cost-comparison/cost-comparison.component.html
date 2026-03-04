@@ -1,0 +1,237 @@
+<div class="cost-comparison">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <a routerLink="/dashboard" class="back-link">← Dashboard</a>
+        <div class="page-title-wrap">
+            <div class="page-title">💰 AI Provider Cost Comparison</div>
+            <div class="page-sub">Compare Gemini, OpenAI, and Local Llama — pricing, privacy, and trade-offs for
+                Messenger Insights at scale</div>
+        </div>
+        <div class="methodology-note">
+            Pricing based on public API rates · March 2026 · subject to change
+        </div>
+    </div>
+
+    <!-- Live Run Estimate -->
+    <section class="section">
+        <div class="section-title">Your Import · Actual Cost</div>
+        @if (liveStats; as stats) {
+        <div class="live-run-card">
+            <div class="live-run-meta">
+                <span class="live-file">📄 {{ stats.fileName }}</span>
+                <span class="live-sep">·</span>
+                <span class="live-stat">{{ stats.cleanCount | number }} clean msgs</span>
+                <span class="live-sep">·</span>
+                <span class="live-stat">{{ stats.generativeCalls }} AI calls</span>
+                <span class="live-sep">·</span>
+                <span class="live-stat">{{ stats.durationMs | number }} ms</span>
+            </div>
+            <div class="live-provider-row">
+                @for (p of providers; track p.id) {
+                <div class="live-provider-cell" [class.active-provider]="p.id === 'openai'">
+                    <div class="live-prov-name">{{ p.logo }} {{ p.name }}</div>
+                    <div class="live-total" [class.free]="p.id === 'llama'">{{ liveRunCost(p) }}</div>
+                    <div class="live-breakdown">
+                        <span class="live-bk-row">Embed: {{ liveEmbedCost(p) }}</span>
+                        <span class="live-bk-row">Gen ({{ stats.generativeCalls }} calls): {{ liveGenCost(p) }}</span>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        } @else {
+        <div class="live-run-empty">
+            <span class="live-empty-icon">📂</span>
+            <span>Upload a Telegram or WhatsApp file on the dashboard — actual cost will appear here.</span>
+        </div>
+        }
+    </section>
+
+    <!-- Provider Cards -->
+    <section class="section">
+        <div class="section-title">Provider Overview</div>
+        <div class="provider-grid">
+            @for (p of providers; track p.id) {
+            <div class="provider-card" [class.active-provider]="p.id === 'openai'">
+                <div class="provider-header">
+                    <div class="provider-logo">{{ p.logo }}</div>
+                    <div class="provider-name-wrap">
+                        <div class="provider-name">{{ p.name }}</div>
+                        <div class="provider-tagline">{{ p.tagline }}</div>
+                    </div>
+                    <span [class]="'provider-badge badge-' + p.badgeClass">{{ p.badge }}</span>
+                </div>
+
+                <!-- Models -->
+                <div class="model-section">
+                    <div class="model-row">
+                        <div class="model-type-label">Embedding</div>
+                        <div class="model-name">{{ p.embeddingModel }}</div>
+                        <div class="model-price">{{ p.embeddingPriceLabel }}</div>
+                    </div>
+                    <div class="model-row">
+                        <div class="model-type-label">Generative</div>
+                        <div class="model-name">{{ p.generativeModel }}</div>
+                        <div class="model-price">In: {{ p.generativePriceInLabel }}</div>
+                        <div class="model-price muted">Out: {{ p.generativePriceOutLabel }}</div>
+                    </div>
+                </div>
+
+                <div class="provider-meta-row">
+                    <!-- Privacy -->
+                    <div class="meta-pill" [class]="'meta-pill privacy-' + p.privacyClass">
+                        @if (p.privacyClass === 'local') { 🔒 } @else { ☁️ }
+                        {{ p.privacy }}
+                    </div>
+                    <!-- Setup complexity -->
+                    <div class="meta-pill setup-pill">
+                        <span class="setup-label">Setup</span>
+                        <span class="setup-dots">
+                            @for (dot of setupDots(p.setupLevel); track dot) {
+                            <span class="dot" [class.filled]="dot <= p.setupLevel"></span>
+                            }
+                        </span>
+                        <span class="setup-text">{{ p.setup }}</span>
+                    </div>
+                </div>
+
+                <!-- Pros -->
+                <div class="pros-cons">
+                    <div class="pros-title">✅ Strengths</div>
+                    <ul class="pros-list">
+                        @for (pro of p.pros; track pro) { <li>{{ pro }}</li> }
+                    </ul>
+                    <div class="cons-title">⚠️ Trade-offs</div>
+                    <ul class="cons-list">
+                        @for (con of p.cons; track con) { <li>{{ con }}</li> }
+                    </ul>
+                </div>
+            </div>
+            }
+        </div>
+    </section>
+
+    <!-- Cost Table -->
+    <section class="section">
+        <div class="section-title">Monthly Cost by Scale</div>
+        <div class="section-sub">Based on avg 60 chars/message · 6 AI calls (label + vibe + 2×summary) per run · 3
+            timeframes</div>
+
+        <div class="cost-table-wrap">
+            <table class="cost-table">
+                <thead>
+                    <tr>
+                        <th class="scale-col">Scale</th>
+                        <th class="runs-col">Runs/mo</th>
+                        <th class="msgs-col">Msgs/Run</th>
+                        @for (p of providers; track p.id) {
+                        <th class="price-col" [class.active-col]="p.id === 'openai'">
+                            {{ p.logo }} {{ p.name }}
+                        </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (scale of scales; track scale.label) {
+                    <tr>
+                        <td class="scale-col">
+                            <div class="scale-label">{{ scale.label }}</div>
+                            <div class="scale-desc">{{ scale.desc }}</div>
+                        </td>
+                        <td class="runs-col mono">{{ scale.runsPerMonth | number }}</td>
+                        <td class="msgs-col mono">{{ scale.msgsPerRun | number }}</td>
+                        @for (p of providers; track p.id) {
+                        <td class="price-col" [class.active-col]="p.id === 'openai'">
+                            <span class="price-val" [class.free]="p.id === 'llama'">
+                                {{ estimateMonthlyCost(p, scale) }}
+                            </span>
+                        </td>
+                        }
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="table-footnote">
+            * Llama / Ollama: $0 API cost. Cloud GPU rental (if not running locally) adds ~$0.10–0.50/hr.
+            At Enterprise scale, a dedicated A10G instance (~$0.75/hr) would add ~$540/mo.
+        </div>
+    </section>
+
+    <!-- Per-run cost breakdown -->
+    <section class="section">
+        <div class="section-title">Cost Per Run Breakdown</div>
+        <div class="section-sub">Single analysis run · what drives the cost</div>
+
+        <div class="breakdown-grid">
+            @for (p of providers; track p.id) {
+            <div class="breakdown-card" [class.active-provider]="p.id === 'openai'">
+                <div class="breakdown-header">{{ p.logo }} {{ p.name }}</div>
+                <table class="breakdown-table">
+                    <tr>
+                        <td>1K msgs run</td>
+                        <td class="mono right">{{ estimatePerRun(p, 1000) }}</td>
+                    </tr>
+                    <tr>
+                        <td>5K msgs run</td>
+                        <td class="mono right">{{ estimatePerRun(p, 5000) }}</td>
+                    </tr>
+                    <tr>
+                        <td>20K msgs run</td>
+                        <td class="mono right">{{ estimatePerRun(p, 20000) }}</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>Embedding cost driver</td>
+                        <td class="mono right">{{ p.embeddingPricePerM === 0 ? '$0 (local)' : '$' + p.embeddingPricePerM
+                            + '/1M tok' }}</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>Generative cost driver</td>
+                        <td class="mono right">{{ p.generativePriceIn === 0 ? '$0 (local)' : p.generativePriceInLabel }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            }
+        </div>
+    </section>
+
+    <!-- Summary / Recommendation -->
+    <section class="section">
+        <div class="section-title">When to Use Each</div>
+        <div class="rec-grid">
+            <div class="rec-card gemini">
+                <div class="rec-icon">🟦</div>
+                <div class="rec-title">Choose Gemini when…</div>
+                <ul>
+                    <li>You want purpose-built CLUSTERING embeddings</li>
+                    <li>You need a single API key for both embedding + generation</li>
+                    <li>Cost and latency are equally important</li>
+                    <li>Running at Starter → Growth scale</li>
+                </ul>
+            </div>
+            <div class="rec-card openai">
+                <div class="rec-icon">⬛</div>
+                <div class="rec-title">Choose OpenAI when…</div>
+                <ul>
+                    <li>You need maximum embedding throughput</li>
+                    <li>Rock-solid JSON output from gpt-4o-mini matters</li>
+                    <li>Your team already uses the OpenAI ecosystem</li>
+                    <li>Cost is comparable and reliability is paramount</li>
+                </ul>
+            </div>
+            <div class="rec-card llama">
+                <div class="rec-icon">🦙</div>
+                <div class="rec-title">Choose Local Llama when…</div>
+                <ul>
+                    <li>Data privacy is non-negotiable (healthcare, legal, gov)</li>
+                    <li>You operate at massive scale and want $0 API cost</li>
+                    <li>You're running air-gapped or offline deployments</li>
+                    <li>You have GPU infrastructure already available</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>

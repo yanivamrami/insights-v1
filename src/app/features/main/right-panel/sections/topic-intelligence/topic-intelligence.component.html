@@ -1,0 +1,38 @@
+@if (report.topics === null) {
+<div class="pending-state">
+    @for (i of skeletonRows; track i) {
+    <div class="skeleton-row">
+        <div class="skeleton skel-rank"></div>
+        <div class="skeleton-body">
+            <div class="skeleton skel-label"></div>
+            <div class="skeleton skel-bar"></div>
+        </div>
+        <div class="skeleton skel-count"></div>
+    </div>
+    }
+    <div class="pending-label">Clustering messages…</div>
+</div>
+} @else if (!report.topics.length) {
+<div class="empty-state">Not enough messages to cluster topics</div>
+} @else {
+@for (topic of report.topics; track topic.id; let i = $index) {
+<div class="topic-row">
+    <div class="topic-rank">{{ i + 1 }}</div>
+    <div class="topic-body">
+        <div class="topic-header-row">
+            <span class="topic-label">{{ topic.label }}</span>
+            <span class="topic-trend" [class]="trendClass(topic.trend)">{{ trendArrow(topic.trend) }}</span>
+        </div>
+        <div class="topic-bar-track">
+            <div class="topic-bar-fill" [style.width.%]="topic.percentage"
+                [style.background]="'linear-gradient(90deg, var(--accent2), var(--accent))'">
+            </div>
+        </div>
+        <div class="topic-meta">
+            <span class="topic-pct">{{ topic.percentage }}%</span>
+            <span class="topic-msg-count">{{ topic.messageCount }} msgs</span>
+        </div>
+    </div>
+</div>
+}
+}

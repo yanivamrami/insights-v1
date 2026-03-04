@@ -1,0 +1,152 @@
+@use 'variables' as v;
+
+:host {
+    display: block;
+    padding: 14px 16px;
+}
+
+/* ── Pending State ─────────────────────────────────────────── */
+.pending-state {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pending-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 4px;
+}
+
+.skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skeleton-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.skeleton {
+    background: var(--surface2);
+    border-radius: 3px;
+    animation: skeleton-pulse 1.4s ease-in-out infinite;
+
+    &.skel-rank {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    &.skel-label {
+        width: 60%;
+        height: 10px;
+    }
+
+    &.skel-bar {
+        width: 100%;
+        height: 6px;
+    }
+
+    &.skel-count {
+        width: 32px;
+        height: 10px;
+        flex-shrink: 0;
+    }
+}
+
+/* ── Empty State ───────────────────────────────────────────── */
+.empty-state {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* ── Topic Rows ────────────────────────────────────────────── */
+.topic-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.topic-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    width: 16px;
+    padding-top: 2px;
+    flex-shrink: 0;
+}
+
+.topic-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.topic-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topic-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.topic-trend {
+    font-size: 11px;
+
+    &.green {
+        color: var(--green);
+    }
+
+    &.red {
+        color: var(--red);
+    }
+
+    &.accent {
+        color: var(--accent);
+    }
+
+    &.muted {
+        color: var(--muted);
+    }
+}
+
+.topic-bar-track {
+    height: 5px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.topic-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width .4s ease;
+}
+
+.topic-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+}

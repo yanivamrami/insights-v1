@@ -1,0 +1,22 @@
+<div class="audience-toggle">
+    <button class="audience-btn" [class.active]="isCLevel" (click)="appState.setAudience('clevel')">C-Level</button>
+    <button class="audience-btn" [class.active]="!isCLevel" (click)="appState.setAudience('analyst')">Analyst</button>
+</div>
+
+@if (!summaryText) {
+<div class="pending-state">
+    <div class="pulse-ring"></div>
+    <div class="pending-label">Generating {{ isCLevel ? 'executive' : 'analyst' }} summary…</div>
+    <div class="skeleton-lines">
+        <div class="skeleton skel-line long"></div>
+        <div class="skeleton skel-line"></div>
+        <div class="skeleton skel-line medium"></div>
+        <div class="skeleton skel-line"></div>
+        <div class="skeleton skel-line short"></div>
+    </div>
+</div>
+} @else {
+<div class="summary-body" [class.analyst-mode]="!isCLevel">
+    {{ summaryText }}
+</div>
+}

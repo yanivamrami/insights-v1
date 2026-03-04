@@ -1,0 +1,35 @@
+@if (!report.authors.length) {
+<div class="empty-state">No author data available</div>
+} @else {
+<div class="engagement-columns">
+    <!-- By Volume -->
+    <div class="engagement-col">
+        <div class="col-title">By Volume</div>
+        @for (author of byVolume; track author.author; let i = $index) {
+        <div class="author-row">
+            <div class="avatar" [class]="'av' + author.colorIndex">{{ initials(author.author) }}</div>
+            <div class="author-info">
+                <div class="author-name">{{ author.author }}</div>
+                <div class="author-meta">{{ author.messageCount }} msgs</div>
+            </div>
+            <div class="author-rank">#{{ i + 1 }}</div>
+        </div>
+        }
+    </div>
+
+    <!-- By Influence -->
+    <div class="engagement-col">
+        <div class="col-title">By Influence</div>
+        @for (author of byInfluence; track author.author; let i = $index) {
+        <div class="author-row">
+            <div class="avatar" [class]="'av' + author.colorIndex">{{ initials(author.author) }}</div>
+            <div class="author-info">
+                <div class="author-name">{{ author.author }}</div>
+                <div class="author-meta">{{ author.influenceScore.toFixed(2) }} score</div>
+            </div>
+            <div class="author-rank muted">#{{ i + 1 }}</div>
+        </div>
+        }
+    </div>
+</div>
+}

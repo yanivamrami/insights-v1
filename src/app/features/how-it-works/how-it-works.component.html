@@ -1,0 +1,126 @@
+<div class="how-it-works">
+
+    <!-- Live stats bar -->
+    <div class="live-stats-bar">
+        <div class="stats-label">LIVE STATS</div>
+        <div class="stats-cells">
+            <div class="stat-cell">
+                <span class="stat-val">{{ reportService.pipelineStats()?.rawCount ?? '—' }}</span>
+                <span class="stat-lbl">Total Messages</span>
+            </div>
+            <div class="stat-cell">
+                <span class="stat-val">{{ reportService.pipelineStats()?.cleanCount ?? '—' }}</span>
+                <span class="stat-lbl">After Filter</span>
+            </div>
+            <div class="stat-cell">
+                <span class="stat-val">{{ reportService.pipelineStats()?.droppedCount ?? '—' }}</span>
+                <span class="stat-lbl">Dropped</span>
+            </div>
+            <div class="stat-cell">
+                <span class="stat-val">{{ reportService.pipelineStats()?.embeddingCalls ?? '—' }}</span>
+                <span class="stat-lbl">Embed Calls</span>
+            </div>
+            <div class="stat-cell">
+                <span class="stat-val">{{ reportService.pipelineStats()?.generativeCalls ?? '—' }}</span>
+                <span class="stat-lbl">AI Calls</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="page-header">
+        <h1 class="page-title">How It Works</h1>
+        <p class="page-sub">A fully client-side NLP pipeline — no backend, no data leaves your browser.</p>
+    </div>
+
+    <!-- Layer legend -->
+    <div class="layer-legend">
+        <span class="layer-pill ts">Pure TypeScript</span>
+        <span class="layer-pill emb">Embedding API</span>
+        <span class="layer-pill ai">Generative AI</span>
+    </div>
+
+    <!-- Pipeline stages -->
+    <div class="pipeline-stages">
+
+        <!-- TS Layer divider -->
+        <div class="layer-divider ts">
+            <span>TypeScript Layer — runs instantly, zero API cost</span>
+        </div>
+
+        @for (stage of stages.slice(0, 3); track stage.title) {
+        <div class="stage-card" [class]="stage.layer">
+            <div class="stage-badge" [class]="stage.layer">{{ stage.layer === 'ts' ? 'TS' : stage.layer === 'emb' ?
+                'EMB' : 'AI' }}</div>
+            <div class="stage-content">
+                <div class="stage-title">{{ stage.title }}</div>
+                <div class="stage-desc">{{ stage.desc }}</div>
+                <div class="stage-detail">{{ stage.detail }}</div>
+            </div>
+        </div>
+        }
+
+        <!-- Embedding Layer divider -->
+        <div class="layer-divider emb">
+            <span>Embedding Layer — one batched API call</span>
+        </div>
+
+        @for (stage of stages.slice(3, 7); track stage.title) {
+        <div class="stage-card" [class]="stage.layer">
+            <div class="stage-badge" [class]="stage.layer">{{ stage.layer === 'ts' ? 'TS' : stage.layer === 'emb' ?
+                'EMB' : 'AI' }}</div>
+            <div class="stage-content">
+                <div class="stage-title">{{ stage.title }}</div>
+                <div class="stage-desc">{{ stage.desc }}</div>
+                <div class="stage-detail">{{ stage.detail }}</div>
+            </div>
+        </div>
+        }
+
+        <!-- Generative Layer divider -->
+        <div class="layer-divider ai">
+            <span>Generative Layer — AI-powered enrichment</span>
+        </div>
+
+        @for (stage of stages.slice(7); track stage.title) {
+        <div class="stage-card" [class]="stage.layer">
+            <div class="stage-badge" [class]="stage.layer">{{ stage.layer === 'ts' ? 'TS' : stage.layer === 'emb' ?
+                'EMB' : 'AI' }}</div>
+            <div class="stage-content">
+                <div class="stage-title">{{ stage.title }}</div>
+                <div class="stage-desc">{{ stage.desc }}</div>
+                <div class="stage-detail">{{ stage.detail }}</div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- Anomaly timeline diagram -->
+    <div class="anomaly-section">
+        <div class="section-title">Anomaly Detection — Volume Timeline</div>
+        <div class="timeline-dots">
+            @for (dot of timelineDots; track $index) {
+            <div class="t-dot" [class.active]="dot.active" [style.margin-bottom.px]="dot.mb">
+            </div>
+            }
+        </div>
+        <div class="timeline-legend">
+            <span class="legend-item"><span class="legend-dot normal"></span> Normal</span>
+            <span class="legend-item"><span class="legend-dot anomaly"></span> Anomaly (mean + 2σ)</span>
+        </div>
+    </div>
+
+    <!-- Summary table -->
+    <div class="summary-section">
+        <div class="section-title">Pipeline Summary</div>
+        <table class="summary-table">
+            @for (row of summaryTable; track row.label) {
+            <tr>
+                <td class="sum-label">{{ row.label }}</td>
+                <td class="sum-value">{{ row.value }}</td>
+            </tr>
+            }
+        </table>
+    </div>
+
+</div>

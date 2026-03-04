@@ -1,0 +1,159 @@
+<div class="left-panel">
+
+    <!-- ── Data Source ── -->
+    <div>
+        <div class="section-label">Data Source</div>
+
+        <div class="upload-zone" [class.dragover]="isDragOver()" [class.loaded]="isLoaded"
+            [class.analyzing]="reportService.isAnalyzing()" [class.error]="hasError && !reportService.isAnalyzing()"
+            (click)="!reportService.isAnalyzing() && triggerUpload(fileInput)">
+
+            <input #fileInput type="file" accept=".json,.txt" (change)="onFileChange($event)" style="display:none">
+
+            @if (reportService.isAnalyzing()) {
+            <div class="upload-icon">⚙️</div>
+            <div class="upload-title" style="color:var(--accent)">Analyzing…</div>
+            <div class="upload-sub">{{ reportService.fileName() }}</div>
+            } @else if (hasError) {
+            <div class="upload-icon">❌</div>
+            <div class="upload-title error-title">Analysis Failed</div>
+            <div class="upload-sub">{{ reportService.fileName() }}</div>
+            <div class="upload-sub retry-hint">Drop a file to retry</div>
+            } @else if (isLoaded) {
+            <div class="upload-icon">✅</div>
+            <div class="upload-title">{{ reportService.fileName() }}</div>
+            <div class="upload-sub">{{ reportService.fileSource() === 'telegram' ? 'Telegram' : 'WhatsApp' }} · analysis
+                complete</div>
+            } @else {
+            <div class="upload-icon">📂</div>
+            <div class="upload-title">Drop Export File</div>
+            <div class="upload-sub">Telegram .json or WhatsApp .txt</div>
+            <div class="upload-formats">
+                <span class="fmt-badge tg">telegram .json</span>
+                <span class="fmt-badge wa">whatsapp .txt</span>
+            </div>
+            }
+
+            @if (fileError()) {
+            <div class="upload-error">{{ fileError() }}</div>
+            }
+        </div>
+
+        @if (reportService.pipelineSteps().length) {
+        <div class="pipeline-steps">
+            @for (step of reportService.pipelineSteps(); track $index) {
+            <div class="p-step">
+                <div class="step-dot" [class]="step.status"></div>
+                <span class="step-label" [class]="step.status">{{ step.label }}</span>
+                <app-method-badge class="step-badge-wrap" [type]="step.type" />
+            </div>
+            }
+        </div>
+        @if (reportService.error()) {
+        <div class="pipeline-error">
+            <span class="pipeline-error-icon">⚠️</span>
+            <span class="pipeline-error-msg">{{ reportService.error() }}</span>
+        </div>
+        }
+        }
+    </div>
+
+    <!-- ── Parse Summary ── -->
+    <div>
+        <div class="section-label">Parse Summary</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Msgs</div>
+                <div class="stat-value accent">{{ appState.currentReport()?.totalMessages ?? '—' }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">After Filter</div>
+                <div class="stat-value green">{{ appState.currentReport()?.cleanMessages ?? '—' }}</div>
+                @if (appState.currentReport(); as r) {
+                <div class="stat-delta">{{ r.droppedMessages }} noise msgs dropped ({{ r.totalMessages ?
+                    Math.round(r.droppedMessages / r.totalMessages * 100) : 0 }}%)</div>
+                } @else {
+                <div class="stat-delta">Upload a file to begin</div>
+                }
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Authors</div>
+                <div class="stat-value">{{ appState.currentReport()?.activeAuthorCount ?? '—' }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Date Range</div>
+                <div class="stat-value yellow date-range">{{ appState.currentReport()?.dateRangeLabel ?? '—' }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Cost Estimator ── -->
+    <div>
+        <div class="section-label">Cost Estimator</div>
+        <div class="cost-panel">
+            <div class="cost-header">
+                <div class="cost-header-title">💰 Token Budget</div>
+                @if (appState.currentReport()) {
+                <div class="saving-badge">{{ savingsPercent }}% saved</div>
+                } @else {
+                <div class="saving-badge">—% saved</div>
+                }
+            </div>
+            <div class="cost-body">
+
+                <div class="token-row">
+                    <div class="token-row-header">
+                        <span class="token-label">📦 Raw tokens (before filter)</span>
+                        <span class="token-count">{{ appState.currentReport() ?
+                            formatNumber(appState.currentReport()!.tokensRaw) : '—' }}</span>
+                    </div>
+                    <div class="token-bar-bg">
+                        <div class="token-bar-fill bar-raw" style="width:100%"></div>
+                    </div>
+                </div>
+
+                <div class="token-row">
+                    <div class="token-row-header">
+                        <span class="token-label">🧹 After noise removal</span>
+                        <span class="token-count">{{ appState.currentReport() ?
+                            formatNumber(appState.currentReport()!.tokensFiltered) : '—' }}</span>
+                    </div>
+                    <div class="token-bar-bg">
+                        <div class="token-bar-fill bar-clean" [style.width]="filteredBarWidth"></div>
+                    </div>
+                </div>
+
+                <div class="token-row">
+                    <div class="token-row-header">
+                        <span class="token-label">🚀 Embedding payload sent</span>
+                        <span class="token-count">{{ appState.currentReport() ?
+                            formatNumber(appState.currentReport()!.tokensPayload) : '—' }}</span>
+                    </div>
+                    <div class="token-bar-bg">
+                        <div class="token-bar-fill bar-payload" [style.width]="payloadBarWidth"></div>
+                    </div>
+                </div>
+
+                <div class="cost-divider"></div>
+
+                <div class="cost-total">
+                    <div>
+                        <div class="cost-total-label">Est. This Run</div>
+                        <div class="cost-breakdown">Embedding + 2 generative calls</div>
+                    </div>
+                    <div class="cost-total-value">
+                        @if (appState.currentReport()?.estimatedCostUsd) {
+                        ${{ appState.currentReport()!.estimatedCostUsd.toFixed(4) }}
+                        } @else {
+                        $—
+                        }
+                    </div>
+                </div>
+
+                <a routerLink="/cost-comparison" class="compare-models-link">💡 Compare Gemini · OpenAI · Llama →</a>
+
+            </div>
+        </div>
+    </div>
+
+</div>

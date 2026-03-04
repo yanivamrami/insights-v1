@@ -1,0 +1,111 @@
+@use 'variables' as v;
+
+:host {
+    display: block;
+    padding: 14px 16px;
+}
+
+/* ── Audience toggle ───────────────────────────────────────── */
+.audience-toggle {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+
+.audience-btn {
+    padding: 5px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:first-child {
+        border-right: 1px solid var(--border);
+    }
+
+    &.active {
+        background: var(--accent);
+        color: #000;
+    }
+
+    &:not(.active):hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-primary);
+    }
+}
+
+/* ── Pending ───────────────────────────────────────────────── */
+.pending-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.pulse-ring {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    animation: pulse-border 1.6s ease-in-out infinite;
+}
+
+.pending-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.skeleton-lines {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.skeleton {
+    height: 10px;
+    background: var(--surface2);
+    border-radius: 3px;
+    animation: skeleton-pulse 1.4s ease-in-out infinite;
+
+    &.long {
+        width: 100%;
+    }
+
+    &.medium {
+        width: 75%;
+    }
+
+    &.short {
+        width: 50%;
+    }
+
+    &:not(.long):not(.medium):not(.short) {
+        width: 90%;
+    }
+}
+
+/* ── Summary Body ──────────────────────────────────────────── */
+.summary-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 12px;
+}
+
+.summary-body.analyst-mode {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    border-left-color: var(--accent2);
+    line-height: 1.8;
+}

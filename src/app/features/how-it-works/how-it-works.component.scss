@@ -1,0 +1,330 @@
+@use 'variables' as v;
+
+:host {
+    display: block;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.how-it-works {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+}
+
+/* ── Live Stats Bar ────────────────────────────────────────── */
+.live-stats-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin-bottom: 32px;
+}
+
+.stats-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.stats-cells {
+    display: flex;
+    gap: 24px;
+    flex: 1;
+}
+
+.stat-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .stat-val {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .stat-lbl {
+        font-size: 10px;
+        color: var(--muted);
+    }
+}
+
+/* ── Page Header ───────────────────────────────────────────── */
+.page-header {
+    margin-bottom: 20px;
+
+    .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0 0 8px;
+    }
+
+    .page-sub {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 0;
+    }
+}
+
+/* ── Layer Legend ──────────────────────────────────────────── */
+.layer-legend {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.layer-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+
+    &.ts {
+        background: rgba(0, 212, 255, .1);
+        color: var(--accent);
+        border: 1px solid rgba(0, 212, 255, .25);
+    }
+
+    &.emb {
+        background: rgba(124, 58, 237, .1);
+        color: var(--accent2);
+        border: 1px solid rgba(124, 58, 237, .25);
+    }
+
+    &.ai {
+        background: rgba(0, 230, 118, .1);
+        color: var(--green);
+        border: 1px solid rgba(0, 230, 118, .25);
+    }
+}
+
+/* ── Pipeline Stages ───────────────────────────────────────── */
+.pipeline-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+}
+
+.layer-divider {
+    display: flex;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    gap: 10px;
+    margin: 8px 0 4px;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+    }
+
+    &.ts {
+        color: var(--accent);
+    }
+
+    &.emb {
+        color: var(--accent2);
+    }
+
+    &.ai {
+        color: var(--green);
+    }
+}
+
+.stage-card {
+    display: flex;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    transition: border-color .15s ease;
+
+    &.ts:hover {
+        border-color: rgba(0, 212, 255, .35);
+    }
+
+    &.emb:hover {
+        border-color: rgba(124, 58, 237, .35);
+    }
+
+    &.ai:hover {
+        border-color: rgba(0, 230, 118, .35);
+    }
+}
+
+.stage-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    height: fit-content;
+
+    &.ts {
+        background: rgba(0, 212, 255, .12);
+        color: var(--accent);
+    }
+
+    &.emb {
+        background: rgba(124, 58, 237, .12);
+        color: var(--accent2);
+    }
+
+    &.ai {
+        background: rgba(0, 230, 118, .12);
+        color: var(--green);
+    }
+}
+
+.stage-content {
+    flex: 1;
+}
+
+.stage-title {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.stage-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 6px;
+}
+
+.stage-detail {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: rgba(100, 116, 139, .7);
+    line-height: 1.5;
+}
+
+/* ── Anomaly Timeline ──────────────────────────────────────── */
+.anomaly-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text);
+    margin-bottom: 16px;
+}
+
+.timeline-dots {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 44px;
+    padding-bottom: 4px;
+}
+
+.t-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+
+    &.active {
+        background: var(--red);
+        border-color: var(--red);
+        box-shadow: 0 0 6px rgba(255, 68, 68, .5);
+    }
+}
+
+.timeline-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+
+    &.normal {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+    }
+
+    &.anomaly {
+        background: var(--red);
+    }
+}
+
+/* ── Summary Table ─────────────────────────────────────────── */
+.summary-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tr {
+        border-bottom: 1px solid var(--border);
+    }
+
+    tr:last-child {
+        border-bottom: none;
+    }
+
+    td {
+        padding: 10px 0;
+        font-size: 12px;
+    }
+
+    .sum-label {
+        color: var(--muted);
+        width: 45%;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+    }
+
+    .sum-value {
+        color: var(--text);
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+    }
+}

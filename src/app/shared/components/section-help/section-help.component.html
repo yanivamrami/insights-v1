@@ -1,0 +1,18 @@
+<div class="help-wrap">
+    <button class="help-btn" (click)="toggle($event)" [class.active]="open()" title="Learn more about this section"
+        aria-label="Section info">?</button>
+
+    @if (open()) {
+    <!-- Backdrop -->
+    <div class="help-backdrop" (click)="close()"></div>
+
+    <!-- Popup -->
+    <div class="help-popup" role="dialog" [attr.aria-label]="title">
+        <div class="help-popup-header">
+            <span class="help-popup-title">{{ title }}</span>
+            <button class="help-close" (click)="close()" aria-label="Close">✕</button>
+        </div>
+        <div class="help-popup-body">{{ content }}</div>
+    </div>
+    }
+</div>

@@ -1,0 +1,27 @@
+@if (report.insights === null) {
+<div class="pending-state">
+    <div class="pending-label">Detecting anomalies…</div>
+    <div class="skeleton-cards">
+        <div class="skeleton skel-card"></div>
+        <div class="skeleton skel-card"></div>
+        <div class="skeleton skel-card short"></div>
+    </div>
+</div>
+} @else if (!report.insights.length) {
+<div class="empty-state">No significant patterns detected</div>
+} @else {
+<div class="insights-list">
+    @for (insight of report.insights; track $index) {
+    <div class="insight-card" [style.border-left-color]="insightBorderColor(insight.type)">
+        <div class="insight-header">
+            <span class="insight-icon">{{ insightIconEmoji(insight.type) }}</span>
+            <span class="insight-title">{{ insight.headline }}</span>
+        </div>
+        <div class="insight-body">{{ insight.body }}</div>
+        @if (insight.timeLabel) {
+        <div class="insight-metric">{{ insight.timeLabel }}</div>
+        }
+    </div>
+    }
+</div>
+}

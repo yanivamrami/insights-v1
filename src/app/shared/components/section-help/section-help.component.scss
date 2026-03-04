@@ -1,0 +1,128 @@
+@use 'variables' as *;
+
+:host {
+    display: inline-block;
+    position: relative;
+}
+
+.help-wrap {
+    display: inline-block;
+    position: relative;
+}
+
+// ─── ? button ─────────────────────────────────────────────────────────────────
+
+.help-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.5;
+    transition: opacity 0.15s, border-color 0.15s, color 0.15s, background 0.15s;
+    vertical-align: middle;
+    flex-shrink: 0;
+
+    &:hover,
+    &.active {
+        opacity: 1;
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(0, 208, 132, 0.1);
+    }
+}
+
+// ─── Backdrop (captures outside click) ───────────────────────────────────────
+
+.help-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: transparent;
+}
+
+// ─── Popup ────────────────────────────────────────────────────────────────────
+
+.help-popup {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 101;
+    width: 300px;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 208, 132, 0.1);
+    animation: popup-in 0.12s ease-out;
+
+    // If near right edge, align to the right instead
+    @media (max-width: 640px) {
+        left: auto;
+        right: 0;
+        transform: none;
+        width: 260px;
+    }
+}
+
+@keyframes popup-in {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.help-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.help-popup-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.help-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 11px;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 0;
+    line-height: 1;
+
+    &:hover {
+        opacity: 1;
+        color: var(--text-primary);
+    }
+}
+
+.help-popup-body {
+    padding: 12px 14px;
+    font-size: 11px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+}

@@ -1,0 +1,109 @@
+@use 'variables' as v;
+
+:host {
+    display: block;
+    padding: 14px 16px;
+}
+
+.empty-state {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    padding: 20px 0;
+}
+
+.engagement-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.col-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.author-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* ── Avatar ───────────────────────────────────────────────── */
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    flex-shrink: 0;
+
+    &.av1 {
+        background: rgba(0, 212, 255, .18);
+        color: var(--accent);
+    }
+
+    &.av2 {
+        background: rgba(124, 58, 237, .18);
+        color: var(--accent2);
+    }
+
+    &.av3 {
+        background: rgba(0, 230, 118, .18);
+        color: var(--green);
+    }
+
+    &.av4 {
+        background: rgba(255, 214, 0, .18);
+        color: var(--yellow);
+    }
+
+    &.av5 {
+        background: rgba(255, 68, 68, .18);
+        color: var(--red);
+    }
+}
+
+.author-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.author-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.author-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+}
+
+.author-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    flex-shrink: 0;
+
+    &.muted {
+        color: var(--muted);
+    }
+}

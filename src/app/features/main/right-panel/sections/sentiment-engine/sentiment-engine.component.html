@@ -1,0 +1,46 @@
+@if (report.overallSentimentScore === null && !report.topics?.length) {
+<div class="pending-state">
+    <div class="vibe-circle skeleton"></div>
+    <div class="pending-label">Scoring sentiment…</div>
+</div>
+} @else {
+<div class="sentiment-body">
+    <!-- Vibe circle -->
+    <div class="vibe-circle-wrap">
+        <div class="vibe-circle" [style.border-color]="vibeColor">
+            <span class="vibe-emoji">{{ vibeEmoji }}</span>
+            <span class="vibe-label-inner">{{ vibeLabel }}</span>
+            <span class="vibe-score">{{ overallScore.toFixed(2) }}</span>
+        </div>
+    </div>
+
+    <!-- Gradient bar -->
+    <div class="sentiment-gradient-wrap">
+        <div class="gradient-bar">
+            <div class="gradient-cursor" [style.left.%]="sentimentCursorPct"></div>
+        </div>
+        <div class="gradient-labels">
+            <span>Neg</span><span>Neutral</span><span>Pos</span>
+        </div>
+    </div>
+
+    <!-- Per-topic sentiment mini-bars -->
+    @if (report.topics?.length) {
+    <div class="topic-sentiment-list">
+        @for (topic of report.topics!.slice(0, 5); track topic.id) {
+        <div class="ts-row">
+            <span class="ts-label">{{ topic.label }}</span>
+            <div class="ts-bar-track">
+                <div class="ts-bar-fill" [style.width.%]="sentimentBarWidth(topic.sentimentScore)"
+                    [style.background]="topicSentimentColor(topic.sentimentScore)">
+                </div>
+            </div>
+            <span class="ts-score" [style.color]="topicSentimentColor(topic.sentimentScore)">
+                {{ topic.sentimentScore.toFixed(2) }}
+            </span>
+        </div>
+        }
+    </div>
+    }
+</div>
+}

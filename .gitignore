@@ -41,3 +41,14 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+_requirements/messenger-insights-ui-v4.html
+_requirements/plan.md
+_requirements/telegram_bad_sentiment.json
+_requirements/telegram_good_sentiment.json
+_requirements/telegram_neutral_sentiment.json
+_requirements/whatsapp_bad_sentiment.txt
+_requirements/whatsapp_good_sentiment.txt
+_requirements/whatsapp_neutral_sentiment.txt
+_requirements/whatsapp_noisy.txt
+src/Archive.zip
+src/environments/environment.ts

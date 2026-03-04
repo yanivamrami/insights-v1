@@ -106,8 +106,8 @@ export class EmbeddingService {
 
     async scoreSentiment(embedding: number[]): Promise<number> {
         const anchors = await this.getAnchorEmbeddings();
-        const posScore  = this.cosineSimilarity(embedding, anchors.positive);
-        const negScore  = this.cosineSimilarity(embedding, anchors.negative);
+        const posScore = this.cosineSimilarity(embedding, anchors.positive);
+        const negScore = this.cosineSimilarity(embedding, anchors.negative);
         const neutScore = this.cosineSimilarity(embedding, anchors.neutral);
         // Normalise by all three anchors so factual/neutral messages don't compress toward ±0.23
         const total = posScore + negScore + neutScore;

@@ -7,12 +7,12 @@
     <div class="help-backdrop" (click)="close()"></div>
 
     <!-- Popup -->
-    <div class="help-popup" role="dialog" [attr.aria-label]="title">
+    <div class="help-popup" role="dialog" [attr.aria-label]="title" [class.popup-up]="popupUp">
         <div class="help-popup-header">
             <span class="help-popup-title">{{ title }}</span>
             <button class="help-close" (click)="close()" aria-label="Close">✕</button>
         </div>
-        <div class="help-popup-body">{{ content }}</div>
+        <div class="help-popup-body">{{ formattedContent }}</div>
     </div>
     }
 </div>

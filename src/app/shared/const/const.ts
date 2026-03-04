@@ -1,0 +1,1 @@
+export const AI_PROVIDER: 'openai' | 'gemini' = 'gemini'; // 'openai' or 'gemini'

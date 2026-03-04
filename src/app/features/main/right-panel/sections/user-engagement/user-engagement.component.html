@@ -1,4 +1,6 @@
-@if (!report.authors.length) {
+@if (reportService.isAnalyzingTf() !== null || !report) {
+<div class="empty-state">Loading author data…</div>
+} @else if (!report.authors.length) {
 <div class="empty-state">No author data available</div>
 } @else {
 <div class="engagement-columns">

@@ -9,6 +9,11 @@ import { Component, Input, signal, HostListener } from '@angular/core';
 export class SectionHelpComponent {
     @Input({ required: true }) title!: string;
     @Input({ required: true }) content!: string;
+    @Input() popupUp = false;
+
+    get formattedContent(): string {
+        return this.content.replace(/\\n/g, '\n');
+    }
 
     open = signal(false);
 

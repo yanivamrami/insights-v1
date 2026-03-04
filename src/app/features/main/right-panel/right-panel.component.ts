@@ -41,4 +41,21 @@ export class RightPanelComponent {
     setTimeframe(tf: Timeframe): void {
         this.appState.setTimeframe(tf);
     }
+
+    /**
+     * Returns the current state of a timeframe tab:
+     * - 'no-data'     : no messages exist for this period in the uploaded file
+     * - 'available'   : messages exist, topics not yet loaded, stage data ready → loads on click
+     * - 'loading'     : AI is currently running for this timeframe
+     * - 'needs-upload': topics not loaded, stage data gone (page refresh) → user must re-upload
+     * - 'ready'       : fully loaded with AI results
+     */
+    tabState(tf: Timeframe): 'no-data' | 'available' | 'loading' | 'needs-upload' | 'ready' {
+        const cache = this.reportService.reportCache()[tf];
+        if (!cache) return 'no-data';
+        if (this.reportService.isAnalyzingTf() === tf) return 'loading';
+        if (cache.topics !== null) return 'ready';
+        if (this.reportService.hasStageData()) return 'available';
+        return 'needs-upload';
+    }
 }

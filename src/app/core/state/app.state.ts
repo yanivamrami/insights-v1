@@ -14,6 +14,10 @@ export class AppState {
         this.reportService.reportCache()[this.timeframe()] ?? null
     );
 
-    setTimeframe(tf: Timeframe): void { this.timeframe.set(tf); }
+    setTimeframe(tf: Timeframe): void {
+        this.timeframe.set(tf);
+        // Trigger lazy AI analysis for this timeframe if it hasn't been loaded yet
+        this.reportService.analyzeTimeframe(tf);
+    }
     setAudience(a: Audience): void { this.audience.set(a); }
 }

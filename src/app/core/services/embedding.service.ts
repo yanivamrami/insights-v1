@@ -94,6 +94,7 @@ export class EmbeddingService {
     }
 
     centroid(vecs: number[][]): number[] {
+        debugger;
         if (!vecs.length) return [];
         const dim = vecs[0].length;
         const result = new Array<number>(dim).fill(0);

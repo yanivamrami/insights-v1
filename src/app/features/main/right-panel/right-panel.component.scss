@@ -96,6 +96,48 @@
     border-radius: 10px;
 }
 
+.tab-status-icon {
+    font-size: 9px;
+    opacity: .7;
+}
+
+.tab-dot-available {
+    color: var(--accent);
+    opacity: .5;
+}
+
+.tab-no-data {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+.tab-needs-upload {
+    opacity: .55;
+}
+
+.reupload-notice {
+    margin: 0 18px 0;
+    padding: 8px 14px;
+    background: rgba(255, 200, 0, .06);
+    border: 1px solid rgba(255, 200, 0, .2);
+    border-radius: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: rgba(255, 200, 0, .7);
+}
+
+.loading-notice {
+    margin: 0 18px 0;
+    padding: 8px 14px;
+    background: rgba(0, 212, 255, .05);
+    border: 1px solid rgba(0, 212, 255, .15);
+    border-radius: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    opacity: .7;
+}
+
 .timeframe-meta {
     .date-range {
         font-family: 'IBM Plex Mono', monospace;
@@ -138,6 +180,8 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 8px;
+    height: 100%;
+    ;
 
     &.full {
         grid-column: span 2;

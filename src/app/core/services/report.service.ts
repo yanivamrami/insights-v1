@@ -39,6 +39,19 @@ export class ReportService {
     readonly fileName = signal('');
     readonly fileSource = signal<FileSource | null>(null);
     readonly error = signal<string | null>(null);
+    /** The timeframe currently being lazily analyzed (null = none) */
+    readonly isAnalyzingTf = signal<Timeframe | null>(null);
+    /** True once Steps 1–7 have completed for the current file and in-memory stage data is available */
+    readonly hasStageData = signal(false);
+
+    private _fileKey = '';
+    private _stageData: {
+        fileKey: string;
+        clustersByTf: Record<Timeframe, Cluster[]>;
+        anomaliesByTf: Record<Timeframe, Message[]>;
+        buckets: Record<Timeframe, Message[]>;
+        partials: ReportCache;
+    } | null = null;
 
     private advanceStep(activeIdx: number): void {
         this.pipelineSteps.update(steps =>
@@ -68,13 +81,19 @@ export class ReportService {
 
     async analyzeFile(file: File): Promise<void> {
         const start = Date.now();
+        const fileKey = `${file.name}:${file.size}`;
+        this._fileKey = fileKey;
+        this._stageData = null;
         this.isAnalyzing.set(true);
+        this.isAnalyzingTf.set(null);
+        this.hasStageData.set(false);
         this.error.set(null);
         this.fileName.set(file.name);
         this.fileSource.set(null);
         this.reportCache.set({ today: null, yesterday: null, '7days': null });
         this.pipelineStats.set(null);
         this.pipelineSteps.set(INITIAL_STEPS.map(s => ({ ...s })));
+        this.clearAllStorage();
 
         try {
             // ── STEP 1: Parse ──────────────────────────────────────────────────
@@ -98,6 +117,8 @@ export class ReportService {
             this.advanceStep(2);
             const buckets = this.analytics.bucketByTimeframe(clean);
             const rawBuckets = this.analytics.bucketByTimeframe(raw);
+            const anomaliesByTf: Record<Timeframe, Message[]> = { today: [], yesterday: [], '7days': [] };
+            const clustersByTf: Record<Timeframe, Cluster[]> = { today: [], yesterday: [], '7days': [] };
 
             const partials: ReportCache = { today: null, yesterday: null, '7days': null };
 
@@ -116,8 +137,6 @@ export class ReportService {
                 const daily = this.analytics.getDailyActivity(msgs);
                 const tokensRaw = this.analytics.estimateTokens(rawMsgs);
                 const tokensFiltered = this.analytics.estimateTokens(msgs);
-
-                // Payload: one short line per message for embedding
                 const tokensPayload = Math.round(msgs.length * 12);
 
                 const report: Report = {
@@ -155,7 +174,6 @@ export class ReportService {
             // ── STEP 4: Embed all messages ────────────────────────────────────
             this.advanceStep(3);
             const embeddedClean = await this.embedding.embedMessages(clean);
-            // Update message buckets with embeddings
             const embeddingMap = new Map(embeddedClean.map(m => [m.id, m.embedding]));
             for (const tf of TIMEFRAMES) {
                 buckets[tf] = buckets[tf].map(m => ({ ...m, embedding: embeddingMap.get(m.id) }));
@@ -163,7 +181,6 @@ export class ReportService {
 
             // ── STEP 5: Cluster ───────────────────────────────────────────────
             this.advanceStep(4);
-            const clustersByTf: Record<Timeframe, Cluster[]> = { today: [], yesterday: [], '7days': [] };
             for (const tf of TIMEFRAMES) {
                 const msgs = buckets[tf].filter(m => m.embedding?.length);
                 if (!msgs.length) continue;
@@ -173,16 +190,10 @@ export class ReportService {
 
             // ── STEP 6: Sentiment scoring ─────────────────────────────────────
             this.advanceStep(5);
-            // Score cluster centroids — anchors are already cached from Step 4
-            for (const tf of TIMEFRAMES) {
-                for (const cluster of clustersByTf[tf]) {
-                    // Score is computed lazily later when building topic objects
-                }
-            }
+            // Scores are computed per-cluster in Step 8 when building topic objects
 
             // ── STEP 7: Anomaly detection ─────────────────────────────────────
             this.advanceStep(6);
-            const anomaliesByTf: Record<Timeframe, Message[]> = { today: [], yesterday: [], '7days': [] };
             for (const tf of TIMEFRAMES) {
                 const msgs = buckets[tf].filter(m => m.embedding?.length);
                 if (!msgs.length) continue;
@@ -191,104 +202,56 @@ export class ReportService {
                 anomaliesByTf[tf] = this.embedding.detectAnomalies(msgs, centroid);
             }
 
-            // Build insights from anomalies (needs clusters for topics, but we use partial data here)
+            // Build initial insights — topic labels not yet available at this stage
             const insightsByTf: Record<Timeframe, Insight[]> = { today: [], yesterday: [], '7days': [] };
             for (const tf of TIMEFRAMES) {
                 const report = (partials as Record<string, Report | null>)[tf];
                 if (!report) continue;
-                insightsByTf[tf] = this.buildInsights(anomaliesByTf[tf], report.authors, clustersByTf[tf]);
+                insightsByTf[tf] = this.buildInsights(
+                    anomaliesByTf[tf],
+                    report.authors,
+                    clustersByTf[tf],
+                    [],
+                    buckets[tf]
+                );
             }
 
-            // Update reports with insights
-            const insightUpdates: Partial<ReportCache> = {};
+            // Update reports with initial insights
             for (const tf of TIMEFRAMES) {
                 const existing = (partials as Record<string, Report | null>)[tf];
                 if (!existing) continue;
                 const updated = { ...existing, insights: insightsByTf[tf] };
-                (insightUpdates as Record<string, Report | null>)[tf] = updated;
                 (partials as Record<string, Report | null>)[tf] = updated;
             }
-            this.updateCache(insightUpdates);
+            this.updateCache(partials);
 
-            // ── STEP 8: Label clusters + Vibe ─────────────────────────────────
+            // Capture stage data — enables lazy AI analysis for yesterday / 7days
+            this._stageData = {
+                fileKey,
+                clustersByTf,
+                anomaliesByTf,
+                buckets: { today: [...buckets['today']], yesterday: [...buckets['yesterday']], '7days': [...buckets['7days']] },
+                partials: { ...partials } as ReportCache,
+            };
+            this.hasStageData.set(true);
+
+            // ── STEP 8 + 9: AI labels, vibe, summaries — today only ──────────
             this.advanceStep(7);
-            for (const tf of TIMEFRAMES) {
-                const clusters = clustersByTf[tf];
-                const report = (partials as Record<string, Report | null>)[tf];
-                if (!clusters.length || !report) continue;
-
-                // Score sentiments for all clusters
-                const sentimentScores = await Promise.all(
-                    clusters.map(c => this.embedding.scoreSentiment(c.centroidVector))
+            const tfToday: Timeframe = 'today';
+            const clustersToday = clustersByTf[tfToday];
+            const reportToday = (partials as Record<string, Report | null>)[tfToday];
+            if (clustersToday.length && reportToday) {
+                const final = await this.runStep8And9(
+                    tfToday,
+                    clustersToday,
+                    reportToday,
+                    anomaliesByTf[tfToday],
+                    clustersByTf,
+                    buckets[tfToday],
+                    fileKey
                 );
-
-                // Label clusters with AI
-                let topics: Topic[];
-                try {
-                    const labels = await this.labelClusters(clusters, report.cleanMessages);
-                    topics = clusters.map((c, i) => ({
-                        id: String(i),
-                        label: labels[i] ?? `Topic ${i + 1}`,
-                        messageCount: c.messages.length,
-                        percentage: (c.messages.length / report.cleanMessages) * 100,
-                        trend: this.computeTrend(c, tf, clustersByTf),
-                        sentimentScore: sentimentScores[i],
-                        centroidMessageText: c.centroidMessage.text,
-                    }));
-                } catch {
-                    topics = clusters.map((c, i) => ({
-                        id: String(i),
-                        label: `Topic ${i + 1}`,
-                        messageCount: c.messages.length,
-                        percentage: (c.messages.length / report.cleanMessages) * 100,
-                        trend: 'stable' as const,
-                        sentimentScore: sentimentScores[i],
-                        centroidMessageText: c.centroidMessage.text,
-                    }));
-                }
-
-                const overallScore = sentimentScores.reduce((s, v) => s + v, 0) / sentimentScores.length;
-
-                // Generate vibe info
-                let vibeEmoji = '😐', vibeLabel = 'Neutral', vibeDesc = 'Mixed sentiments across topics.';
-                try {
-                    const vibe = await this.generateVibeInfo(overallScore, topics.map(t => t.label));
-                    vibeEmoji = vibe.emoji;
-                    vibeLabel = vibe.label;
-                    vibeDesc = vibe.description;
-                } catch { /* keep defaults */ }
-
-                const cost = this.estimateCost(report.cleanMessages);
-
-                // Re-run insights now that topic labels are available
-                const labeledInsights = this.buildInsights(
-                    anomaliesByTf[tf],
-                    report.authors,
-                    clustersByTf[tf],
-                    topics.map(t => t.label)
-                );
-
-                const updated = {
-                    ...report, topics, overallSentimentScore: overallScore,
-                    overallVibeEmoji: vibeEmoji, overallVibeLabel: vibeLabel,
-                    overallVibeDescription: vibeDesc, estimatedCostUsd: cost,
-                    insights: labeledInsights,
-                };
-                (partials as Record<string, Report | null>)[tf] = updated;
-                this.updateCache({ [tf]: updated } as Partial<ReportCache>);
-            }
-
-            // ── STEP 9: Executive summaries ───────────────────────────────────
-            this.advanceStep(8);
-            for (const tf of TIMEFRAMES) {
-                const report = (partials as Record<string, Report | null>)[tf];
-                if (!report) continue;
-                try {
-                    const [summaryExec, summaryAnalyst] = await this.generateSummaries(report);
-                    const updated = { ...report, summaryExec, summaryAnalyst };
-                    (partials as Record<string, Report | null>)[tf] = updated;
-                    this.updateCache({ [tf]: updated } as Partial<ReportCache>);
-                } catch { /* summaries remain null */ }
+                (partials as Record<string, Report | null>)[tfToday] = final;
+                this.updateCache({ [tfToday]: final } as Partial<ReportCache>);
             }
 
             // ── DONE ──────────────────────────────────────────────────────────
@@ -300,7 +263,7 @@ export class ReportService {
                 cleanCount: clean.length,
                 droppedCount: dropped,
                 embeddingCalls: 1,
-                generativeCalls: TIMEFRAMES.filter(tf => buckets[tf].length > 0).length * 2,
+                generativeCalls: clustersByTf['today'].length > 0 ? 2 : 0,
                 estimatedCostUsd: this.estimateCost(clean.length),
                 durationMs: Date.now() - start,
             });
@@ -416,7 +379,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         ]);
     }
 
-    private buildInsights(anomalies: Message[], authors: AuthorStat[], clusters: Cluster[], topicLabels: string[] = []): Insight[] {
+    private buildInsightsV1(anomalies: Message[], authors: AuthorStat[], clusters: Cluster[], topicLabels: string[] = []): Insight[] {
         const insights: Insight[] = [];
         const now = new Date();
         const timeLabel = `${now.toLocaleDateString('en-US', { weekday: 'long' })}`;
@@ -424,11 +387,19 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         // 1. Anomalous messages
         if (anomalies.length > 0) {
             const uniqueAuthors = [...new Set(anomalies.map(m => m.author))];
+            // Surface the actual content — take the most outlying message as the example
+            const exampleMsg = anomalies[0];
+            const preview = exampleMsg.text.length > 80
+                ? exampleMsg.text.slice(0, 80) + '…'
+                : exampleMsg.text;
+            const otherCount = anomalies.length - 1;
+            const tail = otherCount > 0 ? ` +${otherCount} other outlier message${otherCount > 1 ? 's' : ''}.` : '';
+
             insights.push({
                 type: 'alert',
                 icon: '🚨',
-                headline: `Outlier Activity: ${uniqueAuthors.length} User(s) Detected`,
-                body: `${uniqueAuthors.join(', ')} produced messages significantly outside normal embedding space.`,
+                headline: `Unusual Message${anomalies.length > 1 ? 's' : ''} Detected from ${uniqueAuthors.join(', ')}`,
+                body: `"${preview}"${tail} This message stands out significantly from the conversation's main themes.`,
                 timeLabel,
             });
         }
@@ -478,6 +449,284 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         return insights;
     }
 
+    private buildInsights(
+        anomalies: Message[],
+        authors: AuthorStat[],
+        clusters: Cluster[],
+        topicLabels: string[] = [],
+        allMsgs: Message[] = []
+    ): Insight[] {
+        const insights: Insight[] = [];
+
+        // ── 1. Sentiment trajectory ───────────────────────────────────────────
+        // Split messages chronologically into thirds, compare first vs last sentiment.
+        // Requires embeddings + anchor cache already populated (Step 6 complete).
+        if (allMsgs.length >= 9) {
+            const sorted = [...allMsgs]
+                .filter(m => m.embedding)
+                .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+            const timeline = this.buildSentimentTimeline(sorted);
+
+            if (timeline.length >= 3) {
+                // Pattern 1: sudden drop
+                const dropIdx = timeline.findIndex((v, i) =>
+                    i > 0 && timeline[i - 1] - v > 0.35
+                );
+                if (dropIdx > -1) {
+                    const triggerMsg = sorted[dropIdx];
+                    insights.push({
+                        type: 'alert',
+                        icon: '📉',
+                        headline: 'Sudden Sentiment Drop Detected',
+                        body: `Sentiment fell sharply around ${this.formatMsgTime(triggerMsg)} — from ${timeline[dropIdx - 1] >= 0 ? '+' : ''}${timeline[dropIdx - 1].toFixed(2)} to ${timeline[dropIdx] >= 0 ? '+' : ''}${timeline[dropIdx].toFixed(2)}. This pattern precedes formal complaints. Review messages at this point.`,
+                        timeLabel: this.formatMsgTime(triggerMsg),
+                    });
+                }
+
+                // Pattern 2: sustained negative tail (only if no sudden drop already flagged)
+                else if (this.detectNegativeTail(timeline)) {
+                    const lastMsg = sorted[sorted.length - 1];
+                    const tailAvg = timeline.slice(-3).reduce((s, v) => s + v, 0) / 3;
+                    insights.push({
+                        type: 'warning',
+                        icon: '📉',
+                        headline: 'Conversation Ending on a Negative Trend',
+                        body: `The final segment of this conversation shows a consistent downward sentiment trajectory (avg ${tailAvg >= 0 ? '+' : ''}${tailAvg.toFixed(2)}). No single spike, but sustained decline often precedes unresolved escalation.`,
+                        timeLabel: this.formatMsgTime(lastMsg),
+                    });
+                }
+
+                // Pattern 3: recovery
+                else if (this.detectRecovery(timeline)) {
+                    const midMsg = sorted[Math.floor(sorted.length / 2)];
+                    insights.push({
+                        type: 'info',
+                        icon: '📈',
+                        headline: 'Tension Resolved Mid-Conversation',
+                        body: `Conversation started negatively but sentiment recovered in the second half. This signals that an issue was raised and handled — a positive indicator of team responsiveness.`,
+                        timeLabel: this.formatMsgTime(midMsg),
+                    });
+                }
+            }
+        }
+
+        // ── 2. Late-session topic shift ───────────────────────────────────────
+        // Flag if any cluster has > 60% of its messages in the last 25% of the session.
+        // Signals an emerging topic that appeared suddenly near the end.
+        if (allMsgs.length >= 8 && clusters.length > 0) {
+            const sorted = [...allMsgs].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+            const cutoff = sorted[Math.floor(sorted.length * 0.75)].timestamp;
+
+            clusters.forEach((cluster, i) => {
+                const lateMessages = cluster.messages.filter(m => m.timestamp > cutoff);
+                const lateRatio = lateMessages.length / cluster.messages.length;
+                if (lateRatio > 0.6 && cluster.messages.length >= 3) {
+                    const label = topicLabels[i] ? `"${topicLabels[i]}"` : 'A new topic';
+                    insights.push({
+                        type: 'warning',
+                        icon: '⚡',
+                        headline: 'Late-Session Topic Spike Detected',
+                        body: `${label} emerged heavily in the final quarter of the conversation (${lateMessages.length} of ${cluster.messages.length} messages). A sudden topic spike can signal an unresolved issue gaining momentum.`,
+                        timeLabel: this.formatMsgTime(lateMessages[0]),
+                    });
+                }
+            });
+        }
+
+        // ── 3. Per-author sentiment deviation ────────────────────────────────
+        // Flag any author whose messages score > 0.3 below the group average.
+        // Surfaces individuals who are significantly more negative than the group.
+        if (allMsgs.length >= 6) {
+            const anchors = this.embedding['anchorCache'];
+            if (anchors) {
+                const scoreMsg = (m: Message): number | null => {
+                    if (!m.embedding) return null;
+                    const pos = this.embedding.cosineSimilarity(m.embedding, anchors.positive);
+                    const neg = this.embedding.cosineSimilarity(m.embedding, anchors.negative);
+                    const neut = this.embedding.cosineSimilarity(m.embedding, anchors.neutral);
+                    const total = pos + neg + neut;
+                    return total === 0 ? null : (pos - neg) / total;
+                };
+
+                const allScored = allMsgs.map(m => scoreMsg(m)).filter((s): s is number => s !== null);
+                const groupAvg = allScored.reduce((s, v) => s + v, 0) / allScored.length;
+
+                const authorGroups = new Map<string, number[]>();
+                for (const m of allMsgs) {
+                    const s = scoreMsg(m);
+                    if (s === null) continue;
+                    if (!authorGroups.has(m.author)) authorGroups.set(m.author, []);
+                    authorGroups.get(m.author)!.push(s);
+                }
+
+                for (const [author, scores] of authorGroups) {
+                    if (scores.length < 3) continue; // need enough messages to be meaningful
+                    const authorAvg = scores.reduce((s, v) => s + v, 0) / scores.length;
+                    const deviation = authorAvg - groupAvg;
+                    if (deviation < -0.3) {
+                        insights.push({
+                            type: 'warning',
+                            icon: '👤',
+                            headline: `${author} Significantly More Negative Than Group`,
+                            body: `${author}'s messages average ${authorAvg >= 0 ? '+' : ''}${authorAvg.toFixed(2)} against a group average of ${groupAvg >= 0 ? '+' : ''}${groupAvg.toFixed(2)}. Individual negative outliers often surface before formal complaints reach management.`,
+                            timeLabel: this.formatMsgTime(allMsgs.filter(m => m.author === author).slice(-1)[0]),
+                        });
+                    }
+                }
+            }
+        }
+
+        // ── 4. Response burst after silence ──────────────────────────────────
+        // Find the largest time gap in the conversation, then check if a burst
+        // of messages followed it. Signals a triggering event.
+        if (allMsgs.length >= 6) {
+            const sorted = [...allMsgs].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+            let maxGap = 0;
+            let gapIdx = 0;
+
+            for (let i = 1; i < sorted.length; i++) {
+                const gap = sorted[i].timestamp.getTime() - sorted[i - 1].timestamp.getTime();
+                if (gap > maxGap) { maxGap = gap; gapIdx = i; }
+            }
+
+            const gapMinutes = maxGap / 60000;
+            const burstWindow = 5 * 60000; // 5 minutes
+            const burstEnd = sorted[gapIdx].timestamp.getTime() + burstWindow;
+            const burst = sorted.slice(gapIdx).filter(m => m.timestamp.getTime() <= burstEnd);
+
+            if (gapMinutes >= 30 && burst.length >= 4) {
+                const gapLabel = gapMinutes >= 60
+                    ? `${Math.round(gapMinutes / 60)}h gap`
+                    : `${Math.round(gapMinutes)}min gap`;
+                insights.push({
+                    type: 'warning',
+                    icon: '💥',
+                    headline: 'Reaction Burst After Silence',
+                    body: `${burst.length} messages were sent within 5 minutes after a ${gapLabel}. A sudden burst following silence typically signals a triggering event — review the messages at ${this.formatMsgTime(sorted[gapIdx])} for context.`,
+                    timeLabel: this.formatMsgTime(sorted[gapIdx]),
+                });
+            }
+        }
+
+        // ── 5. Anomalous message content (outlier embedding) ─────────────────
+        if (anomalies.length > 0) {
+            const uniqueAuthors = [...new Set(anomalies.map(m => m.author))];
+            const exampleMsg = anomalies[0];
+            const preview = exampleMsg.text.length > 80
+                ? exampleMsg.text.slice(0, 80) + '…'
+                : exampleMsg.text;
+            const otherCount = anomalies.length - 1;
+            const tail = otherCount > 0
+                ? ` +${otherCount} other outlier message${otherCount > 1 ? 's' : ''}.`
+                : '';
+            insights.push({
+                type: 'alert',
+                icon: '🚨',
+                headline: `Unusual Message${anomalies.length > 1 ? 's' : ''} Detected from ${uniqueAuthors.join(', ')}`,
+                body: `"${preview}"${tail} This message stands out significantly from the conversation's main themes.`,
+                timeLabel: this.formatMsgTime(exampleMsg),
+            });
+        }
+
+        // ── 6. Influence ≠ Volume ─────────────────────────────────────────────
+        if (authors.length >= 2) {
+            const volumeLeader = authors.find(a => a.volumeRank === 1);
+            const influenceLeader = authors.find(a => a.influenceRank === 1);
+            if (volumeLeader && influenceLeader && volumeLeader.author !== influenceLeader.author) {
+                insights.push({
+                    type: 'info',
+                    icon: '💡',
+                    headline: 'Influence ≠ Volume: Different Leaders',
+                    body: `${volumeLeader.author} sends the most messages but ${influenceLeader.author} drives the most replies. The real conversation driver is not the loudest voice — worth monitoring ${influenceLeader.author}'s tone as a leading indicator.`,
+                    timeLabel: this.formatMsgTime(allMsgs[allMsgs.length - 1] ?? new Date() as any),
+                });
+            }
+        }
+
+        return insights;
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    private buildSentimentTimeline(msgs: Message[], windowSize = 5): number[] {
+        const anchors = this.embedding['anchorCache'];
+        if (!anchors || msgs.length < windowSize) return [];
+
+        const sorted = [...msgs].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+        const timeline: number[] = [];
+
+        for (let i = 0; i <= sorted.length - windowSize; i++) {
+            const window = sorted.slice(i, i + windowSize).filter(m => m.embedding);
+            if (!window.length) continue;
+
+            const scores = window.map(m => {
+                const pos = this.embedding.cosineSimilarity(m.embedding!, anchors.positive);
+                const neg = this.embedding.cosineSimilarity(m.embedding!, anchors.negative);
+                const neut = this.embedding.cosineSimilarity(m.embedding!, anchors.neutral);
+                const total = pos + neg + neut;
+                return total === 0 ? 0 : (pos - neg) / total;
+            });
+
+            timeline.push(scores.reduce((s, v) => s + v, 0) / scores.length);
+        }
+
+        return timeline;
+    }
+
+    private detectSuddenDrop(timeline: number[], threshold = 0.35): boolean {
+        for (let i = 1; i < timeline.length; i++) {
+            if (timeline[i - 1] - timeline[i] > threshold) return true;
+        }
+        return false;
+    }
+
+    private detectNegativeTail(timeline: number[]): boolean {
+        if (timeline.length < 4) return false;
+        const tail = timeline.slice(Math.floor(timeline.length * 0.7));
+        // Check if every step in the tail is declining
+        return tail.every((v, i) => i === 0 || v <= tail[i - 1]);
+    }
+
+    private detectRecovery(timeline: number[]): boolean {
+        if (timeline.length < 4) return false;
+        const firstHalf = timeline.slice(0, Math.floor(timeline.length / 2));
+        const secondHalf = timeline.slice(Math.floor(timeline.length / 2));
+        const firstAvg = firstHalf.reduce((s, v) => s + v, 0) / firstHalf.length;
+        const secondAvg = secondHalf.reduce((s, v) => s + v, 0) / secondHalf.length;
+        return firstAvg < -0.1 && secondAvg > firstAvg + 0.25;
+    }
+
+    private formatMsgTime(m: Message): string {
+        if (!m?.timestamp) return '';
+        return m.timestamp.toLocaleDateString('en-US', {
+            weekday: 'short', month: 'short', day: 'numeric',
+        }) + ' ' + String(m.timestamp.getHours()).padStart(2, '0')
+            + ':' + String(m.timestamp.getMinutes()).padStart(2, '0');
+    }
+
+    private authorSentimentScores(
+        msgs: Message[],
+        anchors: { positive: number[]; negative: number[]; neutral: number[] }
+    ): Map<string, number> {
+        const groups = new Map<string, number[]>();
+        for (const m of msgs) {
+            if (!m.embedding) continue;
+            const pos = this.embedding.cosineSimilarity(m.embedding, anchors.positive);
+            const neg = this.embedding.cosineSimilarity(m.embedding, anchors.negative);
+            const neut = this.embedding.cosineSimilarity(m.embedding, anchors.neutral);
+            const total = pos + neg + neut;
+            const score = total === 0 ? 0 : (pos - neg) / total;
+            if (!groups.has(m.author)) groups.set(m.author, []);
+            groups.get(m.author)!.push(score);
+        }
+        const result = new Map<string, number>();
+        for (const [author, scores] of groups) {
+            result.set(author, scores.reduce((s, v) => s + v, 0) / scores.length);
+        }
+        return result;
+    }
+
     private computeTrend(
         currentCluster: Cluster,
         currentTf: Timeframe,
@@ -516,5 +765,185 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         const avgOutputTokens = 250;
         const genCost = genCallsEstimate * (avgInputTokens * 0.075 + avgOutputTokens * 0.30) / 1_000_000;
         return Math.round((embCost + genCost) * 100000) / 100000;
+    }
+
+    // ── Lazy timeframe analysis ────────────────────────────────────────────────
+
+    /**
+     * Called when the user switches to a timeframe tab.
+     * - If AI results are already in the cache signal → no-op.
+     * - If the result is in localStorage → hydrate and return.
+     * - If in-memory stage data is available → run Steps 8+9 for the timeframe.
+     * - If stage data is gone (page refresh) → no-op; UI shows re-upload nudge.
+     */
+    async analyzeTimeframe(tf: Timeframe): Promise<void> {
+        // Already fully loaded
+        if (this.reportCache()[tf]?.topics !== null && this.reportCache()[tf] !== null) return;
+        // Currently being analyzed
+        if (this.isAnalyzingTf() === tf) return;
+
+        // Try localStorage cache first (survives page refresh + same-file re-upload)
+        const cached = this.loadFromStorage(tf, this._fileKey);
+        if (cached) {
+            this.updateCache({ [tf]: cached } as Partial<ReportCache>);
+            return;
+        }
+
+        // No in-memory stage data (page refresh without re-upload)
+        if (!this._stageData) return;
+
+        const stage = this._stageData;
+        const clusters = stage.clustersByTf[tf];
+        const report = (stage.partials as Record<string, Report | null>)[tf];
+        if (!clusters.length || !report) return;
+
+        this.isAnalyzingTf.set(tf);
+        // Reset pipeline to show steps 0–6 as done, 7–8 as pending
+        this.pipelineSteps.set(INITIAL_STEPS.map((s, i) => ({
+            ...s,
+            status: (i < 7 ? 'done' : 'pending') as 'done' | 'pending',
+        })));
+        this.advanceStep(7);
+
+        try {
+            // const final = await this.runStep8And9(
+            //     tf, clusters, report,
+            //     stage.anomaliesByTf[tf], stage.clustersByTf, stage.fileKey,
+            // );
+            const final = await this.runStep8And9(
+                tf,
+                clusters,
+                report,
+                stage.anomaliesByTf[tf],
+                stage.clustersByTf,
+                stage.buckets[tf],
+                stage.fileKey
+            );
+
+            this.updateCache({ [tf]: final } as Partial<ReportCache>);
+            this.markAllDone();
+        } catch (err: unknown) {
+            this.markStepFailed();
+            const msg = err instanceof Error ? err.message : 'Analysis failed';
+            this.error.set(msg);
+        } finally {
+            this.isAnalyzingTf.set(null);
+        }
+    }
+
+    // ── Shared AI execution helper (Steps 8+9) ─────────────────────────────────
+
+    private async runStep8And9(
+        tf: Timeframe,
+        clusters: Cluster[],
+        report: Report,
+        anomalies: Message[],
+        clustersByTf: Record<Timeframe, Cluster[]>,
+        allMsgs: Message[],
+        fileKey: string
+    ): Promise<Report> {
+        // Sentiment scoring
+        const sentimentScores = await Promise.all(
+            clusters.map(c => this.embedding.scoreSentiment(c.centroidVector))
+        );
+
+        // Label clusters
+        let topics: Topic[];
+        try {
+            const labels = await this.labelClusters(clusters, report.cleanMessages);
+            topics = clusters.map((c, i) => ({
+                id: String(i),
+                label: labels[i] ?? `Topic ${i + 1}`,
+                messageCount: c.messages.length,
+                percentage: (c.messages.length / report.cleanMessages) * 100,
+                trend: this.computeTrend(c, tf, clustersByTf),
+                sentimentScore: sentimentScores[i],
+                centroidMessageText: c.centroidMessage.text,
+            }));
+        } catch {
+            topics = clusters.map((c, i) => ({
+                id: String(i),
+                label: `Topic ${i + 1}`,
+                messageCount: c.messages.length,
+                percentage: (c.messages.length / report.cleanMessages) * 100,
+                trend: 'stable' as const,
+                sentimentScore: sentimentScores[i],
+                centroidMessageText: c.centroidMessage.text,
+            }));
+        }
+
+        const overallScore = sentimentScores.reduce((s, v) => s + v, 0) / sentimentScores.length;
+
+        // Vibe info
+        let vibeEmoji = '😐', vibeLabel = 'Neutral', vibeDesc = 'Mixed sentiments across topics.';
+        try {
+            const vibe = await this.generateVibeInfo(overallScore, topics.map(t => t.label));
+            vibeEmoji = vibe.emoji;
+            vibeLabel = vibe.label;
+            vibeDesc = vibe.description;
+        } catch { /* keep defaults */ }
+
+        const cost = this.estimateCost(report.cleanMessages);
+        // const labeledInsights = this.buildInsights(anomalies, report.authors, clusters, topics.map(t => t.label));
+        const labeledInsights = this.buildInsights(
+            anomalies,
+            report.authors,
+            clustersByTf[tf],
+            topics.map(t => t.label),
+            allMsgs
+        );
+
+        let result: Report = {
+            ...report, topics, overallSentimentScore: overallScore,
+            overallVibeEmoji: vibeEmoji, overallVibeLabel: vibeLabel,
+            overallVibeDescription: vibeDesc, estimatedCostUsd: cost,
+            insights: labeledInsights,
+        };
+
+        // Step 9: summaries
+        this.advanceStep(8);
+        try {
+            const [summaryExec, summaryAnalyst] = await this.generateSummaries(result);
+            result = { ...result, summaryExec, summaryAnalyst };
+        } catch { /* summaries remain null */ }
+
+        this.saveToStorage(tf, result, fileKey);
+        return result;
+    }
+
+    // ── localStorage helpers ───────────────────────────────────────────────────
+
+    private storageKey(tf: Timeframe, fileKey: string): string {
+        return `insights-v1:${fileKey}:${tf}`;
+    }
+
+    private saveToStorage(tf: Timeframe, report: Report, fileKey: string): void {
+        try {
+            localStorage.setItem(this.storageKey(tf, fileKey), JSON.stringify(report));
+        } catch { /* ignore quota errors */ }
+    }
+
+    private loadFromStorage(tf: Timeframe, fileKey: string): Report | null {
+        if (!fileKey) return null;
+        try {
+            const raw = localStorage.getItem(this.storageKey(tf, fileKey));
+            if (!raw) return null;
+            const r = JSON.parse(raw) as Report;
+            // Validate that it's actually a completed report
+            if (!r?.topics) return null;
+            // Restore Date objects (JSON.parse gives strings)
+            return r;
+        } catch { return null; }
+    }
+
+    /** Remove all insights-v1 cache entries unconditionally. Called on every new upload. */
+    private clearAllStorage(): void {
+        const prefix = 'insights-v1:';
+        const toDelete: string[] = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key?.startsWith(prefix)) toDelete.push(key);
+        }
+        toDelete.forEach(k => localStorage.removeItem(k));
     }
 }

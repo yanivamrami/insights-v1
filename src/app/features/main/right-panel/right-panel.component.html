@@ -11,12 +11,21 @@
     <div class="timeframe-bar">
         <div class="tabs">
             @for (tf of timeframes; track tf.value) {
-            <button class="tab-btn" [class.active]="appState.timeframe() === tf.value" (click)="setTimeframe(tf.value)">
+            <button class="tab-btn" [class.active]="appState.timeframe() === tf.value"
+                [class.tab-no-data]="tabState(tf.value) === 'no-data'"
+                [class.tab-loading]="tabState(tf.value) === 'loading'"
+                [class.tab-needs-upload]="tabState(tf.value) === 'needs-upload'"
+                [disabled]="tabState(tf.value) === 'no-data'" (click)="setTimeframe(tf.value)">
                 {{ tf.label }}
+                @switch (tabState(tf.value)) {
+                @case ('loading') { <span class="tab-status-icon">⏳</span> }
+                @case ('available') { <span class="tab-status-icon tab-dot-available">●</span> }
+                @case ('needs-upload') { <span class="tab-status-icon">↑</span> }
+                @default {
                 @if (reportService.reportCache()[tf.value]) {
-                <span class="tab-count">
-                    {{ reportService.reportCache()[tf.value]!.cleanMessages }}
-                </span>
+                <span class="tab-count">{{ reportService.reportCache()[tf.value]!.cleanMessages }}</span>
+                }
+                }
                 }
             </button>
             }
@@ -29,6 +38,16 @@
         </div>
     </div>
 
+    @if (tabState(appState.timeframe()) === 'needs-upload') {
+    <div class="reupload-notice">
+        ↑ Re-upload the same file to load AI analysis for this period
+    </div>
+    }
+    @if (tabState(appState.timeframe()) === 'loading') {
+    <div class="loading-notice">
+        ⏳ Analyzing {{ appState.timeframe() === 'yesterday' ? 'yesterday' : '7-day' }} period…
+    </div>
+    }
     <!-- Dashboard grid -->
     <div class="dashboard-grid">
         <!-- Activity Pulse (full width) -->
@@ -78,7 +97,7 @@
                     <span class="badge ts">Pure TS</span>
                 </div>
             </div>
-            <app-user-engagement [report]="appState.currentReport()!" />
+            <app-user-engagement />
         </div>
 
         <!-- Deep Insights -->
@@ -103,7 +122,7 @@
                     <span class="audience-tag" [class.clevel]="appState.audience() === 'clevel'">
                         {{ appState.audience() === 'clevel' ? 'C-Level' : 'Analyst' }}
                     </span>
-                    <app-section-help title="Executive Summary"
+                    <app-section-help title="Executive Summary" [popupUp]="true"
                         content="Two summaries are generated in parallel by gpt-4o-mini — no raw message text is sent, only structured report data (counts, scores, topic names, author stats).\n\nC-Level mode: 3–4 sentences focused on business risk, churn signals, and recommended actions. Plain language, no jargon.\n\nAnalyst mode: 4–5 sentences with precise numeric language — message counts, filtering ratios, cluster distribution, sentiment scores, and data quality notes.\n\nUse the C-Level / Analyst toggle inside the card to switch modes." />
                 </div>
                 <div class="badges">

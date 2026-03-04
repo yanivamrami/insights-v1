@@ -31,7 +31,7 @@ export class GeminiProvider implements IAIProvider {
         }
 
         const data = await resp.json();
-        return (data.embeddings as Array<{ values: number[] }>).map(e => e.values);
+        return (data.embedding.values as Array<{ values: number[] }>).map(e => e.values);
     }
 
     async complete(prompt: string, systemPrompt?: string): Promise<string> {

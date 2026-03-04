@@ -1,6 +1,8 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Report, AuthorStat } from '../../../../../core/models/report.model';
+import { AuthorStat } from '../../../../../core/models/report.model';
+import { AppState } from '../../../../../core/state/app.state';
+import { ReportService } from '../../../../../core/services/report.service';
 
 @Component({
     selector: 'app-user-engagement',
@@ -11,18 +13,21 @@ import { Report, AuthorStat } from '../../../../../core/models/report.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserEngagementComponent {
-    @Input({ required: true }) report!: Report;
+    private appState = inject(AppState);
+    protected reportService = inject(ReportService);
+
+    get report() { return this.appState.currentReport(); }
 
     get byVolume(): AuthorStat[] {
-        return [...this.report.authors]
-            .sort((a, b) => b.messageCount - a.messageCount)
-            .slice(0, 5);
+        const authors = this.report?.authors;
+        if (!authors?.length) return [];
+        return [...authors].sort((a, b) => b.messageCount - a.messageCount).slice(0, 5);
     }
 
     get byInfluence(): AuthorStat[] {
-        return [...this.report.authors]
-            .sort((a, b) => b.influenceScore - a.influenceScore)
-            .slice(0, 5);
+        const authors = this.report?.authors;
+        if (!authors?.length) return [];
+        return [...authors].sort((a, b) => b.influenceScore - a.influenceScore).slice(0, 5);
     }
 
     initials(name: string): string {

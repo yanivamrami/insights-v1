@@ -358,10 +358,14 @@ Return ONLY valid JSON. No markdown. No extra text.`;
 - Timeframe: ${report.timeframe}
 - Messages analyzed: ${report.cleanMessages}
 - Overall sentiment score: ${report.overallSentimentScore?.toFixed(2) ?? 'N/A'}
-- Topics: ${topicsStr}
-- Top author by volume: ${topVolume} (${report.authors[0]?.messageCount ?? 0} messages)
-- Top author by influence: ${topInfluence} (score ${report.authors.find(a => a.influenceRank === 1)?.influenceScore ?? 0})
-- Anomalous messages detected: ${report.insights?.length ?? 0}
+(scale: -1.0 = extremely negative, 0.0 = neutral, +1.0 = extremely positive)
+- Sentiment vibe: ${report.overallVibeLabel} — "${report.overallVibeDescription}"
+- Topics: ${report.topics?.map(t =>
+            `${t.label} (${t.messageCount} msgs, sentiment ${t.sentimentScore.toFixed(2)})`
+        ).join(', ')}
+- Top author by volume: ${report.authors[0]?.author} (${report.authors[0]?.messageCount} messages)
+- Top author by influence: ${report.authors.find(a => a.influenceRank === 1)?.author}
+- Anomalous messages detected: ${report.insights?.filter(i => i.type === 'alert').length ?? 0}
 - Active authors: ${report.activeAuthorCount}
 
 Write the summary now.`;

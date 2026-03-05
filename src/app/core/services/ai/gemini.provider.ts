@@ -11,12 +11,14 @@ export class GeminiProvider implements IAIProvider {
     private readonly taskType = environment.embeddingTaskType;
 
     async embedBatch(texts: string[]): Promise<number[][]> {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.embeddingModel}:embedContent`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.embeddingModel}:batchEmbedContents`;
         const body = {
-            model: `models/${this.embeddingModel}`,
-            content: { parts: texts.map(t => ({ text: t })) },
-            taskType: this.taskType,
-            outputDimensionality: this.dimensions,
+            requests: texts.map(t => ({
+                model: `models/${this.embeddingModel}`,
+                content: { parts: [{ text: t }] },
+                taskType: 'SEMANTIC_SIMILARITY', //this.taskType,
+                outputDimensionality: this.dimensions,
+            })),
         };
 
         const resp = await fetch(url, {
@@ -31,7 +33,7 @@ export class GeminiProvider implements IAIProvider {
         }
 
         const data = await resp.json();
-        return (data.embedding.values as Array<{ values: number[] }>).map(e => e.values);
+        return (data.embeddings as Array<{ values: number[] }>).map(e => e.values);
     }
 
     async complete(prompt: string, systemPrompt?: string): Promise<string> {

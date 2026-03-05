@@ -105,13 +105,9 @@ export class ReportService {
             this.fileSource.set(source);
             const raw = parser.parse(content);
 
-            console.log('Raw parsed messages:', raw);
-
             // ── STEP 2: Filter ─────────────────────────────────────────────────
             this.advanceStep(1);
             const { clean, dropped } = this.analytics.filterNoise(raw);
-
-            console.log('Clean messages after filtering:', clean);
 
             // ── STEP 3: Bucket + Analytics ────────────────────────────────────
             this.advanceStep(2);
@@ -123,49 +119,8 @@ export class ReportService {
             const partials: ReportCache = { today: null, yesterday: null, '7days': null };
 
             for (const tf of TIMEFRAMES) {
-                const msgs = buckets[tf];
-                if (!msgs.length) continue;
-                const rawMsgs = rawBuckets[tf];
-                const prevMsgs = tf === 'today'
-                    ? buckets['yesterday']
-                    : tf === 'yesterday'
-                        ? []
-                        : [];
-
-                const maxMsgTs = msgs.reduce((max, m) => m.timestamp > max ? m.timestamp : max, msgs[0].timestamp);
-                const hourly = this.analytics.getHourlyActivity(msgs);
-                const daily = this.analytics.getDailyActivity(msgs);
-                const tokensRaw = this.analytics.estimateTokens(rawMsgs);
-                const tokensFiltered = this.analytics.estimateTokens(msgs);
-                const tokensPayload = Math.round(msgs.length * 12);
-
-                const report: Report = {
-                    timeframe: tf,
-                    totalMessages: rawMsgs.length,
-                    cleanMessages: msgs.length,
-                    droppedMessages: rawMsgs.length - msgs.length,
-                    activeAuthorCount: new Set(msgs.map(m => m.author)).size,
-                    dateRangeLabel: this.analytics.getDateRangeLabel(msgs),
-                    hourlyActivity: hourly,
-                    dailyActivity: daily,
-                    dataEndDayOfWeek: maxMsgTs.getDay(),
-                    peakHour: this.analytics.getPeakHour(hourly),
-                    volumeVsPrevious: this.analytics.getVolumeVsPrevious(msgs, prevMsgs),
-                    tokensRaw,
-                    tokensFiltered,
-                    tokensPayload,
-                    authors: this.analytics.getAuthorStats(msgs),
-                    estimatedCostUsd: 0,
-                    topics: null,
-                    overallSentimentScore: null,
-                    overallVibeEmoji: null,
-                    overallVibeLabel: null,
-                    overallVibeDescription: null,
-                    insights: null,
-                    summaryExec: null,
-                    summaryAnalyst: null,
-                };
-
+                const report = this.buildReportForTimeframe(tf, buckets, rawBuckets);
+                if (!report) continue;
                 (partials as Record<string, Report | null>)[tf] = report;
             }
 
@@ -379,76 +334,6 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         ]);
     }
 
-    private buildInsightsV1(anomalies: Message[], authors: AuthorStat[], clusters: Cluster[], topicLabels: string[] = []): Insight[] {
-        const insights: Insight[] = [];
-        const now = new Date();
-        const timeLabel = `${now.toLocaleDateString('en-US', { weekday: 'long' })}`;
-
-        // 1. Anomalous messages
-        if (anomalies.length > 0) {
-            const uniqueAuthors = [...new Set(anomalies.map(m => m.author))];
-            // Surface the actual content — take the most outlying message as the example
-            const exampleMsg = anomalies[0];
-            const preview = exampleMsg.text.length > 80
-                ? exampleMsg.text.slice(0, 80) + '…'
-                : exampleMsg.text;
-            const otherCount = anomalies.length - 1;
-            const tail = otherCount > 0 ? ` +${otherCount} other outlier message${otherCount > 1 ? 's' : ''}.` : '';
-
-            insights.push({
-                type: 'alert',
-                icon: '🚨',
-                headline: `Unusual Message${anomalies.length > 1 ? 's' : ''} Detected from ${uniqueAuthors.join(', ')}`,
-                body: `"${preview}"${tail} This message stands out significantly from the conversation's main themes.`,
-                timeLabel,
-            });
-        }
-
-        // 2. Dominant cluster concentration — only flag if top cluster holds > 50% of messages
-        const totalMsgs = clusters.reduce((sum, c) => sum + c.messages.length, 0);
-        const topClusterShare = totalMsgs > 0 ? (clusters[0]?.messages.length ?? 0) / totalMsgs : 0;
-        if (clusters.length > 0 && topClusterShare > 0.5) {
-            insights.push({
-                type: 'warning',
-                icon: '⚠️',
-                headline: 'Dominant Topic: Conversation Is Highly Concentrated',
-                body: `${Math.round(topClusterShare * 100)}% of messages belong to a single topic cluster${topicLabels[0] ? ` ("${topicLabels[0]}")` : ''} (${clusters[0]?.messages.length ?? 0} of ${totalMsgs} messages). Low topic diversity may indicate a focused issue.`,
-                timeLabel,
-            });
-        }
-
-        // 3. Influence ≠ Volume
-        if (authors.length >= 2) {
-            const volumeLeader = authors.find(a => a.volumeRank === 1);
-            const influenceLeader = authors.find(a => a.influenceRank === 1);
-            if (volumeLeader && influenceLeader && volumeLeader.author !== influenceLeader.author) {
-                insights.push({
-                    type: 'info',
-                    icon: '💡',
-                    headline: 'Influence ≠ Volume: Different Leaders',
-                    body: `${volumeLeader.author} sends the most messages; ${influenceLeader.author} drives the most replies.`,
-                    timeLabel,
-                });
-            }
-        }
-
-        // 4. Silent majority
-        if (authors.length > 0) {
-            const silent = authors.filter(a => a.messageCount < 5).length;
-            if (silent > 0) {
-                insights.push({
-                    type: 'info',
-                    icon: '👁️',
-                    headline: `${silent} of ${authors.length} Participants Mostly Silent`,
-                    body: `${silent} of ${authors.length} participants sent fewer than 5 messages — silent majority may hold unvoiced sentiment.`,
-                    timeLabel,
-                });
-            }
-        }
-
-        return insights;
-    }
-
     private buildInsights(
         anomalies: Message[],
         authors: AuthorStat[],
@@ -538,7 +423,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         // Flag any author whose messages score > 0.3 below the group average.
         // Surfaces individuals who are significantly more negative than the group.
         if (allMsgs.length >= 6) {
-            const anchors = this.embedding['anchorCache'];
+            const anchors = this.embedding.anchors;
             if (anchors) {
                 const scoreMsg = (m: Message): number | null => {
                     if (!m.embedding) return null;
@@ -591,11 +476,13 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
             }
 
             const gapMinutes = maxGap / 60000;
+            const totalSpanMinutes = (sorted[sorted.length - 1].timestamp.getTime() - sorted[0].timestamp.getTime()) / 60000;
+            const burstThreshold = Math.min(120, Math.max(15, totalSpanMinutes * 0.05));
             const burstWindow = 5 * 60000; // 5 minutes
             const burstEnd = sorted[gapIdx].timestamp.getTime() + burstWindow;
             const burst = sorted.slice(gapIdx).filter(m => m.timestamp.getTime() <= burstEnd);
 
-            if (gapMinutes >= 30 && burst.length >= 4) {
+            if (gapMinutes >= burstThreshold && burst.length >= 4) {
                 const gapLabel = gapMinutes >= 60
                     ? `${Math.round(gapMinutes / 60)}h gap`
                     : `${Math.round(gapMinutes)}min gap`;
@@ -647,10 +534,60 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         return insights;
     }
 
+    private buildReportForTimeframe(
+        tf: Timeframe,
+        buckets: Record<Timeframe, Message[]>,
+        rawBuckets: Record<Timeframe, Message[]>
+    ): Report | null {
+        const msgs = buckets[tf];
+        if (!msgs.length) return null;
+
+        const rawMsgs = rawBuckets[tf];
+        const prevMsgs = tf === 'today'
+            ? buckets['yesterday']
+            : tf === 'yesterday'
+                ? []
+                : [];
+
+        const maxMsgTs = msgs.reduce((max, m) => m.timestamp > max ? m.timestamp : max, msgs[0].timestamp);
+        const hourly = this.analytics.getHourlyActivity(msgs);
+        const daily = this.analytics.getDailyActivity(msgs);
+        const tokensRaw = this.analytics.estimateTokens(rawMsgs);
+        const tokensFiltered = this.analytics.estimateTokens(msgs);
+        const tokensPayload = Math.round(msgs.length * 12);
+
+        return {
+            timeframe: tf,
+            totalMessages: rawMsgs.length,
+            cleanMessages: msgs.length,
+            droppedMessages: rawMsgs.length - msgs.length,
+            activeAuthorCount: new Set(msgs.map(m => m.author)).size,
+            dateRangeLabel: this.analytics.getDateRangeLabel(msgs),
+            hourlyActivity: hourly,
+            dailyActivity: daily,
+            dataEndDayOfWeek: maxMsgTs.getDay(),
+            peakHour: this.analytics.getPeakHour(hourly),
+            volumeVsPrevious: this.analytics.getVolumeVsPrevious(msgs, prevMsgs),
+            tokensRaw,
+            tokensFiltered,
+            tokensPayload,
+            authors: this.analytics.getAuthorStats(msgs),
+            estimatedCostUsd: 0,
+            topics: null,
+            overallSentimentScore: null,
+            overallVibeEmoji: null,
+            overallVibeLabel: null,
+            overallVibeDescription: null,
+            insights: null,
+            summaryExec: null,
+            summaryAnalyst: null,
+        };
+    }
+
     // ── Helpers ───────────────────────────────────────────────────────────────
 
     private buildSentimentTimeline(msgs: Message[], windowSize = 5): number[] {
-        const anchors = this.embedding['anchorCache'];
+        const anchors = this.embedding.anchors;
         if (!anchors || msgs.length < windowSize) return [];
 
         const sorted = [...msgs].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
@@ -674,12 +611,12 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         return timeline;
     }
 
-    private detectSuddenDrop(timeline: number[], threshold = 0.35): boolean {
-        for (let i = 1; i < timeline.length; i++) {
-            if (timeline[i - 1] - timeline[i] > threshold) return true;
-        }
-        return false;
-    }
+    // private detectSuddenDrop(timeline: number[], threshold = 0.35): boolean {
+    //     for (let i = 1; i < timeline.length; i++) {
+    //         if (timeline[i - 1] - timeline[i] > threshold) return true;
+    //     }
+    //     return false;
+    // }
 
     private detectNegativeTail(timeline: number[]): boolean {
         if (timeline.length < 4) return false;
@@ -703,28 +640,6 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
             weekday: 'short', month: 'short', day: 'numeric',
         }) + ' ' + String(m.timestamp.getHours()).padStart(2, '0')
             + ':' + String(m.timestamp.getMinutes()).padStart(2, '0');
-    }
-
-    private authorSentimentScores(
-        msgs: Message[],
-        anchors: { positive: number[]; negative: number[]; neutral: number[] }
-    ): Map<string, number> {
-        const groups = new Map<string, number[]>();
-        for (const m of msgs) {
-            if (!m.embedding) continue;
-            const pos = this.embedding.cosineSimilarity(m.embedding, anchors.positive);
-            const neg = this.embedding.cosineSimilarity(m.embedding, anchors.negative);
-            const neut = this.embedding.cosineSimilarity(m.embedding, anchors.neutral);
-            const total = pos + neg + neut;
-            const score = total === 0 ? 0 : (pos - neg) / total;
-            if (!groups.has(m.author)) groups.set(m.author, []);
-            groups.get(m.author)!.push(score);
-        }
-        const result = new Map<string, number>();
-        for (const [author, scores] of groups) {
-            result.set(author, scores.reduce((s, v) => s + v, 0) / scores.length);
-        }
-        return result;
     }
 
     private computeTrend(

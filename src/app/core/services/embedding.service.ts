@@ -31,6 +31,9 @@ export class EmbeddingService {
     private ai = inject(AIService);
     private anchorCache: AnchorVectors | null = null;
 
+    /** Public read-only access to cached anchor vectors. Populated after first embedMessages() or getAnchorEmbeddings() call. */
+    get anchors(): AnchorVectors | null { return this.anchorCache; }
+
     private formatMessage(m: Message): string {
         const hh = String(m.timestamp.getHours()).padStart(2, '0');
         const mm = String(m.timestamp.getMinutes()).padStart(2, '0');
@@ -94,7 +97,6 @@ export class EmbeddingService {
     }
 
     centroid(vecs: number[][]): number[] {
-        debugger;
         if (!vecs.length) return [];
         const dim = vecs[0].length;
         const result = new Array<number>(dim).fill(0);

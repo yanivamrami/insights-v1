@@ -97,7 +97,7 @@
 
     <!-- Anomaly timeline diagram -->
     <div class="anomaly-section">
-        <div class="section-title">Anomaly Detection — Volume Timeline</div>
+        <div class="section-title">Anomaly Detection — Semantic Distance Timeline</div>
         <div class="timeline-dots">
             @for (dot of timelineDots; track $index) {
             <div class="t-dot" [class.active]="dot.active" [style.margin-bottom.px]="dot.mb">
@@ -105,8 +105,8 @@
             }
         </div>
         <div class="timeline-legend">
-            <span class="legend-item"><span class="legend-dot normal"></span> Normal</span>
-            <span class="legend-item"><span class="legend-dot anomaly"></span> Anomaly (mean + 2σ)</span>
+            <span class="legend-item"><span class="legend-dot normal"></span> Within 2σ of centroid</span>
+            <span class="legend-item"><span class="legend-dot anomaly"></span> Semantic outlier (mean + 2σ)</span>
         </div>
     </div>
 

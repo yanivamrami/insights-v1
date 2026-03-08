@@ -26,6 +26,23 @@ For a complete list of available schematics (such as `components`, `directives`,
 ng generate --help
 ```
 
+## Before Building - Create environment.ts file
+Before building the app, create an environment.ts file at ```src/environments``` with the following properties:
+```
+export const environment = {
+    production: false,
+    geminiApiKey: <YOUR_GEMINI_API_KEY>,
+    openApiKey: <YOUR_OPENAI_API_KEY>,
+    geminiEmbeddingModel: 'gemini-embedding-001',
+    geminiGenerativeModel: 'gemini-2.5-flash-lite',
+    openAIGenerativeModel: 'gpt-4o-mini',
+    embeddingDimensions: 768,
+    embeddingTaskType: 'CLUSTERING',
+};
+
+```
+
+
 ## Building
 
 To build the project run:

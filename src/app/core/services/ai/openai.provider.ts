@@ -9,7 +9,7 @@ export class OpenAIProvider implements IAIProvider {
     private readonly completionsUrl = 'https://api.openai.com/v1/chat/completions';
     private readonly apiKey = environment.openApiKey;
     private readonly selectedEmbeddedModel = this.embeddingModel[0];
-    private readonly generativeModel = environment.openAIGenerativeModel;
+    private readonly generativeModel = 'gpt-4o-mini';
     private readonly BATCH_SIZE = 100;
 
 

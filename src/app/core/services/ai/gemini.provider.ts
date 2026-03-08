@@ -5,8 +5,8 @@ import { IAIProvider } from './ai-provider.interface';
 @Injectable({ providedIn: 'root' })
 export class GeminiProvider implements IAIProvider {
     private readonly apiKey = environment.geminiApiKey;
-    private readonly embeddingModel = environment.geminiEmbeddingModel;
-    private readonly generativeModel = environment.geminiGenerativeModel;
+    private readonly embeddingModel = 'gemini-embedding-001';
+    private readonly generativeModel = 'gemini-2.5-flash-lite';
     private readonly dimensions = environment.embeddingDimensions;
     private readonly taskType = environment.embeddingTaskType;
 

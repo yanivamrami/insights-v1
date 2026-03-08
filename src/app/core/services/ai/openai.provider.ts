@@ -10,8 +10,25 @@ export class OpenAIProvider implements IAIProvider {
     private readonly apiKey = environment.openApiKey;
     private readonly selectedEmbeddedModel = this.embeddingModel[0];
     private readonly generativeModel = environment.openAIGenerativeModel;
+    private readonly BATCH_SIZE = 100;
+
 
     async embedBatch(texts: string[]): Promise<number[][]> {
+        if (texts.length === 0) return [];
+
+        // Split into chunks of BATCH_SIZE and call the API in parallel
+        const chunks: string[][] = [];
+        for (let i = 0; i < texts.length; i += this.BATCH_SIZE) {
+            chunks.push(texts.slice(i, i + this.BATCH_SIZE));
+        }
+
+        const chunkResults = await Promise.all(chunks.map(chunk => this.embedChunk(chunk)));
+
+        // Flatten chunks back into a single array preserving original order
+        return chunkResults.flat();
+    }
+
+    async embedChunk(texts: string[]): Promise<number[][]> {
         const url = this.embeddedUrl;
         const body = {
             model: this.selectedEmbeddedModel,
@@ -26,7 +43,7 @@ export class OpenAIProvider implements IAIProvider {
 
         if (!resp.ok) {
             const err = await resp.text();
-            throw new Error(`OpenAI embedBatch failed (${resp.status}): ${err}`);
+            throw new Error(`OpenAI embedChunk failed (${resp.status}): ${err}`);
         }
 
         const data = await resp.json() as { data: Array<{ index: number; embedding: number[] }> };

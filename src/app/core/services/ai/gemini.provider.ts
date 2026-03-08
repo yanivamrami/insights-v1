@@ -10,7 +10,25 @@ export class GeminiProvider implements IAIProvider {
     private readonly dimensions = environment.embeddingDimensions;
     private readonly taskType = environment.embeddingTaskType;
 
+    private readonly BATCH_SIZE = 100;
+
+
     async embedBatch(texts: string[]): Promise<number[][]> {
+        if (texts.length === 0) return [];
+
+        // Split into chunks of BATCH_SIZE and call the API in parallel
+        const chunks: string[][] = [];
+        for (let i = 0; i < texts.length; i += this.BATCH_SIZE) {
+            chunks.push(texts.slice(i, i + this.BATCH_SIZE));
+        }
+
+        const chunkResults = await Promise.all(chunks.map(chunk => this.embedChunk(chunk)));
+
+        // Flatten chunks back into a single array preserving original order
+        return chunkResults.flat();
+    }
+
+    async embedChunk(texts: string[]): Promise<number[][]> {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.embeddingModel}:batchEmbedContents`;
         const body = {
             requests: texts.map(t => ({

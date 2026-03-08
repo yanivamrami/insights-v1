@@ -139,8 +139,7 @@ export class ReportService {
             for (const tf of TIMEFRAMES) {
                 const msgs = buckets[tf].filter(m => m.embedding?.length);
                 if (!msgs.length) continue;
-                const k = this.clustering.estimateK(msgs.length);
-                clustersByTf[tf] = this.clustering.kMeans(msgs, k);
+                clustersByTf[tf] = this.clustering.kMeans(msgs);
             }
 
             // ── STEP 6: Sentiment scoring ─────────────────────────────────────
@@ -218,7 +217,9 @@ export class ReportService {
                 cleanCount: clean.length,
                 droppedCount: dropped,
                 embeddingCalls: 1,
-                generativeCalls: clustersByTf['today'].length > 0 ? 2 : 0,
+                // 4 calls for today: labelClusters (1) + generateVibeInfo (1) + generateSummaries (2)
+                // Yesterday + 7days are lazy — their calls are not included here
+                generativeCalls: clustersByTf['today'].length > 0 ? 4 : 0,
                 estimatedCostUsd: this.estimateCost(clean.length),
                 durationMs: Date.now() - start,
             });

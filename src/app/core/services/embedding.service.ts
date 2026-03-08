@@ -96,6 +96,11 @@ export class EmbeddingService {
         return denom === 0 ? 0 : dot / denom;
     }
 
+    /** Cosine distance in [0, 1]. Use this consistently everywhere distances are needed. */
+    cosineDistance(a: number[], b: number[]): number {
+        return 1 - Math.min(1, this.cosineSimilarity(a, b));
+    }
+
     centroid(vecs: number[][]): number[] {
         if (!vecs.length) return [];
         const dim = vecs[0].length;
@@ -121,8 +126,7 @@ export class EmbeddingService {
         const withEmb = msgs.filter(m => m.embedding);
         if (!withEmb.length) return [];
 
-        // Clamp to ≤ 1 to prevent negative distances from floating-point rounding above 1.0
-        const distances = withEmb.map(m => 1 - Math.min(1, this.cosineSimilarity(m.embedding!, centroidVec)));
+        const distances = withEmb.map(m => this.cosineDistance(m.embedding!, centroidVec));
         const mean = distances.reduce((s, d) => s + d, 0) / distances.length;
         const std = Math.sqrt(distances.reduce((s, d) => s + Math.pow(d - mean, 2), 0) / distances.length);
         const threshold = mean + 2 * std;

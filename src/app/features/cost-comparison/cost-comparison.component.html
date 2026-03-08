@@ -23,7 +23,7 @@
                 <span class="live-sep">·</span>
                 <span class="live-stat">{{ stats.cleanCount | number }} clean msgs</span>
                 <span class="live-sep">·</span>
-                <span class="live-stat">{{ stats.generativeCalls }} AI calls</span>
+                <span class="live-stat">{{ stats.generativeCalls }} AI calls (today only)</span>
                 <span class="live-sep">·</span>
                 <span class="live-stat">{{ stats.durationMs | number }} ms</span>
             </div>
@@ -34,7 +34,8 @@
                     <div class="live-total" [class.free]="p.id === 'llama'">{{ liveRunCost(p) }}</div>
                     <div class="live-breakdown">
                         <span class="live-bk-row">Embed: {{ liveEmbedCost(p) }}</span>
-                        <span class="live-bk-row">Gen ({{ stats.generativeCalls }} calls): {{ liveGenCost(p) }}</span>
+                        <span class="live-bk-row">Gen ({{ stats.generativeCalls }} calls · today): {{ liveGenCost(p)
+                            }}</span>
                     </div>
                 </div>
                 }
@@ -115,7 +116,7 @@
     <!-- Cost Table -->
     <section class="section">
         <div class="section-title">Monthly Cost by Scale</div>
-        <div class="section-sub">Based on avg 60 chars/message · 6 AI calls (label + vibe + 2×summary) per run · 3
+        <div class="section-sub">Based on avg 60 chars/message · 12 AI calls (label + vibe + 2×summary) per run · 3
             timeframes</div>
 
         <div class="cost-table-wrap">
@@ -143,8 +144,14 @@
                         <td class="msgs-col mono">{{ scale.msgsPerRun | number }}</td>
                         @for (p of providers; track p.id) {
                         <td class="price-col" [class.active-col]="p.id === 'openai'">
-                            <span class="price-val" [class.free]="p.id === 'llama'">
-                                {{ estimateMonthlyCost(p, scale) }}
+                            <span class="price-wrap">
+                                <span class="price-val" [class.free]="p.id === 'llama'">
+                                    {{ estimateMonthlyCost(p, scale) }}
+                                </span>
+                                @if (estimateMonthlyCostCalc(p, scale); as calc) {
+                                <span class="calc-hint" (mouseenter)="showCalcTooltip(calc, $event)"
+                                    (mousemove)="updateTooltipPos($event)" (mouseleave)="hideCalcTooltip()">?</span>
+                                }
                             </span>
                         </td>
                         }
@@ -159,6 +166,12 @@
         </div>
     </section>
 
+    @if (tooltipText()) {
+    <div class="calc-tooltip-overlay" [style.left.px]="tooltipX()" [style.top.px]="tooltipY()">
+        {{ tooltipText() }}
+    </div>
+    }
+
     <!-- Per-run cost breakdown -->
     <section class="section">
         <div class="section-title">Cost Per Run Breakdown</div>
@@ -171,15 +184,39 @@
                 <table class="breakdown-table">
                     <tr>
                         <td>1K msgs run</td>
-                        <td class="mono right">{{ estimatePerRun(p, 1000) }}</td>
+                        <td class="mono right">
+                            <span class="price-wrap">
+                                {{ estimatePerRun(p, 1000) }}
+                                @if (estimatePerRunCalc(p, 1000); as calc) {
+                                <span class="calc-hint" (mouseenter)="showCalcTooltip(calc, $event)"
+                                    (mousemove)="updateTooltipPos($event)" (mouseleave)="hideCalcTooltip()">?</span>
+                                }
+                            </span>
+                        </td>
                     </tr>
                     <tr>
                         <td>5K msgs run</td>
-                        <td class="mono right">{{ estimatePerRun(p, 5000) }}</td>
+                        <td class="mono right">
+                            <span class="price-wrap">
+                                {{ estimatePerRun(p, 5000) }}
+                                @if (estimatePerRunCalc(p, 5000); as calc) {
+                                <span class="calc-hint" (mouseenter)="showCalcTooltip(calc, $event)"
+                                    (mousemove)="updateTooltipPos($event)" (mouseleave)="hideCalcTooltip()">?</span>
+                                }
+                            </span>
+                        </td>
                     </tr>
                     <tr>
                         <td>20K msgs run</td>
-                        <td class="mono right">{{ estimatePerRun(p, 20000) }}</td>
+                        <td class="mono right">
+                            <span class="price-wrap">
+                                {{ estimatePerRun(p, 20000) }}
+                                @if (estimatePerRunCalc(p, 20000); as calc) {
+                                <span class="calc-hint" (mouseenter)="showCalcTooltip(calc, $event)"
+                                    (mousemove)="updateTooltipPos($event)" (mouseleave)="hideCalcTooltip()">?</span>
+                                }
+                            </span>
+                        </td>
                     </tr>
                     <tr class="total-row">
                         <td>Embedding cost driver</td>

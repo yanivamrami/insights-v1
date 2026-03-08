@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ReportService } from '../../core/services/report.service';
@@ -42,6 +42,24 @@ export interface ScaleRow {
 })
 export class CostComparisonComponent {
     readonly reportService = inject(ReportService);
+
+    readonly tooltipText = signal<string | null>(null);
+    readonly tooltipX = signal(0);
+    readonly tooltipY = signal(0);
+
+    showCalcTooltip(text: string, event: MouseEvent): void {
+        this.tooltipText.set(text);
+        this.updateTooltipPos(event);
+    }
+
+    updateTooltipPos(event: MouseEvent): void {
+        this.tooltipX.set(event.clientX);
+        this.tooltipY.set(event.clientY);
+    }
+
+    hideCalcTooltip(): void {
+        this.tooltipText.set(null);
+    }
 
     providers: ModelProvider[] = [
         {
@@ -149,12 +167,13 @@ export class CostComparisonComponent {
 
     // Cost model:
     // embedding: (msgs * avgCharsPerMsg) / 1000 * pricePerKChars
-    // generative: 6 calls × (600 input + 250 output) tokens
+    // generative: 12 calls — 4 per period (labelClusters × 1 + generateVibeInfo × 1 + generateSummaries × 2) × 3 periods
+    //             × (600 input + 250 output) tokens each
     estimateMonthlyCost(provider: ModelProvider, scale: ScaleRow): string {
         if (provider.generativePriceIn === null) return '—';
 
         const avgCharsPerMsg = 60;
-        const genCallsPerRun = 6;
+        const genCallsPerRun = 12; // 4 calls/period × 3 periods
         const inputTokensPerCall = 600;
         const outputTokensPerCall = 250;
 
@@ -183,10 +202,173 @@ export class CostComparisonComponent {
         return `~$${Math.round(monthly).toLocaleString()}`;
     }
 
+    /** Builds the infrastructure-cost explanation tooltip for self-hosted Llama. */
+    private llamaInfraTooltip(msgsPerRun: number, runsPerMonth?: number): string {
+        // AWS g5.2xlarge (A10G GPU) — standard reference server
+        const serverCostPerHr = 1.00;
+        const lowThroughput = 500;   // msgs/hr — conservative, ~500-tok payloads, 1 group
+        const highThroughput = 5000;  // msgs/hr — high utilization, 500+ groups concurrent
+
+        const lowCostPerRun = serverCostPerHr / lowThroughput * msgsPerRun;
+        const highCostPerRun = serverCostPerHr / highThroughput * msgsPerRun;
+
+        const fmtN = (n: number) => n.toLocaleString();
+        const fmtD = (n: number) => n < 0.01 ? `$${n.toFixed(4)}` : `$${n.toFixed(2)}`;
+
+        const lines: string[] = [
+            `⚠️  $0 = zero API cost, not zero total cost`,
+            `   Self-hosted replaces per-call fees with infrastructure cost.`,
+            ``,
+            `── Reference server ───────────────────────────────────`,
+            `Server     : AWS g5.2xlarge (A10G GPU)  ≈ $${serverCostPerHr.toFixed(2)}/hr`,
+            `Formula    : ($server/hr ÷ msgs/hr) × msgs processed`,
+            ``,
+            `── Per-run cost — ${fmtN(msgsPerRun)} msgs ───────────────────────`,
+            `Low util   : $${serverCostPerHr.toFixed(2)} ÷ ${fmtN(lowThroughput)} msgs/hr × ${fmtN(msgsPerRun)}  =  ${fmtD(lowCostPerRun)}/run`,
+            `            (1 group, server mostly idle)`,
+            `High util  : $${serverCostPerHr.toFixed(2)} ÷ ${fmtN(highThroughput)} msgs/hr × ${fmtN(msgsPerRun)}  =  ${fmtD(highCostPerRun)}/run`,
+            `            (500+ groups, server near capacity)`,
+        ];
+
+        if (runsPerMonth !== undefined) {
+            const lowMonthly = lowCostPerRun * runsPerMonth;
+            const highMonthly = highCostPerRun * runsPerMonth;
+            lines.push(
+                ``,
+                `── Monthly (× ${fmtN(runsPerMonth)} runs) ────────────────────────`,
+                `Low util   : ${fmtD(lowMonthly)}/mo`,
+                `High util  : ${fmtD(highMonthly)}/mo`,
+            );
+        }
+
+        lines.push(
+            ``,
+            `── Breakeven vs managed APIs ────────────────────`,
+            `Self-hosted wins at ≥ ~500 groups (high GPU utilization).`,
+            `Below that, Gemini / OpenAI are cheaper all-in.`,
+        );
+
+        return lines.join('\n');
+    }
+
+    estimateMonthlyCostCalc(provider: ModelProvider, scale: ScaleRow): string {
+        if (provider.generativePriceIn === null) return '';
+
+        const tokPerMsg = 60 / 4; // avgCharsPerMsg / chars-per-token = 15
+        const genCallsPerRun = 12; // 4 calls/period × 3 periods
+        const inputTokPerCall = 600;
+        const outputTokPerCall = 250;
+
+        const embTok = scale.msgsPerRun * tokPerMsg;
+        const genInTok = genCallsPerRun * inputTokPerCall;    // 12 × 600 = 7,200
+        const genOutTok = genCallsPerRun * outputTokPerCall;  // 12 × 250 = 3,000
+
+        const fmtN = (n: number) => n.toLocaleString();
+        const fmtP = (n: number) => n.toFixed(6);
+
+        if (provider.id === 'llama') {
+            return this.llamaInfraTooltip(scale.msgsPerRun, scale.runsPerMonth);
+        }
+
+        const embCostPerRun = provider.embeddingPricePerM === null || provider.embeddingPricePerM === 0
+            ? 0
+            : embTok / 1_000_000 * provider.embeddingPricePerM;
+        const genInCostPerRun = provider.generativePriceIn === 0
+            ? 0
+            : genInTok / 1_000_000 * provider.generativePriceIn;
+        const genOutCostPerRun = provider.generativePriceOut === 0
+            ? 0
+            : genOutTok / 1_000_000 * (provider.generativePriceOut ?? 0);
+        const totalPerRun = embCostPerRun + genInCostPerRun + genOutCostPerRun;
+        const monthly = totalPerRun * scale.runsPerMonth;
+
+        const monthlyFmt = monthly < 0.01
+            ? `~$${(monthly * 100).toFixed(2)}¢`
+            : monthly < 100
+                ? `~$${monthly.toFixed(2)}`
+                : `~$${Math.round(monthly).toLocaleString()}`;
+
+        const embLine = provider.embeddingPricePerM === null || provider.embeddingPricePerM === 0
+            ? `Embedding : free`
+            : `Embedding : ${fmtN(scale.msgsPerRun)} msgs × ${tokPerMsg} tok/msg = ${fmtN(embTok)} tok × $${provider.embeddingPricePerM}/1M  =  $${fmtP(embCostPerRun)}/run`;
+
+        const genInLine = provider.generativePriceIn === 0
+            ? `AI (in)   : free`
+            : `AI (in)   : ${genCallsPerRun} calls × ${fmtN(inputTokPerCall)} tok/call = ${fmtN(genInTok)} tok × $${provider.generativePriceIn}/1M  =  $${fmtP(genInCostPerRun)}/run`;
+
+        const genOutLine = !provider.generativePriceOut
+            ? `AI (out)  : free`
+            : `AI (out)  : ${genCallsPerRun} calls × ${fmtN(outputTokPerCall)} tok/call = ${fmtN(genOutTok)} tok × $${provider.generativePriceOut}/1M  =  $${fmtP(genOutCostPerRun)}/run`;
+
+        return [
+            embLine,
+            genInLine,
+            genOutLine,
+            ``,
+            `Per run   : $${fmtP(totalPerRun)}`,
+            `× ${fmtN(scale.runsPerMonth)} runs/mo  =  ${monthlyFmt} / mo`,
+        ].join('\n');
+    }
+
+    estimatePerRunCalc(provider: ModelProvider, msgsPerRun: number): string {
+        if (provider.generativePriceIn === null) return '';
+
+        const tokPerMsg = 15; // 60 chars / 4
+        const genCallsPerRun = 12; // 4 calls/period × 3 periods
+        const inputTokPerCall = 600;
+        const outputTokPerCall = 250;
+
+        const embTok = msgsPerRun * tokPerMsg;
+        const genInTok = genCallsPerRun * inputTokPerCall;
+        const genOutTok = genCallsPerRun * outputTokPerCall;
+
+        const fmtN = (n: number) => n.toLocaleString();
+        const fmtP = (n: number) => n.toFixed(6);
+
+        if (provider.id === 'llama') {
+            return this.llamaInfraTooltip(msgsPerRun);
+        }
+
+        const embCostPerRun = provider.embeddingPricePerM === null || provider.embeddingPricePerM === 0
+            ? 0
+            : embTok / 1_000_000 * provider.embeddingPricePerM;
+        const genInCostPerRun = provider.generativePriceIn === 0
+            ? 0
+            : genInTok / 1_000_000 * provider.generativePriceIn;
+        const genOutCostPerRun = !provider.generativePriceOut
+            ? 0
+            : genOutTok / 1_000_000 * provider.generativePriceOut;
+        const total = embCostPerRun + genInCostPerRun + genOutCostPerRun;
+
+        const totalFmt = total < 0.001
+            ? `~$${(total * 1000).toFixed(3)}m`
+            : `~$${total.toFixed(4)}`;
+
+        const embLine = provider.embeddingPricePerM === null || provider.embeddingPricePerM === 0
+            ? `Embedding : free`
+            : `Embedding : ${fmtN(msgsPerRun)} msgs × ${tokPerMsg} tok/msg = ${fmtN(embTok)} tok × $${provider.embeddingPricePerM}/1M  =  $${fmtP(embCostPerRun)}`;
+
+        const genInLine = provider.generativePriceIn === 0
+            ? `AI (in)   : free`
+            : `AI (in)   : ${genCallsPerRun} calls × ${fmtN(inputTokPerCall)} tok/call = ${fmtN(genInTok)} tok × $${provider.generativePriceIn}/1M  =  $${fmtP(genInCostPerRun)}`;
+
+        const genOutLine = !provider.generativePriceOut
+            ? `AI (out)  : free`
+            : `AI (out)  : ${genCallsPerRun} calls × ${fmtN(outputTokPerCall)} tok/call = ${fmtN(genOutTok)} tok × $${provider.generativePriceOut}/1M  =  $${fmtP(genOutCostPerRun)}`;
+
+        return [
+            embLine,
+            genInLine,
+            genOutLine,
+            ``,
+            `Total     : ${totalFmt} / run`,
+        ].join('\n');
+    }
+
     estimatePerRun(provider: ModelProvider, msgsPerRun: number): string {
         if (provider.generativePriceIn === null) return '—';
         const avgCharsPerMsg = 60;
-        const genCallsPerRun = 6;
+        const genCallsPerRun = 12; // 4 calls/period × 3 periods
         const inputTokensPerCall = 600;
         const outputTokensPerCall = 250;
 

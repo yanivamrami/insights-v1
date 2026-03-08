@@ -33,9 +33,6 @@ export const environment = {
     production: false,
     geminiApiKey: <YOUR_GEMINI_API_KEY>,
     openApiKey: <YOUR_OPENAI_API_KEY>,
-    geminiEmbeddingModel: 'gemini-embedding-001',
-    geminiGenerativeModel: 'gemini-2.5-flash-lite',
-    openAIGenerativeModel: 'gpt-4o-mini',
     embeddingDimensions: 768,
     embeddingTaskType: 'CLUSTERING',
 };

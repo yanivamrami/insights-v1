@@ -88,6 +88,8 @@ export class LeftPanelComponent {
             this.fileError.set('Unsupported file type. Please upload a .json (Telegram) or .txt (WhatsApp) export.');
             return;
         }
+        this.appState.timeframe.set('today');
+        this.appState.closeDrillDown();
         this.reportService.analyzeFile(file);
     }
 

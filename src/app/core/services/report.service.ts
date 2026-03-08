@@ -190,34 +190,36 @@ export class ReportService {
             };
             this.hasStageData.set(true);
 
-            // ── STEP 8 + 9: AI labels, vibe, summaries — today only ──────────
+            // ── STEP 8 + 9: AI labels, vibe, summaries — all timeframes ─────
             this.advanceStep(7);
-            const tfToday: Timeframe = 'today';
-            const clustersToday = clustersByTf[tfToday];
-            const reportToday = (partials as Record<string, Report | null>)[tfToday];
-            let todayGenInTok = 0;
-            let todayGenOutTok = 0;
-            if (clustersToday.length && reportToday) {
-                const { report: final, totalGenInTok, totalGenOutTok } = await this.runStep8And9(
-                    tfToday,
-                    clustersToday,
-                    reportToday,
-                    anomaliesByTf[tfToday],
+            let totalGenInTok = 0;
+            let totalGenOutTok = 0;
+            let totalGenerativeCalls = 0;
+            for (const tf of TIMEFRAMES) {
+                const tfClusters = clustersByTf[tf];
+                const tfReport = (partials as Record<string, Report | null>)[tf];
+                if (!tfClusters.length || !tfReport) continue;
+                const { report: final, totalGenInTok: tfIn, totalGenOutTok: tfOut } = await this.runStep8And9(
+                    tf,
+                    tfClusters,
+                    tfReport,
+                    anomaliesByTf[tf],
                     clustersByTf,
-                    buckets[tfToday],
+                    buckets[tf],
                     fileKey
                 );
-                todayGenInTok = totalGenInTok;
-                todayGenOutTok = totalGenOutTok;
-                (partials as Record<string, Report | null>)[tfToday] = final;
-                this.updateCache({ [tfToday]: final } as Partial<ReportCache>);
+                totalGenInTok += tfIn;
+                totalGenOutTok += tfOut;
+                totalGenerativeCalls += 4; // labelClusters (1) + generateVibeInfo (1) + generateSummaries (2)
+                (partials as Record<string, Report | null>)[tf] = final;
+                this.updateCache({ [tf]: final } as Partial<ReportCache>);
             }
 
             // ── DONE ──────────────────────────────────────────────────────────
             this.markAllDone();
-            // Use full-file cleanCount for embedding (the API call covers all timeframes),
-            // and actual measured gen tokens from today's Step 8+9 run.
-            const finalEstimatedCost = this.computeActualCost(clean.length, todayGenInTok, todayGenOutTok);
+            // Full-file cleanCount for embedding (single batch covers all timeframes).
+            // Accumulate real gen tokens across all 3 timeframe runs.
+            const finalEstimatedCost = this.computeActualCost(clean.length, totalGenInTok, totalGenOutTok);
             this.pipelineStats.set({
                 fileName: file.name,
                 fileSource: source,
@@ -225,12 +227,11 @@ export class ReportService {
                 cleanCount: clean.length,
                 droppedCount: dropped,
                 embeddingCalls: 1,
-                // 4 calls for today: labelClusters (1) + generateVibeInfo (1) + generateSummaries (2)
-                // Yesterday + 7days are lazy — their calls are not included here
-                generativeCalls: clustersByTf['today'].length > 0 ? 4 : 0,
+                // 4 calls per timeframe × up to 3 timeframes
+                generativeCalls: totalGenerativeCalls,
                 estimatedCostUsd: finalEstimatedCost,
-                actualGenInTok: todayGenInTok,
-                actualGenOutTok: todayGenOutTok,
+                actualGenInTok: totalGenInTok,
+                actualGenOutTok: totalGenOutTok,
                 durationMs: Date.now() - start,
             });
 

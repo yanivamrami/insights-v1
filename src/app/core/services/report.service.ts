@@ -141,7 +141,7 @@ export class ReportService {
             for (const tf of TIMEFRAMES) {
                 const msgs = buckets[tf].filter(m => m.embedding?.length);
                 if (!msgs.length) continue;
-                clustersByTf[tf] = this.clustering.kMeans(msgs);
+                clustersByTf[tf] = await this.clustering.kMeansAsync(msgs);
             }
 
             // ── STEP 6: Sentiment scoring ─────────────────────────────────────

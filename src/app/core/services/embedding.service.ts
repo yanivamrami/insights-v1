@@ -129,8 +129,10 @@ export class EmbeddingService {
         const distances = withEmb.map(m => this.cosineDistance(m.embedding!, centroidVec));
         const mean = distances.reduce((s, d) => s + d, 0) / distances.length;
         const std = Math.sqrt(distances.reduce((s, d) => s + Math.pow(d - mean, 2), 0) / distances.length);
-        const threshold = mean + 2 * std;
+        const threshold = mean + 3 * std;
 
-        return withEmb.filter((_, i) => distances[i] > threshold);
+        // return withEmb.filter((_, i) => distances[i] > threshold);
+        const outliers = withEmb.filter((_, i) => distances[i] > threshold);
+        return outliers.slice(0, 5);  // cap at 5 — if more than 5 fire it's an arc problem not genuine outliers
     }
 }

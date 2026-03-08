@@ -1,0 +1,4507 @@
+{
+    "name": "Customer Support Group",
+    "type": "public_supergroup",
+    "id": 1001234567,
+    "messages": [
+        {
+            "id": 1000,
+            "type": "message",
+            "date": "2025-03-01T16:06:51",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "exactly",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1001,
+            "type": "message",
+            "date": "2025-03-01T16:40:13",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "What are the support hours?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1002,
+            "type": "message",
+            "date": "2025-03-01T17:32:18",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Followed up on my order and got an instant reply.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1003,
+            "type": "message",
+            "date": "2025-03-01T18:18:11",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Ordered 3 units, all arrived in perfect condition.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1004,
+            "type": "message",
+            "date": "2025-03-01T18:19:39",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Highly recommend to everyone here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1005,
+            "type": "message",
+            "date": "2025-03-01T18:50:40",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Thank you for the fast service.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1006,
+            "type": "message",
+            "date": "2025-03-01T18:56:02",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Love the product quality.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1007,
+            "type": "message",
+            "date": "2025-03-01T19:22:00",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Great service as always.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1008,
+            "type": "message",
+            "date": "2025-03-01T19:24:21",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Very responsive support, thank you.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1009,
+            "type": "message",
+            "date": "2025-03-01T19:57:42",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "The quality this time exceeded my expectations.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1010,
+            "type": "message",
+            "date": "2025-03-01T20:07:54",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Just placed an order this morning.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1011,
+            "type": "message",
+            "date": "2025-03-01T20:26:42",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Can I change the delivery address after ordering?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1012,
+            "type": "message",
+            "date": "2025-03-01T20:34:25",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Order arrived a day early, very pleased.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1013,
+            "type": "message",
+            "date": "2025-03-01T20:43:47",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "What is the best way to get in touch with support?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1014,
+            "type": "message",
+            "date": "2025-03-01T21:11:43",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Is there a way to track my order online?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1015,
+            "type": "message",
+            "date": "2025-03-01T21:35:40",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "sure",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1016,
+            "type": "message",
+            "date": "2025-03-01T21:44:18",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Hi everyone, just joined the group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1017,
+            "type": "message",
+            "date": "2025-03-01T21:46:54",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Ordered yesterday and it already shipped — impressive!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1018,
+            "type": "message",
+            "date": "2025-03-01T22:00:07",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "No complaints at all — everything went smoothly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1019,
+            "type": "message",
+            "date": "2025-03-01T22:07:06",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Got exactly what I ordered, no surprises.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1020,
+            "type": "message",
+            "date": "2025-03-01T22:09:59",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Can anyone recommend the best product for home use?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1021,
+            "type": "message",
+            "date": "2025-03-01T22:12:57",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "My second order and just as good as the first.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1022,
+            "type": "message",
+            "date": "2025-03-01T22:21:08",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "Another satisfied customer here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1023,
+            "type": "message",
+            "date": "2025-03-01T22:25:21",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Arrived well within the promised timeframe.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1024,
+            "type": "message",
+            "date": "2025-03-01T23:26:58",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Very happy with my last purchase.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1025,
+            "type": "message",
+            "date": "2025-03-01T23:34:08",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Recommended this group to a colleague of mine.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1026,
+            "type": "message",
+            "date": "2025-03-01T23:48:05",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Has anyone tried the new model yet?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1027,
+            "type": "message",
+            "date": "2025-03-01T23:51:14",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Is there free shipping above a certain amount?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1028,
+            "type": "message",
+            "date": "2025-03-01T23:59:03",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "The website is really easy to navigate.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1029,
+            "type": "message",
+            "date": "2025-03-02T00:12:00",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "The team is very professional.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1030,
+            "type": "message",
+            "date": "2025-03-02T00:18:00",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Is there a warranty on the product?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1031,
+            "type": "message",
+            "date": "2025-03-02T00:33:40",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Just joined — happy to be part of this group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1032,
+            "type": "message",
+            "date": "2025-03-02T00:50:51",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Received my order, all good.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1033,
+            "type": "message",
+            "date": "2025-03-02T01:02:03",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "thanks",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1034,
+            "type": "message",
+            "date": "2025-03-02T01:10:18",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Thanks for the quick response last time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1035,
+            "type": "message",
+            "date": "2025-03-02T01:42:45",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Five stars from me, would order again.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1036,
+            "type": "message",
+            "date": "2025-03-02T01:49:18",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "The new catalog looks amazing.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1037,
+            "type": "message",
+            "date": "2025-03-02T02:26:47",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Product arrived exactly as described.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1038,
+            "type": "message",
+            "date": "2025-03-02T02:43:38",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Smooth transaction from start to finish.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1039,
+            "type": "message",
+            "date": "2025-03-02T02:55:20",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "The team really went above and beyond.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1040,
+            "type": "message",
+            "date": "2025-03-02T03:15:24",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Great experience overall.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1041,
+            "type": "message",
+            "date": "2025-03-02T03:19:06",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "The packaging was excellent, nothing damaged at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1042,
+            "type": "message",
+            "date": "2025-03-02T03:46:20",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Impressed by how organized the whole process is.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1043,
+            "type": "message",
+            "date": "2025-03-02T03:55:45",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The product photos on the website are accurate.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1044,
+            "type": "message",
+            "date": "2025-03-02T04:08:22",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "I will definitely be a returning customer.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1045,
+            "type": "message",
+            "date": "2025-03-02T04:25:24",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Quick question — what are the delivery times this week?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1046,
+            "type": "message",
+            "date": "2025-03-02T04:28:14",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Delivery driver was professional and on time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1047,
+            "type": "message",
+            "date": "2025-03-02T04:40:53",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Delivery was right on time, very happy.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1048,
+            "type": "message",
+            "date": "2025-03-02T04:47:09",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Small question about the new product line.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1049,
+            "type": "message",
+            "date": "2025-03-02T04:51:45",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Just got my order, everything looks great.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1050,
+            "type": "message",
+            "date": "2025-03-02T05:03:21",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Happy to see such an active support group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1051,
+            "type": "message",
+            "date": "2025-03-02T05:23:34",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Does anyone know if they do bulk discounts?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1052,
+            "type": "message",
+            "date": "2025-03-02T05:41:14",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Good morning everyone!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1053,
+            "type": "message",
+            "date": "2025-03-02T05:45:14",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Good value for money, honestly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1054,
+            "type": "message",
+            "date": "2025-03-02T05:47:26",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Any update on the new product release?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1055,
+            "type": "message",
+            "date": "2025-03-02T05:55:22",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Any promotions coming up soon?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1056,
+            "type": "message",
+            "date": "2025-03-02T06:13:16",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Tracking number works perfectly, thanks.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1057,
+            "type": "message",
+            "date": "2025-03-02T06:16:27",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Customer service was kind and helpful.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1058,
+            "type": "message",
+            "date": "2025-03-02T06:27:40",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Really happy with the service so far.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1059,
+            "type": "message",
+            "date": "2025-03-02T06:35:20",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Had a really pleasant chat with the team today.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1060,
+            "type": "message",
+            "date": "2025-03-02T16:19:10",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Can anyone recommend the best product for home use?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1061,
+            "type": "message",
+            "date": "2025-03-02T16:22:10",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Order confirmed, thanks for the fast update.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1062,
+            "type": "message",
+            "date": "2025-03-02T16:24:52",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Just joined — happy to be part of this group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1063,
+            "type": "message",
+            "date": "2025-03-02T16:32:25",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Super easy checkout process.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1064,
+            "type": "message",
+            "date": "2025-03-02T16:56:18",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Good morning everyone!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1065,
+            "type": "message",
+            "date": "2025-03-02T17:15:15",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Does anyone know if they do bulk discounts?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1066,
+            "type": "message",
+            "date": "2025-03-02T17:35:58",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Smooth transaction from start to finish.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1067,
+            "type": "message",
+            "date": "2025-03-02T17:47:43",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Got exactly what I ordered, no surprises.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1068,
+            "type": "message",
+            "date": "2025-03-02T17:50:50",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Really clean packaging, good attention to detail.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1069,
+            "type": "message",
+            "date": "2025-03-02T18:00:59",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Thank you for the fast service.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1070,
+            "type": "message",
+            "date": "2025-03-02T18:08:30",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Delivery was right on time, very happy.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1071,
+            "type": "message",
+            "date": "2025-03-02T18:22:55",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "I will definitely be a returning customer.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1072,
+            "type": "message",
+            "date": "2025-03-02T18:31:41",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Followed up on my order and got an instant reply.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1073,
+            "type": "message",
+            "date": "2025-03-02T18:34:05",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Any promotions coming up soon?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1074,
+            "type": "message",
+            "date": "2025-03-02T18:37:48",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Love the product quality.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1075,
+            "type": "message",
+            "date": "2025-03-02T18:57:11",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "The team really went above and beyond.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1076,
+            "type": "message",
+            "date": "2025-03-02T19:07:31",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "The new catalog looks amazing.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1077,
+            "type": "message",
+            "date": "2025-03-02T19:21:27",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "What is the best way to get in touch with support?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1078,
+            "type": "message",
+            "date": "2025-03-02T20:03:56",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Great experience overall.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1079,
+            "type": "message",
+            "date": "2025-03-02T20:11:47",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "The product photos on the website are accurate.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1080,
+            "type": "message",
+            "date": "2025-03-02T20:17:42",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Just got my order, everything looks great.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1081,
+            "type": "message",
+            "date": "2025-03-02T21:32:10",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Five stars from me, would order again.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1082,
+            "type": "message",
+            "date": "2025-03-02T21:41:52",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Small question about the new product line.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1083,
+            "type": "message",
+            "date": "2025-03-02T22:03:13",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "The packaging was excellent, nothing damaged at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1084,
+            "type": "message",
+            "date": "2025-03-02T22:32:45",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Another satisfied customer here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1085,
+            "type": "message",
+            "date": "2025-03-02T22:58:43",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "What are the support hours?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1086,
+            "type": "message",
+            "date": "2025-03-02T23:04:10",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Impressed by how organized the whole process is.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1087,
+            "type": "message",
+            "date": "2025-03-02T23:23:16",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "My second order and just as good as the first.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1088,
+            "type": "message",
+            "date": "2025-03-02T23:27:51",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Anyone have a discount code? Asking for a friend.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1089,
+            "type": "message",
+            "date": "2025-03-02T23:58:39",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Just placed an order this morning.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1090,
+            "type": "message",
+            "date": "2025-03-03T00:04:15",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "cool",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1091,
+            "type": "message",
+            "date": "2025-03-03T00:18:18",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Highly recommend to everyone here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1092,
+            "type": "message",
+            "date": "2025-03-03T00:43:51",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Arrived well within the promised timeframe.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1093,
+            "type": "message",
+            "date": "2025-03-03T01:01:53",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "Very responsive support, thank you.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1094,
+            "type": "message",
+            "date": "2025-03-03T01:02:37",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Tracking number works perfectly, thanks.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1095,
+            "type": "message",
+            "date": "2025-03-03T01:06:27",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "No complaints at all — everything went smoothly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1096,
+            "type": "message",
+            "date": "2025-03-03T01:12:57",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Can I change the delivery address after ordering?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1097,
+            "type": "message",
+            "date": "2025-03-03T01:14:35",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Very happy with my last purchase.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1098,
+            "type": "message",
+            "date": "2025-03-03T01:28:46",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Had a really pleasant chat with the team today.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1099,
+            "type": "message",
+            "date": "2025-03-03T01:55:56",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "The quality this time exceeded my expectations.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1100,
+            "type": "message",
+            "date": "2025-03-03T02:16:10",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Great service as always.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1101,
+            "type": "message",
+            "date": "2025-03-03T02:16:10",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Customer service was kind and helpful.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1102,
+            "type": "message",
+            "date": "2025-03-03T02:20:51",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Has anyone tried the new model yet?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1103,
+            "type": "message",
+            "date": "2025-03-03T02:20:54",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Really happy with the service so far.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1104,
+            "type": "message",
+            "date": "2025-03-03T02:45:26",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "yes",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1105,
+            "type": "message",
+            "date": "2025-03-03T03:08:52",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "The team is very professional.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1106,
+            "type": "message",
+            "date": "2025-03-03T03:14:39",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Received my order, all good.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1107,
+            "type": "message",
+            "date": "2025-03-03T03:36:31",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Everything worked perfectly, would recommend.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1108,
+            "type": "message",
+            "date": "2025-03-03T03:43:01",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Order arrived a day early, very pleased.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1109,
+            "type": "message",
+            "date": "2025-03-03T03:54:06",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Recommended this group to a colleague of mine.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1110,
+            "type": "message",
+            "date": "2025-03-03T03:59:00",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Is there a warranty on the product?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1111,
+            "type": "message",
+            "date": "2025-03-03T04:03:57",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Ordered yesterday and it already shipped — impressive!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1112,
+            "type": "message",
+            "date": "2025-03-03T04:14:11",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Delivery driver was professional and on time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1113,
+            "type": "message",
+            "date": "2025-03-03T04:26:14",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "The website is really easy to navigate.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1114,
+            "type": "message",
+            "date": "2025-03-03T04:32:41",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "Thanks for the quick response last time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1115,
+            "type": "message",
+            "date": "2025-03-03T04:35:11",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Quick delivery, thank you!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1116,
+            "type": "message",
+            "date": "2025-03-03T04:36:21",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "got it",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1117,
+            "type": "message",
+            "date": "2025-03-03T04:39:10",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Is there free shipping above a certain amount?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1118,
+            "type": "message",
+            "date": "2025-03-03T04:40:27",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Ordered 3 units, all arrived in perfect condition.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1119,
+            "type": "message",
+            "date": "2025-03-03T05:18:47",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Support team replied within minutes, impressive.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1120,
+            "type": "message",
+            "date": "2025-03-03T05:28:03",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Is there a way to track my order online?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1121,
+            "type": "message",
+            "date": "2025-03-03T06:15:11",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Pricing seems very fair for the quality you get.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1122,
+            "type": "message",
+            "date": "2025-03-03T06:52:10",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Quick question — what are the delivery times this week?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1123,
+            "type": "message",
+            "date": "2025-03-03T06:53:10",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Good value for money, honestly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1124,
+            "type": "message",
+            "date": "2025-03-03T06:55:54",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Everything as expected — no issues at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1125,
+            "type": "message",
+            "date": "2025-03-03T16:03:36",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Can I change the delivery address after ordering?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1126,
+            "type": "message",
+            "date": "2025-03-03T16:07:51",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "Really happy with the service so far.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1127,
+            "type": "message",
+            "date": "2025-03-03T16:12:55",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Highly recommend to everyone here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1128,
+            "type": "message",
+            "date": "2025-03-03T16:14:17",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Hi everyone, just joined the group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1129,
+            "type": "message",
+            "date": "2025-03-03T16:21:46",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Five stars from me, would order again.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1130,
+            "type": "message",
+            "date": "2025-03-03T17:00:27",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Really clean packaging, good attention to detail.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1131,
+            "type": "message",
+            "date": "2025-03-03T17:00:27",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Pricing seems very fair for the quality you get.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1132,
+            "type": "message",
+            "date": "2025-03-03T17:02:47",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Thanks for the quick response last time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1133,
+            "type": "message",
+            "date": "2025-03-03T17:04:17",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Support team replied within minutes, impressive.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1134,
+            "type": "message",
+            "date": "2025-03-03T17:19:53",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Just placed an order this morning.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1135,
+            "type": "message",
+            "date": "2025-03-03T17:39:07",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "yes",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1136,
+            "type": "message",
+            "date": "2025-03-03T17:47:01",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Order confirmed, thanks for the fast update.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1137,
+            "type": "message",
+            "date": "2025-03-03T17:49:15",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "The team really went above and beyond.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1138,
+            "type": "message",
+            "date": "2025-03-03T18:48:17",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Is there a way to track my order online?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1139,
+            "type": "message",
+            "date": "2025-03-03T18:52:49",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Very happy with my last purchase.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1140,
+            "type": "message",
+            "date": "2025-03-03T19:04:37",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Order arrived a day early, very pleased.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1141,
+            "type": "message",
+            "date": "2025-03-03T19:07:09",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Got exactly what I ordered, no surprises.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1142,
+            "type": "message",
+            "date": "2025-03-03T19:13:42",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Smooth transaction from start to finish.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1143,
+            "type": "message",
+            "date": "2025-03-03T19:22:08",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Same here, been waiting 4 days already.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1144,
+            "type": "message",
+            "date": "2025-03-03T19:27:56",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "My second order and just as good as the first.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1145,
+            "type": "message",
+            "date": "2025-03-03T19:28:42",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "The new catalog looks amazing.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1146,
+            "type": "message",
+            "date": "2025-03-03T19:38:44",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Thank you for the fast service.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1147,
+            "type": "message",
+            "date": "2025-03-03T19:39:22",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Another satisfied customer here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1148,
+            "type": "message",
+            "date": "2025-03-03T20:04:49",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Good value for money, honestly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1149,
+            "type": "message",
+            "date": "2025-03-03T20:09:12",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Followed up on my order and got an instant reply.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1150,
+            "type": "message",
+            "date": "2025-03-03T20:11:45",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "The product photos on the website are accurate.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1151,
+            "type": "message",
+            "date": "2025-03-03T20:16:54",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Great experience overall.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1152,
+            "type": "message",
+            "date": "2025-03-03T20:29:47",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Customer service was kind and helpful.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1153,
+            "type": "message",
+            "date": "2025-03-03T20:39:39",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "The team is very professional.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1154,
+            "type": "message",
+            "date": "2025-03-03T20:40:11",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Happy to see such an active support group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1155,
+            "type": "message",
+            "date": "2025-03-03T20:45:19",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Had a really pleasant chat with the team today.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1156,
+            "type": "message",
+            "date": "2025-03-03T21:38:05",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Is there free shipping above a certain amount?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1157,
+            "type": "message",
+            "date": "2025-03-03T21:51:07",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "No complaints at all — everything went smoothly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1158,
+            "type": "message",
+            "date": "2025-03-03T22:08:56",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Ordered 3 units, all arrived in perfect condition.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1159,
+            "type": "message",
+            "date": "2025-03-03T22:29:06",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "What are the support hours?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1160,
+            "type": "message",
+            "date": "2025-03-03T22:49:35",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Everything as expected — no issues at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1161,
+            "type": "message",
+            "date": "2025-03-03T22:50:09",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Delivery was right on time, very happy.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1162,
+            "type": "message",
+            "date": "2025-03-03T23:27:35",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "What is the best way to get in touch with support?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1163,
+            "type": "message",
+            "date": "2025-03-03T23:48:57",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Anyone have a discount code? Asking for a friend.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1164,
+            "type": "message",
+            "date": "2025-03-04T00:01:38",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Recommended this group to a colleague of mine.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1165,
+            "type": "message",
+            "date": "2025-03-04T00:02:28",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "got it",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1166,
+            "type": "message",
+            "date": "2025-03-04T00:04:14",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Good morning everyone!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1167,
+            "type": "message",
+            "date": "2025-03-04T00:08:51",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Tracking number works perfectly, thanks.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1168,
+            "type": "message",
+            "date": "2025-03-04T00:15:04",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Great service as always.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1169,
+            "type": "message",
+            "date": "2025-03-04T00:39:22",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Has anyone else had delivery delays recently?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1170,
+            "type": "message",
+            "date": "2025-03-04T01:06:17",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Arrived well within the promised timeframe.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1171,
+            "type": "message",
+            "date": "2025-03-04T01:30:13",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Has anyone tried the new model yet?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1172,
+            "type": "message",
+            "date": "2025-03-04T02:08:55",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Love the product quality.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1173,
+            "type": "message",
+            "date": "2025-03-04T02:16:20",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Ordered yesterday and it already shipped — impressive!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1174,
+            "type": "message",
+            "date": "2025-03-04T02:16:30",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Hmm, my order is taking a bit longer than expected.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1175,
+            "type": "message",
+            "date": "2025-03-04T02:37:37",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Just joined — happy to be part of this group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1176,
+            "type": "message",
+            "date": "2025-03-04T03:25:37",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "The packaging was excellent, nothing damaged at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1177,
+            "type": "message",
+            "date": "2025-03-04T03:28:27",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Any promotions coming up soon?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1178,
+            "type": "message",
+            "date": "2025-03-04T03:54:46",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Everything worked perfectly, would recommend.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1179,
+            "type": "message",
+            "date": "2025-03-04T04:26:24",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Received my order, all good.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1180,
+            "type": "message",
+            "date": "2025-03-04T05:04:16",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Super easy checkout process.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1181,
+            "type": "message",
+            "date": "2025-03-04T05:13:19",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "ok",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1182,
+            "type": "message",
+            "date": "2025-03-04T05:28:16",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Very responsive support, thank you.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1183,
+            "type": "message",
+            "date": "2025-03-04T05:35:43",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Can anyone recommend the best product for home use?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1184,
+            "type": "message",
+            "date": "2025-03-04T05:49:32",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Small question about the new product line.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1185,
+            "type": "message",
+            "date": "2025-03-04T06:18:11",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "The quality this time exceeded my expectations.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1186,
+            "type": "message",
+            "date": "2025-03-04T06:18:25",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Impressed by how organized the whole process is.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1187,
+            "type": "message",
+            "date": "2025-03-04T06:48:20",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Quick delivery, thank you!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1188,
+            "type": "message",
+            "date": "2025-03-04T06:55:55",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Delivery driver was professional and on time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1189,
+            "type": "message",
+            "date": "2025-03-04T16:13:46",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Another satisfied customer here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1190,
+            "type": "message",
+            "date": "2025-03-04T16:22:45",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Has anyone managed to get through to support recently?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1191,
+            "type": "message",
+            "date": "2025-03-04T16:24:27",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Price went up but the quality did not follow.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1192,
+            "type": "message",
+            "date": "2025-03-04T16:49:53",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Got exactly what I ordered, no surprises.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1193,
+            "type": "message",
+            "date": "2025-03-04T16:50:21",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Everything worked perfectly, would recommend.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1194,
+            "type": "message",
+            "date": "2025-03-04T16:53:13",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Super easy checkout process.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1195,
+            "type": "message",
+            "date": "2025-03-04T17:08:37",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Would really appreciate a response from the team.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1196,
+            "type": "message",
+            "date": "2025-03-04T18:14:49",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Not the experience I was promised.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1197,
+            "type": "message",
+            "date": "2025-03-04T18:16:19",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Small question about the new product line.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1198,
+            "type": "message",
+            "date": "2025-03-04T18:56:16",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Ordered 3 units, all arrived in perfect condition.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1199,
+            "type": "message",
+            "date": "2025-03-04T18:56:50",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Honestly starting to lose patience here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1200,
+            "type": "message",
+            "date": "2025-03-04T19:07:22",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Support used to be so much better.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1201,
+            "type": "message",
+            "date": "2025-03-04T19:26:33",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Everything as expected — no issues at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1202,
+            "type": "message",
+            "date": "2025-03-04T19:30:41",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Order arrived a day early, very pleased.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1203,
+            "type": "message",
+            "date": "2025-03-04T19:37:07",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Support team replied within minutes, impressive.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1204,
+            "type": "message",
+            "date": "2025-03-04T19:41:33",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Good value for money, honestly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1205,
+            "type": "message",
+            "date": "2025-03-04T19:42:26",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Does anyone know if they do bulk discounts?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1206,
+            "type": "message",
+            "date": "2025-03-04T20:11:32",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Hi everyone, just joined the group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1207,
+            "type": "message",
+            "date": "2025-03-04T20:36:22",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Quick question — what are the delivery times this week?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1208,
+            "type": "message",
+            "date": "2025-03-04T20:44:42",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Recommended this group to a colleague of mine.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1209,
+            "type": "message",
+            "date": "2025-03-04T21:01:57",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "What is the best way to get in touch with support?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1210,
+            "type": "message",
+            "date": "2025-03-04T21:08:04",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Product arrived exactly as described.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1211,
+            "type": "message",
+            "date": "2025-03-04T21:17:47",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Not the first time this has happened — very frustrating.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1212,
+            "type": "message",
+            "date": "2025-03-04T21:24:20",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "Good morning everyone!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1213,
+            "type": "message",
+            "date": "2025-03-04T21:25:22",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Love the product quality.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1214,
+            "type": "message",
+            "date": "2025-03-04T22:11:56",
+            "from": "Guy Ashkenazi",
+            "from_id": "user_11",
+            "text": "Any promotions coming up soon?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1215,
+            "type": "message",
+            "date": "2025-03-04T22:57:08",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Delivery driver was professional and on time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1216,
+            "type": "message",
+            "date": "2025-03-04T23:02:58",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I keep getting automated responses — I need a real person.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1217,
+            "type": "message",
+            "date": "2025-03-04T23:18:53",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "The packaging was excellent, nothing damaged at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1218,
+            "type": "message",
+            "date": "2025-03-04T23:28:29",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have been waiting 5 days now — what is going on?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1219,
+            "type": "message",
+            "date": "2025-03-04T23:31:40",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Can anyone recommend the best product for home use?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1220,
+            "type": "message",
+            "date": "2025-03-04T23:43:33",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Expected better after reading the reviews.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1221,
+            "type": "message",
+            "date": "2025-03-04T23:51:50",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Ordered yesterday and it already shipped — impressive!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1222,
+            "type": "message",
+            "date": "2025-03-04T23:53:05",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "My second order and just as good as the first.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1223,
+            "type": "message",
+            "date": "2025-03-04T23:56:19",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "The quality this time exceeded my expectations.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1224,
+            "type": "message",
+            "date": "2025-03-05T00:00:11",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Second time this month with a delay.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1225,
+            "type": "message",
+            "date": "2025-03-05T00:11:49",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "Is there a way to track my order online?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1226,
+            "type": "message",
+            "date": "2025-03-05T00:34:16",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Is there free shipping above a certain amount?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1227,
+            "type": "message",
+            "date": "2025-03-05T00:59:48",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Expecting a resolution soon.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1228,
+            "type": "message",
+            "date": "2025-03-05T01:13:13",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "yes",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1229,
+            "type": "message",
+            "date": "2025-03-05T01:14:09",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "Any update on the new product release?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1230,
+            "type": "message",
+            "date": "2025-03-05T01:19:30",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Just got my order, everything looks great.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1231,
+            "type": "message",
+            "date": "2025-03-05T01:23:44",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Tracking has not updated in 2 days — should I be worried?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1232,
+            "type": "message",
+            "date": "2025-03-05T01:25:54",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Had a really pleasant chat with the team today.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1233,
+            "type": "message",
+            "date": "2025-03-05T01:29:49",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The product description was misleading.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1234,
+            "type": "message",
+            "date": "2025-03-05T01:38:19",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Not happy with the wait time at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1235,
+            "type": "message",
+            "date": "2025-03-05T01:55:41",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "My order was supposed to arrive yesterday.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1236,
+            "type": "message",
+            "date": "2025-03-05T01:59:09",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The response time has gotten much worse lately.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1237,
+            "type": "message",
+            "date": "2025-03-05T02:02:43",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "What are the support hours?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1238,
+            "type": "message",
+            "date": "2025-03-05T02:06:58",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Delivery was right on time, very happy.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1239,
+            "type": "message",
+            "date": "2025-03-05T02:18:59",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Thank you for the fast service.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1240,
+            "type": "message",
+            "date": "2025-03-05T02:30:24",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "A bit disappointed with the lack of communication.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1241,
+            "type": "message",
+            "date": "2025-03-05T02:56:53",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Anyone have a discount code? Asking for a friend.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1242,
+            "type": "message",
+            "date": "2025-03-05T02:59:22",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Just placed an order this morning.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1243,
+            "type": "message",
+            "date": "2025-03-05T03:16:14",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "The team is very professional.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1244,
+            "type": "message",
+            "date": "2025-03-05T03:16:28",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The support line is busy every time I call.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1245,
+            "type": "message",
+            "date": "2025-03-05T03:24:05",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Order confirmed, thanks for the fast update.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1246,
+            "type": "message",
+            "date": "2025-03-05T03:26:46",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Received my order, all good.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1247,
+            "type": "message",
+            "date": "2025-03-05T03:34:02",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Highly recommend to everyone here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1248,
+            "type": "message",
+            "date": "2025-03-05T03:59:00",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "I will definitely be a returning customer.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1249,
+            "type": "message",
+            "date": "2025-03-05T04:12:02",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "ok",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1250,
+            "type": "message",
+            "date": "2025-03-05T04:31:48",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Really happy with the service so far.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1251,
+            "type": "message",
+            "date": "2025-03-05T04:32:02",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Five stars from me, would order again.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1252,
+            "type": "message",
+            "date": "2025-03-05T04:54:01",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Impressed by how organized the whole process is.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1253,
+            "type": "message",
+            "date": "2025-03-05T05:01:10",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Just joined — happy to be part of this group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1254,
+            "type": "message",
+            "date": "2025-03-05T05:02:19",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Very responsive support, thank you.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1255,
+            "type": "message",
+            "date": "2025-03-05T05:03:46",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Arrived damaged — this is the second time this has happened.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1256,
+            "type": "message",
+            "date": "2025-03-05T05:14:19",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Pricing seems very fair for the quality you get.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1257,
+            "type": "message",
+            "date": "2025-03-05T05:23:34",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Thanks for the quick response last time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1258,
+            "type": "message",
+            "date": "2025-03-05T05:58:51",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Followed up on my order and got an instant reply.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1259,
+            "type": "message",
+            "date": "2025-03-05T06:09:44",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Happy to see such an active support group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1260,
+            "type": "message",
+            "date": "2025-03-05T06:22:35",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Customer service was kind and helpful.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1261,
+            "type": "message",
+            "date": "2025-03-05T06:43:56",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The team really went above and beyond.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1262,
+            "type": "message",
+            "date": "2025-03-05T06:58:35",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Getting a bit concerned about my delivery.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1263,
+            "type": "message",
+            "date": "2025-03-05T16:12:17",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Order arrived a day early, very pleased.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1264,
+            "type": "message",
+            "date": "2025-03-05T16:27:11",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Is there a way to track my order online?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1265,
+            "type": "message",
+            "date": "2025-03-05T16:39:05",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I expected at least an acknowledgment by now.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1266,
+            "type": "message",
+            "date": "2025-03-05T16:49:59",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Can someone from the team please respond here?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1267,
+            "type": "message",
+            "date": "2025-03-05T16:53:08",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Any promotions coming up soon?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1268,
+            "type": "message",
+            "date": "2025-03-05T17:01:46",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Support team replied within minutes, impressive.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1269,
+            "type": "message",
+            "date": "2025-03-05T17:07:04",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "I will definitely be a returning customer.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1270,
+            "type": "message",
+            "date": "2025-03-05T17:10:01",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Delivery driver was professional and on time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1271,
+            "type": "message",
+            "date": "2025-03-05T17:22:24",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Tracking number works perfectly, thanks.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1272,
+            "type": "message",
+            "date": "2025-03-05T17:38:12",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The product description was misleading.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1273,
+            "type": "message",
+            "date": "2025-03-05T18:00:40",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Quick delivery, thank you!",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1274,
+            "type": "message",
+            "date": "2025-03-05T18:02:19",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "Does anyone know if they do bulk discounts?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1275,
+            "type": "message",
+            "date": "2025-03-05T18:21:23",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I keep getting automated responses — I need a real person.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1276,
+            "type": "message",
+            "date": "2025-03-05T18:28:24",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Is there a warranty on the product?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1277,
+            "type": "message",
+            "date": "2025-03-05T18:38:15",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Getting harder to recommend this to others.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1278,
+            "type": "message",
+            "date": "2025-03-05T18:42:23",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The quality this time is not the same as before.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1279,
+            "type": "message",
+            "date": "2025-03-05T18:53:41",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Small question about the new product line.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1280,
+            "type": "message",
+            "date": "2025-03-05T19:03:15",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "The packaging was excellent, nothing damaged at all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1281,
+            "type": "message",
+            "date": "2025-03-05T19:32:29",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Highly recommend to everyone here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1282,
+            "type": "message",
+            "date": "2025-03-05T19:39:32",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Support used to be so much better.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1283,
+            "type": "message",
+            "date": "2025-03-05T19:42:17",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Starting to question whether to order again.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1284,
+            "type": "message",
+            "date": "2025-03-05T19:56:48",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Followed up on my order and got an instant reply.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1285,
+            "type": "message",
+            "date": "2025-03-05T19:59:27",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Really clean packaging, good attention to detail.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1286,
+            "type": "message",
+            "date": "2025-03-05T19:59:39",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "A bit disappointed with the lack of communication.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1287,
+            "type": "message",
+            "date": "2025-03-05T20:01:54",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Where is the refund I requested last week?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1288,
+            "type": "message",
+            "date": "2025-03-05T20:15:20",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Anyone have a discount code? Asking for a friend.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1289,
+            "type": "message",
+            "date": "2025-03-05T20:41:22",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "What is the best way to get in touch with support?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1290,
+            "type": "message",
+            "date": "2025-03-05T20:42:32",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Order number 7823 — still no shipping confirmation.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1291,
+            "type": "message",
+            "date": "2025-03-05T20:51:35",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Received my order, all good.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1292,
+            "type": "message",
+            "date": "2025-03-05T21:08:09",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Was told 3 to 5 days, now on day 6.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1293,
+            "type": "message",
+            "date": "2025-03-05T21:14:54",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Happy to see such an active support group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1294,
+            "type": "message",
+            "date": "2025-03-05T21:20:06",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "yes",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1295,
+            "type": "message",
+            "date": "2025-03-05T21:36:54",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "My order from 4 days ago still has not arrived.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1296,
+            "type": "message",
+            "date": "2025-03-05T22:17:31",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Product arrived exactly as described.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1297,
+            "type": "message",
+            "date": "2025-03-05T22:23:08",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "Great experience overall.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1298,
+            "type": "message",
+            "date": "2025-03-05T22:59:07",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Everything worked perfectly, would recommend.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1299,
+            "type": "message",
+            "date": "2025-03-05T23:06:38",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Expecting a resolution soon.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1300,
+            "type": "message",
+            "date": "2025-03-05T23:09:03",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Really happy with the service so far.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1301,
+            "type": "message",
+            "date": "2025-03-05T23:17:41",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "This is not the level of service I signed up for.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1302,
+            "type": "message",
+            "date": "2025-03-05T23:55:57",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Price went up but the quality did not follow.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1303,
+            "type": "message",
+            "date": "2025-03-06T00:02:45",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The team really went above and beyond.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1304,
+            "type": "message",
+            "date": "2025-03-06T00:05:08",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Second time this month with a delay.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1305,
+            "type": "message",
+            "date": "2025-03-06T00:22:59",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Tracking has not updated in 2 days — should I be worried?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1306,
+            "type": "message",
+            "date": "2025-03-06T00:23:12",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Not happy with the most recent order.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1307,
+            "type": "message",
+            "date": "2025-03-06T00:29:17",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Any update on the new product release?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1308,
+            "type": "message",
+            "date": "2025-03-06T00:37:26",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Been waiting a week, starting to get frustrated.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1309,
+            "type": "message",
+            "date": "2025-03-06T00:49:47",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The product is not quite what I expected.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1310,
+            "type": "message",
+            "date": "2025-03-06T01:05:51",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "The team is very professional.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1311,
+            "type": "message",
+            "date": "2025-03-06T02:01:42",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "The quality this time exceeded my expectations.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1312,
+            "type": "message",
+            "date": "2025-03-06T02:12:20",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Had a really pleasant chat with the team today.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1313,
+            "type": "message",
+            "date": "2025-03-06T03:13:06",
+            "from": "Amir Dahan",
+            "from_id": "user_13",
+            "text": "Love the product quality.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1314,
+            "type": "message",
+            "date": "2025-03-06T03:19:42",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Pricing seems very fair for the quality you get.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1315,
+            "type": "message",
+            "date": "2025-03-06T03:37:50",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "Thanks for the quick response last time.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1316,
+            "type": "message",
+            "date": "2025-03-06T03:45:02",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Can anyone recommend the best product for home use?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1317,
+            "type": "message",
+            "date": "2025-03-06T03:51:30",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Honestly starting to lose patience here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1318,
+            "type": "message",
+            "date": "2025-03-06T04:01:18",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Is anyone actually monitoring this group?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1319,
+            "type": "message",
+            "date": "2025-03-06T04:01:33",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The response time has gotten much worse lately.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1320,
+            "type": "message",
+            "date": "2025-03-06T04:05:43",
+            "from": "Shira Levi",
+            "from_id": "user_2",
+            "text": "Is there free shipping above a certain amount?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1321,
+            "type": "message",
+            "date": "2025-03-06T04:08:39",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "My refund request has been ignored for days.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1322,
+            "type": "message",
+            "date": "2025-03-06T04:11:10",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "Can I change the delivery address after ordering?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1323,
+            "type": "message",
+            "date": "2025-03-06T04:15:50",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I understand delays happen but some communication would help.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1324,
+            "type": "message",
+            "date": "2025-03-06T04:32:54",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Tried to reach customer service — no answer.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1325,
+            "type": "message",
+            "date": "2025-03-06T04:37:56",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Product arrived damaged — what should I do?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1326,
+            "type": "message",
+            "date": "2025-03-06T05:01:50",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Not the experience I was promised.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1327,
+            "type": "message",
+            "date": "2025-03-06T05:21:20",
+            "from": "Avi Cohen",
+            "from_id": "user_1",
+            "text": "The website is really easy to navigate.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1328,
+            "type": "message",
+            "date": "2025-03-06T05:21:29",
+            "from": "Dana Mizrahi",
+            "from_id": "user_4",
+            "text": "Just joined — happy to be part of this group.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1329,
+            "type": "message",
+            "date": "2025-03-06T05:23:49",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Good value for money, honestly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1330,
+            "type": "message",
+            "date": "2025-03-06T05:27:00",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "The new catalog looks amazing.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1331,
+            "type": "message",
+            "date": "2025-03-06T05:37:38",
+            "from": "Hila Peretz",
+            "from_id": "user_8",
+            "text": "agree",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1332,
+            "type": "message",
+            "date": "2025-03-06T05:55:49",
+            "from": "Rotem Ofer",
+            "from_id": "user_10",
+            "text": "Another satisfied customer here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1333,
+            "type": "message",
+            "date": "2025-03-06T05:56:12",
+            "from": "Eran Goldberg",
+            "from_id": "user_7",
+            "text": "Thank you for the fast service.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1334,
+            "type": "message",
+            "date": "2025-03-06T06:04:22",
+            "from": "Noa Shapiro",
+            "from_id": "user_6",
+            "text": "Customer service was kind and helpful.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1335,
+            "type": "message",
+            "date": "2025-03-06T06:08:04",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have been waiting 5 days now — what is going on?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1336,
+            "type": "message",
+            "date": "2025-03-06T06:17:51",
+            "from": "Lihi Avraham",
+            "from_id": "user_14",
+            "text": "Got exactly what I ordered, no surprises.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1337,
+            "type": "message",
+            "date": "2025-03-06T16:12:14",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Can someone from the team please respond here?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1338,
+            "type": "message",
+            "date": "2025-03-06T16:27:28",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I am sharing this entire conversation thread publicly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1339,
+            "type": "message",
+            "date": "2025-03-06T16:30:11",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "No one is responding to my messages.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1340,
+            "type": "message",
+            "date": "2025-03-06T16:33:58",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Honestly starting to lose patience here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1341,
+            "type": "message",
+            "date": "2025-03-06T16:37:03",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have never had to fight this hard just to get what I paid for.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1342,
+            "type": "message",
+            "date": "2025-03-06T17:20:50",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Nobody answers the phone. Nobody replies to emails. What kind of operation is this?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1343,
+            "type": "message",
+            "date": "2025-03-06T17:21:03",
+            "from": "Noam Carmel",
+            "from_id": "user_15",
+            "text": "good to know",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1344,
+            "type": "message",
+            "date": "2025-03-06T17:33:31",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This company took my money and has not delivered. I want answers right now.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1345,
+            "type": "message",
+            "date": "2025-03-06T17:34:05",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I trusted this company and they have completely let me down.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1346,
+            "type": "message",
+            "date": "2025-03-06T17:52:37",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Getting harder to recommend this to others.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1347,
+            "type": "message",
+            "date": "2025-03-06T17:56:14",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I feel completely scammed at this point. This is not okay.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1348,
+            "type": "message",
+            "date": "2025-03-06T18:00:57",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Expecting a resolution soon.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1349,
+            "type": "message",
+            "date": "2025-03-06T18:08:41",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Product arrived damaged — what should I do?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1350,
+            "type": "message",
+            "date": "2025-03-06T18:26:29",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The response time has gotten much worse lately.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1351,
+            "type": "message",
+            "date": "2025-03-06T18:47:08",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I am beyond frustrated. I am angry. This needs to be resolved now.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1352,
+            "type": "message",
+            "date": "2025-03-06T19:03:37",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The silence from the team is deafening. Where is our money?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1353,
+            "type": "message",
+            "date": "2025-03-06T19:34:41",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Where is the refund I requested last week?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1354,
+            "type": "message",
+            "date": "2025-03-06T19:42:03",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Everyone here should know that refund requests are being deliberately ignored.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1355,
+            "type": "message",
+            "date": "2025-03-06T19:45:27",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I am done waiting. Either fix this or I am disputing the charge with my bank.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1356,
+            "type": "message",
+            "date": "2025-03-06T19:56:53",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I want to speak to a manager. I refuse to keep dealing with this.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1357,
+            "type": "message",
+            "date": "2025-03-06T20:19:46",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Reporting this to consumer protection if I do not hear back by end of day.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1358,
+            "type": "message",
+            "date": "2025-03-06T20:29:23",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Tried to reach customer service — no answer.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1359,
+            "type": "message",
+            "date": "2025-03-06T20:56:23",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Was told 3 to 5 days, now on day 6.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1360,
+            "type": "message",
+            "date": "2025-03-06T21:00:00",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have screenshots of every message I sent. I am prepared to escalate this legally.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1361,
+            "type": "message",
+            "date": "2025-03-06T21:07:15",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Has anyone managed to get through to support recently?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1362,
+            "type": "message",
+            "date": "2025-03-06T21:24:41",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Second time this month with a delay.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1363,
+            "type": "message",
+            "date": "2025-03-06T21:32:52",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Quality control seems to have slipped.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1364,
+            "type": "message",
+            "date": "2025-03-06T21:36:45",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "My lawyer reviewed the delivery terms and this is clearly a breach of contract.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1365,
+            "type": "message",
+            "date": "2025-03-06T21:37:27",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Order number 7823 — still no shipping confirmation.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1366,
+            "type": "message",
+            "date": "2025-03-06T22:02:20",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Escalating to my credit card company right now — dispute filed.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1367,
+            "type": "message",
+            "date": "2025-03-06T22:16:56",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I am warning everyone in this group — do not order until they sort out their service.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1368,
+            "type": "message",
+            "date": "2025-03-06T22:21:02",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "I feel like I am being ignored at this point.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1369,
+            "type": "message",
+            "date": "2025-03-06T22:22:04",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "I ordered this for an event and now the event has passed.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1370,
+            "type": "message",
+            "date": "2025-03-06T22:32:00",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have been given false information multiple times about when my order would arrive.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1371,
+            "type": "message",
+            "date": "2025-03-06T22:35:25",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Anyone else experiencing delays this week?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1372,
+            "type": "message",
+            "date": "2025-03-06T23:02:48",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Arrived damaged — this is the second time this has happened.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1373,
+            "type": "message",
+            "date": "2025-03-06T23:02:54",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Been waiting a week, starting to get frustrated.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1374,
+            "type": "message",
+            "date": "2025-03-06T23:08:47",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I expected at least an acknowledgment by now.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1375,
+            "type": "message",
+            "date": "2025-03-06T23:38:21",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Filing a chargeback today. I gave them more than enough chances.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1376,
+            "type": "message",
+            "date": "2025-03-06T23:43:56",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The quality this time is not the same as before.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1377,
+            "type": "message",
+            "date": "2025-03-07T00:02:13",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Third email sent and still no reply.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1378,
+            "type": "message",
+            "date": "2025-03-07T00:03:43",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The product description was misleading.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1379,
+            "type": "message",
+            "date": "2025-03-07T00:06:19",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Every day without a response is another day closer to legal action.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1380,
+            "type": "message",
+            "date": "2025-03-07T00:18:30",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Is anyone actually monitoring this group?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1381,
+            "type": "message",
+            "date": "2025-03-07T00:20:12",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Expected better after reading the reviews.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1382,
+            "type": "message",
+            "date": "2025-03-07T00:27:50",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The reviews online warned me and I did not listen. My mistake.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1383,
+            "type": "message",
+            "date": "2025-03-07T00:28:33",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Terrible service. I will be leaving a very public review about this experience.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1384,
+            "type": "message",
+            "date": "2025-03-07T00:43:34",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Support used to be so much better.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1385,
+            "type": "message",
+            "date": "2025-03-07T01:00:10",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Do not let them take your money and go silent. Demand your refund.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1386,
+            "type": "message",
+            "date": "2025-03-07T01:20:46",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "My order from 4 days ago still has not arrived.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1387,
+            "type": "message",
+            "date": "2025-03-07T01:49:36",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Service quality seems to have dropped recently.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1388,
+            "type": "message",
+            "date": "2025-03-07T01:54:12",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This is my last warning before I file a formal complaint.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1389,
+            "type": "message",
+            "date": "2025-03-07T01:57:09",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "This is completely unacceptable. I want a full refund immediately.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1390,
+            "type": "message",
+            "date": "2025-03-07T02:06:20",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I have been waiting 10 days and nobody has bothered to respond. This is a joke.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1391,
+            "type": "message",
+            "date": "2025-03-07T02:17:36",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Would really appreciate a response from the team.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1392,
+            "type": "message",
+            "date": "2025-03-07T02:22:44",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "My refund request has been ignored for days.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1393,
+            "type": "message",
+            "date": "2025-03-07T02:23:14",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Contacting the consumer ombudsman today if there is no response within the hour.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1394,
+            "type": "message",
+            "date": "2025-03-07T03:10:59",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Not the first time this has happened — very frustrating.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1395,
+            "type": "message",
+            "date": "2025-03-07T03:11:22",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I am going to share my experience on every review platform I can find.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1396,
+            "type": "message",
+            "date": "2025-03-07T03:23:12",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "How is this company still operating while treating customers this way?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1397,
+            "type": "message",
+            "date": "2025-03-07T03:28:11",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This is the worst customer experience I have ever had. Full stop.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1398,
+            "type": "message",
+            "date": "2025-03-07T03:51:00",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "There is zero accountability from this team whatsoever.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1399,
+            "type": "message",
+            "date": "2025-03-07T03:57:54",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Three weeks. No product. No refund. No explanation. Absolutely unacceptable.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1400,
+            "type": "message",
+            "date": "2025-03-07T04:02:34",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I spent over five hundred dollars here and this is how I am treated.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1401,
+            "type": "message",
+            "date": "2025-03-07T04:25:59",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "The support line is busy every time I call.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1402,
+            "type": "message",
+            "date": "2025-03-07T04:26:15",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "This company took my money and has not delivered. I want answers right now.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1403,
+            "type": "message",
+            "date": "2025-03-07T05:14:49",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This is textbook poor business practice.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1404,
+            "type": "message",
+            "date": "2025-03-07T05:18:58",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Not the experience I was promised.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1405,
+            "type": "message",
+            "date": "2025-03-07T05:35:50",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "A bit disappointed with the lack of communication.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1406,
+            "type": "message",
+            "date": "2025-03-07T05:40:26",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Starting to wonder if I made a mistake ordering here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1407,
+            "type": "message",
+            "date": "2025-03-07T05:50:28",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Never again. I will make sure everyone I know hears about this experience.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1408,
+            "type": "message",
+            "date": "2025-03-07T06:05:28",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have been waiting 5 days now — what is going on?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1409,
+            "type": "message",
+            "date": "2025-03-07T06:08:37",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I want my money back. I no longer want the product. Just give me my refund.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1410,
+            "type": "message",
+            "date": "2025-03-07T06:16:09",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This group is full of people with the same problem — why is nothing being fixed?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1411,
+            "type": "message",
+            "date": "2025-03-07T06:37:40",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I cannot believe this is how you treat paying customers.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1412,
+            "type": "message",
+            "date": "2025-03-07T06:42:14",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Contacting the consumer ombudsman today if there is no response within the hour.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1413,
+            "type": "message",
+            "date": "2025-03-07T06:49:31",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Multiple people here have the exact same issue and still zero response. Shameful.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1414,
+            "type": "message",
+            "date": "2025-03-07T06:53:27",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I ordered 2 weeks ago. Still nothing. This borders on fraud.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1415,
+            "type": "message",
+            "date": "2025-03-07T06:55:29",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The product I received is not what I paid for. This is false advertising.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1416,
+            "type": "message",
+            "date": "2025-03-07T14:00:00",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have contacted my bank. Chargeback is in progress. This could have been avoided.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1417,
+            "type": "message",
+            "date": "2025-03-07T14:12:00",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Same — I filed a dispute this morning. No other option left.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1418,
+            "type": "message",
+            "date": "2025-03-07T14:24:00",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "For anyone still waiting: document everything. You will need it.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1419,
+            "type": "message",
+            "date": "2025-03-07T14:36:00",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This group started as a support channel. Now it is a complaints board. Says it all.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1420,
+            "type": "message",
+            "date": "2025-03-07T14:48:00",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Final update from me: dispute filed, lawyer contacted. I hope others get their resolution faster than I did.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1421,
+            "type": "message",
+            "date": "2025-03-07T16:00:04",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I want to speak to a manager. I refuse to keep dealing with this.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1422,
+            "type": "message",
+            "date": "2025-03-07T16:01:35",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The product is not quite what I expected.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1423,
+            "type": "message",
+            "date": "2025-03-07T16:09:35",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Starting to question whether to order again.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1424,
+            "type": "message",
+            "date": "2025-03-07T16:18:27",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Support used to be so much better.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1425,
+            "type": "message",
+            "date": "2025-03-07T16:25:36",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "There is zero accountability from this team whatsoever.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1426,
+            "type": "message",
+            "date": "2025-03-07T16:27:24",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have never had to fight this hard just to get what I paid for.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1427,
+            "type": "message",
+            "date": "2025-03-07T16:32:51",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I want to speak to a manager. I refuse to keep dealing with this.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1428,
+            "type": "message",
+            "date": "2025-03-07T16:38:59",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The reviews online warned me and I did not listen. My mistake.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1429,
+            "type": "message",
+            "date": "2025-03-07T16:56:16",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Filing a chargeback today. I gave them more than enough chances.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1430,
+            "type": "message",
+            "date": "2025-03-07T17:03:25",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have been given false information multiple times about when my order would arrive.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1431,
+            "type": "message",
+            "date": "2025-03-07T17:06:08",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I feel completely scammed at this point. This is not okay.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1432,
+            "type": "message",
+            "date": "2025-03-07T17:12:33",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Would really appreciate a response from the team.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1433,
+            "type": "message",
+            "date": "2025-03-07T17:18:14",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I am sharing this entire conversation thread publicly.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1434,
+            "type": "message",
+            "date": "2025-03-07T17:29:11",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Has anyone managed to get through to support recently?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1435,
+            "type": "message",
+            "date": "2025-03-07T17:34:40",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The product I received is not what I paid for. This is false advertising.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1436,
+            "type": "message",
+            "date": "2025-03-07T17:41:11",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Terrible service. I will be leaving a very public review about this experience.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1437,
+            "type": "message",
+            "date": "2025-03-07T18:18:06",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Is anyone else still waiting on an order from last week?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1438,
+            "type": "message",
+            "date": "2025-03-07T18:35:09",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Never again. I will make sure everyone I know hears about this experience.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1439,
+            "type": "message",
+            "date": "2025-03-07T18:52:48",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Been waiting a week, starting to get frustrated.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1440,
+            "type": "message",
+            "date": "2025-03-07T19:02:06",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Price went up but the quality did not follow.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1441,
+            "type": "message",
+            "date": "2025-03-07T19:03:49",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Do not let them take your money and go silent. Demand your refund.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1442,
+            "type": "message",
+            "date": "2025-03-07T19:07:08",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I trusted this company and they have completely let me down.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1443,
+            "type": "message",
+            "date": "2025-03-07T19:20:18",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "I feel like I am being ignored at this point.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1444,
+            "type": "message",
+            "date": "2025-03-07T19:22:25",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The silence from the team is deafening. Where is our money?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1445,
+            "type": "message",
+            "date": "2025-03-07T19:44:53",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I have never had to fight this hard just to get what I paid for.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1446,
+            "type": "message",
+            "date": "2025-03-07T20:15:36",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Contacting the consumer ombudsman today if there is no response within the hour.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1447,
+            "type": "message",
+            "date": "2025-03-07T20:18:11",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Everyone here should know that refund requests are being deliberately ignored.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1448,
+            "type": "message",
+            "date": "2025-03-07T20:26:12",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Three weeks. No product. No refund. No explanation. Absolutely unacceptable.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1449,
+            "type": "message",
+            "date": "2025-03-07T20:44:21",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "The delay is causing real problems for me.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1450,
+            "type": "message",
+            "date": "2025-03-07T20:45:20",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I spent over five hundred dollars here and this is how I am treated.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1451,
+            "type": "message",
+            "date": "2025-03-07T20:56:34",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Not happy with the most recent order.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1452,
+            "type": "message",
+            "date": "2025-03-07T21:13:44",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have been waiting 10 days and nobody has bothered to respond. This is a joke.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1453,
+            "type": "message",
+            "date": "2025-03-07T21:21:16",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Third email sent and still no reply.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1454,
+            "type": "message",
+            "date": "2025-03-07T21:31:33",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Where is the refund I requested last week?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1455,
+            "type": "message",
+            "date": "2025-03-07T21:32:26",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "There is zero accountability from this team whatsoever.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1456,
+            "type": "message",
+            "date": "2025-03-07T22:06:45",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Filing a chargeback today. I gave them more than enough chances.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1457,
+            "type": "message",
+            "date": "2025-03-07T22:11:25",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Not the experience I was promised.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1458,
+            "type": "message",
+            "date": "2025-03-07T22:12:47",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Escalating to my credit card company right now — dispute filed.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1459,
+            "type": "message",
+            "date": "2025-03-07T22:17:51",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I cannot believe this is how you treat paying customers.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1460,
+            "type": "message",
+            "date": "2025-03-07T22:33:26",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I am warning everyone in this group — do not order until they sort out their service.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1461,
+            "type": "message",
+            "date": "2025-03-07T22:35:43",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I want my money back. I no longer want the product. Just give me my refund.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1462,
+            "type": "message",
+            "date": "2025-03-07T23:06:07",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I am beyond frustrated. I am angry. This needs to be resolved now.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1463,
+            "type": "message",
+            "date": "2025-03-07T23:13:53",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Three weeks. No product. No refund. No explanation. Absolutely unacceptable.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1464,
+            "type": "message",
+            "date": "2025-03-07T23:22:15",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have been given false information multiple times about when my order would arrive.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1465,
+            "type": "message",
+            "date": "2025-03-07T23:30:37",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Multiple people here have the exact same issue and still zero response. Shameful.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1466,
+            "type": "message",
+            "date": "2025-03-07T23:38:29",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Getting a bit concerned about my delivery.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1467,
+            "type": "message",
+            "date": "2025-03-07T23:43:50",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I have screenshots of every message I sent. I am prepared to escalate this legally.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1468,
+            "type": "message",
+            "date": "2025-03-07T23:50:07",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "This company took my money and has not delivered. I want answers right now.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1469,
+            "type": "message",
+            "date": "2025-03-08T00:12:42",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The product description was misleading.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1470,
+            "type": "message",
+            "date": "2025-03-08T00:20:00",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "The product I received is not what I paid for. This is false advertising.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1471,
+            "type": "message",
+            "date": "2025-03-08T00:24:25",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "This is completely unacceptable. I want a full refund immediately.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1472,
+            "type": "message",
+            "date": "2025-03-08T01:12:49",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Tracking has not updated in 2 days — should I be worried?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1473,
+            "type": "message",
+            "date": "2025-03-08T01:19:15",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Getting harder to recommend this to others.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1474,
+            "type": "message",
+            "date": "2025-03-08T01:20:42",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Terrible service. I will be leaving a very public review about this experience.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1475,
+            "type": "message",
+            "date": "2025-03-08T01:25:38",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Nobody answers the phone. Nobody replies to emails. What kind of operation is this?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1476,
+            "type": "message",
+            "date": "2025-03-08T01:34:43",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Service quality seems to have dropped recently.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1477,
+            "type": "message",
+            "date": "2025-03-08T02:03:50",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "Do not let them take your money and go silent. Demand your refund.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1478,
+            "type": "message",
+            "date": "2025-03-08T02:08:22",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This is textbook poor business practice.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1479,
+            "type": "message",
+            "date": "2025-03-08T02:18:25",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Starting to wonder if I made a mistake ordering here.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1480,
+            "type": "message",
+            "date": "2025-03-08T02:22:42",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "How is this company still operating while treating customers this way?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1481,
+            "type": "message",
+            "date": "2025-03-08T02:38:37",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "My lawyer reviewed the delivery terms and this is clearly a breach of contract.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1482,
+            "type": "message",
+            "date": "2025-03-08T03:01:03",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Reporting this to consumer protection if I do not hear back by end of day.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1483,
+            "type": "message",
+            "date": "2025-03-08T03:04:56",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "This group is full of people with the same problem — why is nothing being fixed?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1484,
+            "type": "message",
+            "date": "2025-03-08T03:09:58",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I have been waiting 10 days and nobody has bothered to respond. This is a joke.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1485,
+            "type": "message",
+            "date": "2025-03-08T03:17:12",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "Every day without a response is another day closer to legal action.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1486,
+            "type": "message",
+            "date": "2025-03-08T03:22:09",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "My order was supposed to arrive yesterday.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1487,
+            "type": "message",
+            "date": "2025-03-08T04:01:44",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "How is this company still operating while treating customers this way?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1488,
+            "type": "message",
+            "date": "2025-03-08T04:03:03",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This is my last warning before I file a formal complaint.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1489,
+            "type": "message",
+            "date": "2025-03-08T05:20:01",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This is the worst customer experience I have ever had. Full stop.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1490,
+            "type": "message",
+            "date": "2025-03-08T05:25:07",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "Quality control seems to have slipped.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1491,
+            "type": "message",
+            "date": "2025-03-08T05:33:39",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I am done waiting. Either fix this or I am disputing the charge with my bank.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1492,
+            "type": "message",
+            "date": "2025-03-08T05:37:07",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "I have screenshots of every message I sent. I am prepared to escalate this legally.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1493,
+            "type": "message",
+            "date": "2025-03-08T05:53:54",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This is not the level of service I signed up for.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1494,
+            "type": "message",
+            "date": "2025-03-08T05:59:32",
+            "from": "Tal Friedman",
+            "from_id": "user_9",
+            "text": "I have been waiting 5 days now — what is going on?",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1495,
+            "type": "message",
+            "date": "2025-03-08T06:02:09",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I am going to share my experience on every review platform I can find.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1496,
+            "type": "message",
+            "date": "2025-03-08T06:17:31",
+            "from": "Yoni Ben-David",
+            "from_id": "user_5",
+            "text": "I ordered 2 weeks ago. Still nothing. This borders on fraud.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1497,
+            "type": "message",
+            "date": "2025-03-08T06:32:58",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "The reviews online warned me and I did not listen. My mistake.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1498,
+            "type": "message",
+            "date": "2025-03-08T06:49:46",
+            "from": "Moshe Katz",
+            "from_id": "user_3",
+            "text": "This company took my money and has not delivered. I want answers right now.",
+            "reply_to_message_id": null
+        },
+        {
+            "id": 1499,
+            "type": "message",
+            "date": "2025-03-08T06:55:16",
+            "from": "Michal Stern",
+            "from_id": "user_12",
+            "text": "appreciated",
+            "reply_to_message_id": null
+        }
+    ]
+}

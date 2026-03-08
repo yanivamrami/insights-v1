@@ -23,6 +23,7 @@ const INITIAL_STEPS: PipelineStep[] = [
 ];
 
 const TIMEFRAMES: Timeframe[] = ['today', 'yesterday', '7days'];
+const dropThreshold = 0.08; // use 0.08 for 768-dimensional | 0.35 for empirically derived threshold for a significant drop
 
 @Injectable({ providedIn: 'root' })
 export class ReportService {
@@ -375,7 +376,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
             if (timeline.length >= 3) {
                 // Pattern 1: sudden drop
                 const dropIdx = timeline.findIndex((v, i) =>
-                    i > 0 && timeline[i - 1] - v > 0.35
+                    i > 0 && timeline[i - 1] - v > dropThreshold
                 );
                 if (dropIdx > -1) {
                     const triggerMsg = sorted[dropIdx];
@@ -468,7 +469,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
                     if (scores.length < 3) continue; // need enough messages to be meaningful
                     const authorAvg = scores.reduce((s, v) => s + v, 0) / scores.length;
                     const deviation = authorAvg - groupAvg;
-                    if (deviation < -0.3) {
+                    if (deviation < -dropThreshold) {
                         insights.push({
                             type: 'warning',
                             icon: '👤',
@@ -609,6 +610,9 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         const anchors = this.embedding.anchors;
         if (!anchors || msgs.length < windowSize) return [];
 
+        // console.log('Timeline anchors present:', !!anchors);
+        // console.log('Messages with embeddings:', msgs.filter(m => m.embedding).length);
+
         const sorted = [...msgs].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
         const timeline: number[] = [];
 
@@ -626,6 +630,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
 
             timeline.push(scores.reduce((s, v) => s + v, 0) / scores.length);
         }
+        // console.log('Max consecutive drop:', Math.max(...timeline.map((v, i) => i > 0 ? timeline[i - 1] - v : 0)));
 
         return timeline;
     }
@@ -650,7 +655,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         const secondHalf = timeline.slice(Math.floor(timeline.length / 2));
         const firstAvg = firstHalf.reduce((s, v) => s + v, 0) / firstHalf.length;
         const secondAvg = secondHalf.reduce((s, v) => s + v, 0) / secondHalf.length;
-        return firstAvg < -0.1 && secondAvg > firstAvg + 0.25;
+        return firstAvg < -0.02 && secondAvg > firstAvg + 0.08;
     }
 
     private formatMsgTime(m: Message): string {

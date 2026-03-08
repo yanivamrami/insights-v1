@@ -10,6 +10,7 @@ import { UserEngagementComponent } from './sections/user-engagement/user-engagem
 import { DeepInsightsComponent } from './sections/deep-insights/deep-insights.component';
 import { ExecutiveSummaryComponent } from './sections/executive-summary/executive-summary.component';
 import { SectionHelpComponent } from '../../../shared/components/section-help/section-help.component';
+import { AnalystDrilldownComponent } from './sections/analyst-drilldown/analyst-drilldown.component';
 
 @Component({
     selector: 'app-right-panel',
@@ -23,6 +24,7 @@ import { SectionHelpComponent } from '../../../shared/components/section-help/se
         DeepInsightsComponent,
         ExecutiveSummaryComponent,
         SectionHelpComponent,
+        AnalystDrilldownComponent,
     ],
     templateUrl: './right-panel.component.html',
     styleUrl: './right-panel.component.scss',

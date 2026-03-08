@@ -390,6 +390,17 @@
     margin-top: 2px;
 }
 
+.col-sub {
+    font-family: var(--sans, sans-serif);
+    font-size: 9px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    opacity: 0.55;
+    margin-top: 2px;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
 .price-wrap {
     display: inline-flex;
     align-items: center;
@@ -638,6 +649,9 @@
 }
 
 .live-total {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-family: var(--mono);
     font-size: 22px;
     font-weight: 700;

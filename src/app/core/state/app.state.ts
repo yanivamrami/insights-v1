@@ -14,8 +14,19 @@ export class AppState {
         this.reportService.reportCache()[this.timeframe()] ?? null
     );
 
+    readonly drillDownCluster = signal<{ topicIndex: number; label: string } | null>(null);
+
+    openDrillDown(topicIndex: number, label: string): void {
+        this.drillDownCluster.set({ topicIndex, label });
+    }
+
+    closeDrillDown(): void {
+        this.drillDownCluster.set(null);
+    }
+
     setTimeframe(tf: Timeframe): void {
         this.timeframe.set(tf);
+        this.closeDrillDown();
         // Trigger lazy AI analysis for this timeframe if it hasn't been loaded yet
         this.reportService.analyzeTimeframe(tf);
     }

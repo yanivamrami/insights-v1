@@ -19,6 +19,37 @@ export class LeftPanelComponent {
     isDragOver = signal(false);
     fileError = signal<string | null>(null);
 
+    tooltipText = signal<string | null>(null);
+    tooltipX = signal(0);
+    tooltipY = signal(0);
+
+    showHint(text: string, event: MouseEvent): void {
+        this.tooltipText.set(text);
+        this.tooltipX.set(event.clientX);
+        this.tooltipY.set(event.clientY);
+    }
+    moveHint(event: MouseEvent): void {
+        this.tooltipX.set(event.clientX);
+        this.tooltipY.set(event.clientY);
+    }
+    hideHint(): void { this.tooltipText.set(null); }
+
+    readonly HINT_RAW =
+        `Every message in the uploaded file, before any filtering.\n` +
+        `Formula: (text chars + author chars + 15 overhead) ÷ 4 chars/token.\n` +
+        `This is the worst-case token budget if no noise filtering were applied.`;
+
+    readonly HINT_FILTERED =
+        `Tokens remaining after noise removal — what the pipeline actually works with.\n` +
+        `Noise dropped: bot messages, system notifications, very short messages (<3 words),\n` +
+        `and duplicate texts. Same formula as Raw, applied to clean messages only.`;
+
+    readonly HINT_PAYLOAD =
+        `Tokens sent to the embedding API — text content only, no author or metadata overhead.\n` +
+        `Formula: clean messages × 15 tok/msg  (avg 60 chars ÷ 4 chars/token).\n` +
+        `Lower than After Filter because author names and per-message overhead are excluded.\n` +
+        `This is the number that directly drives your embedding API cost.`;
+
     @HostListener('dragover', ['$event'])
     onDragOver(e: DragEvent): void {
         e.preventDefault();

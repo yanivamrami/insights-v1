@@ -31,6 +31,9 @@
         <div class="topic-meta">
             <span class="topic-pct">{{ topic.percentage }}%</span>
             <span class="topic-msg-count">{{ topic.messageCount }} msgs</span>
+            @if (appState.audience() === 'analyst') {
+            <button class="inspect-btn" (click)="appState.openDrillDown(+topic.id, topic.label)">Inspect ↗</button>
+            }
         </div>
     </div>
 </div>

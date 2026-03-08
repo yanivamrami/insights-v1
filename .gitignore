@@ -50,5 +50,6 @@ _requirements/whatsapp_bad_sentiment.txt
 _requirements/whatsapp_good_sentiment.txt
 _requirements/whatsapp_neutral_sentiment.txt
 _requirements/whatsapp_noisy.txt
-src/Archive.zip
+src/*.zip
 src/environments/environment.ts
+src/app/*.zip

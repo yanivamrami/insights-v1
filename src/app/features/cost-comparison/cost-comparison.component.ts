@@ -159,10 +159,10 @@ export class CostComparisonComponent {
     ];
 
     scales: ScaleRow[] = [
-        { label: 'Starter', desc: '1 group · daily', runsPerMonth: 30, msgsPerRun: 1000 },
-        { label: 'Growth', desc: '20 groups · daily', runsPerMonth: 600, msgsPerRun: 2000 },
-        { label: 'Scale', desc: '100 groups · daily', runsPerMonth: 3000, msgsPerRun: 5000 },
-        { label: 'Enterprise', desc: '500 groups · daily', runsPerMonth: 15000, msgsPerRun: 10000 },
+        { label: 'Starter', desc: '1 group · daily  (1 × 30 days)', runsPerMonth: 30, msgsPerRun: 1000 },
+        { label: 'Growth', desc: '20 groups · daily  (20 × 30)', runsPerMonth: 600, msgsPerRun: 2000 },
+        { label: 'Scale', desc: '100 groups · daily  (100 × 30)', runsPerMonth: 3000, msgsPerRun: 5000 },
+        { label: 'Enterprise', desc: '500 groups · daily  (500 × 30)', runsPerMonth: 15000, msgsPerRun: 10000 },
     ];
 
     // Cost model:
@@ -196,7 +196,7 @@ export class CostComparisonComponent {
             return monthly === 0 ? '~$0*' : `~$${monthly.toFixed(2)}`;
         }
 
-        if (monthly < 0.01) return `~$${(monthly * 100).toFixed(2)}¢`;
+        if (monthly < 0.01) return `~${(monthly * 100).toFixed(2)}¢`;
         if (monthly < 1) return `~$${monthly.toFixed(3)}`;
         if (monthly < 100) return `~$${monthly.toFixed(2)}`;
         return `~$${Math.round(monthly).toLocaleString()}`;
@@ -403,8 +403,10 @@ export class CostComparisonComponent {
 
         const avgTokensPerMsg = 15; // ~60 chars / 4
         const embCost = stats.cleanCount * avgTokensPerMsg / 1_000_000 * (provider.embeddingPricePerM ?? 0);
-        const inCost = stats.generativeCalls * 600 / 1_000_000 * (provider.generativePriceIn ?? 0);
-        const outCost = stats.generativeCalls * 250 / 1_000_000 * (provider.generativePriceOut ?? 0);
+        const inTok = stats.actualGenInTok > 0 ? stats.actualGenInTok : stats.generativeCalls * 600;
+        const outTok = stats.actualGenOutTok > 0 ? stats.actualGenOutTok : stats.generativeCalls * 250;
+        const inCost = inTok / 1_000_000 * (provider.generativePriceIn ?? 0);
+        const outCost = outTok / 1_000_000 * (provider.generativePriceOut ?? 0);
         const total = embCost + inCost + outCost;
 
         if (total === 0) return '~$0';
@@ -424,7 +426,55 @@ export class CostComparisonComponent {
     liveGenCost(provider: ModelProvider): string {
         const stats = this.reportService.pipelineStats();
         if (!stats || provider.id === 'llama') return provider.id === 'llama' ? '$0' : '—';
-        const cost = stats.generativeCalls * (600 * (provider.generativePriceIn ?? 0) + 250 * (provider.generativePriceOut ?? 0)) / 1_000_000;
+        const inTok = stats.actualGenInTok > 0 ? stats.actualGenInTok : stats.generativeCalls * 600;
+        const outTok = stats.actualGenOutTok > 0 ? stats.actualGenOutTok : stats.generativeCalls * 250;
+        const cost = (inTok * (provider.generativePriceIn ?? 0) + outTok * (provider.generativePriceOut ?? 0)) / 1_000_000;
         return cost < 0.00001 ? '< $0.00001' : `~$${cost.toFixed(5)}`;
+    }
+
+    liveRunTooltip(provider: ModelProvider): string {
+        const stats = this.reportService.pipelineStats();
+        if (!stats) return '';
+
+        if (provider.id === 'llama') {
+            return [
+                `$0 API cost — runs entirely on local hardware.`,
+                `No tokens are billed for embedding or generation.`,
+                `Infrastructure cost depends on hardware (see scale table below).`,
+            ].join('\n');
+        }
+
+        const fmtN = (n: number) => n.toLocaleString();
+        const fmtP = (n: number) => n < 0.000001 ? `$${n.toFixed(7)}` : n < 0.001 ? `$${n.toFixed(6)}` : `$${n.toFixed(5)}`;
+
+        const embTok = stats.cleanCount * 15;
+        const embCost = embTok / 1_000_000 * (provider.embeddingPricePerM ?? 0);
+
+        const measured = stats.actualGenInTok > 0;
+        const inTok = measured ? stats.actualGenInTok : stats.generativeCalls * 600;
+        const outTok = measured ? stats.actualGenOutTok : stats.generativeCalls * 250;
+        const inCost = inTok / 1_000_000 * (provider.generativePriceIn ?? 0);
+        const outCost = outTok / 1_000_000 * (provider.generativePriceOut ?? 0);
+        const total = embCost + inCost + outCost;
+
+        const embPriceLabel = `$${provider.embeddingPricePerM}/1M`;
+        const inPriceLabel = `$${provider.generativePriceIn}/1M`;
+        const outPriceLabel = `$${provider.generativePriceOut}/1M`;
+
+        return [
+            `── Embedding (full file) ─────────────────────────────────`,
+            `Messages : ${fmtN(stats.cleanCount)} clean msgs`,
+            `Tokens   : ${fmtN(stats.cleanCount)} × 15 tok/msg  =  ${fmtN(embTok)} tok`,
+            `Price    : ${embPriceLabel} tokens`,
+            `Cost     : ${fmtP(embCost)}`,
+            ``,
+            `── Generative (today's run · ${stats.generativeCalls} calls) ──────────────`,
+            `Source   : ${measured ? 'measured from real prompts/responses' : 'estimated (no run yet)'}`,
+            `In tok   : ${fmtN(inTok)} tok × ${inPriceLabel}   =  ${fmtP(inCost)}`,
+            `Out tok  : ${fmtN(outTok)} tok × ${outPriceLabel}  =  ${fmtP(outCost)}`,
+            ``,
+            `── Total ─────────────────────────────────────────────────`,
+            `${fmtP(total)}  for this import`,
+        ].join('\n');
     }
 }

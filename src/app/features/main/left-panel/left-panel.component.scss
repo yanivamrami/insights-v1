@@ -498,3 +498,45 @@
         text-decoration: underline;
     }
 }
+
+.token-hint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 1px solid var(--muted);
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--muted);
+    cursor: help;
+    vertical-align: middle;
+    margin-left: 4px;
+    transition: border-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+
+    &:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+}
+
+.token-tooltip-overlay {
+    position: fixed;
+    z-index: 9999;
+    transform: translate(-50%, calc(-100% - 10px));
+    background: #0d1420;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    min-width: 360px;
+    max-width: 420px;
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre;
+    pointer-events: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}

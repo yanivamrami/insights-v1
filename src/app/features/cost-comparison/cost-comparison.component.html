@@ -31,7 +31,11 @@
                 @for (p of providers; track p.id) {
                 <div class="live-provider-cell" [class.active-provider]="p.id === 'openai'">
                     <div class="live-prov-name">{{ p.logo }} {{ p.name }}</div>
-                    <div class="live-total" [class.free]="p.id === 'llama'">{{ liveRunCost(p) }}</div>
+                    <div class="live-total" [class.free]="p.id === 'llama'">
+                        {{ liveRunCost(p) }}
+                        <span class="calc-hint" (mouseenter)="showCalcTooltip(liveRunTooltip(p), $event)"
+                            (mousemove)="updateTooltipPos($event)" (mouseleave)="hideCalcTooltip()">?</span>
+                    </div>
                     <div class="live-breakdown">
                         <span class="live-bk-row">Embed: {{ liveEmbedCost(p) }}</span>
                         <span class="live-bk-row">Gen ({{ stats.generativeCalls }} calls · today): {{ liveGenCost(p)
@@ -116,16 +120,20 @@
     <!-- Cost Table -->
     <section class="section">
         <div class="section-title">Monthly Cost by Scale</div>
-        <div class="section-sub">Based on avg 60 chars/message · 12 AI calls (label + vibe + 2×summary) per run · 3
-            timeframes</div>
+        <div class="section-sub">1 run = 1 group analysis · runs/mo = groups × 30 days · msgs/group = clean messages in
+            that group · 12 AI calls per run (4 per timeframe × today + yesterday + last 7 days)</div>
 
         <div class="cost-table-wrap">
             <table class="cost-table">
                 <thead>
                     <tr>
                         <th class="scale-col">Scale</th>
-                        <th class="runs-col">Runs/mo</th>
-                        <th class="msgs-col">Msgs/Run</th>
+                        <th class="runs-col">Runs/mo
+                            <div class="col-sub">groups × 30 days</div>
+                        </th>
+                        <th class="msgs-col">Msgs/Group
+                            <div class="col-sub">per group run</div>
+                        </th>
                         @for (p of providers; track p.id) {
                         <th class="price-col" [class.active-col]="p.id === 'openai'">
                             {{ p.logo }} {{ p.name }}
@@ -162,7 +170,7 @@
         </div>
         <div class="table-footnote">
             * Llama / Ollama: $0 API cost. Cloud GPU rental (if not running locally) adds ~$0.10–0.50/hr.
-            At Enterprise scale, a dedicated A10G instance (~$0.75/hr) would add ~$540/mo.
+            At Enterprise scale, a dedicated A10G instance (~$1.00/hr) would add ~$720/mo.
         </div>
     </section>
 

@@ -103,7 +103,10 @@
 
                 <div class="token-row">
                     <div class="token-row-header">
-                        <span class="token-label">📦 Raw tokens (before filter)</span>
+                        <span class="token-label">📦 Raw tokens (before filter)
+                            <span class="token-hint" (mouseenter)="showHint(HINT_RAW, $event)"
+                                (mousemove)="moveHint($event)" (mouseleave)="hideHint()">?</span>
+                        </span>
                         <span class="token-count">{{ appState.currentReport() ?
                             formatNumber(appState.currentReport()!.tokensRaw) : '—' }}</span>
                     </div>
@@ -114,7 +117,10 @@
 
                 <div class="token-row">
                     <div class="token-row-header">
-                        <span class="token-label">🧹 After noise removal</span>
+                        <span class="token-label">🧹 After noise removal
+                            <span class="token-hint" (mouseenter)="showHint(HINT_FILTERED, $event)"
+                                (mousemove)="moveHint($event)" (mouseleave)="hideHint()">?</span>
+                        </span>
                         <span class="token-count">{{ appState.currentReport() ?
                             formatNumber(appState.currentReport()!.tokensFiltered) : '—' }}</span>
                     </div>
@@ -125,7 +131,10 @@
 
                 <div class="token-row">
                     <div class="token-row-header">
-                        <span class="token-label">🚀 Embedding payload sent</span>
+                        <span class="token-label">🚀 Embedding payload sent
+                            <span class="token-hint" (mouseenter)="showHint(HINT_PAYLOAD, $event)"
+                                (mousemove)="moveHint($event)" (mouseleave)="hideHint()">?</span>
+                        </span>
                         <span class="token-count">{{ appState.currentReport() ?
                             formatNumber(appState.currentReport()!.tokensPayload) : '—' }}</span>
                     </div>
@@ -139,11 +148,11 @@
                 <div class="cost-total">
                     <div>
                         <div class="cost-total-label">Est. This Run</div>
-                        <div class="cost-breakdown">Embedding + 2 generative calls</div>
+                        <div class="cost-breakdown">Embedding + 4 generative calls</div>
                     </div>
                     <div class="cost-total-value">
-                        @if (appState.currentReport()?.estimatedCostUsd) {
-                        ${{ appState.currentReport()!.estimatedCostUsd.toFixed(4) }}
+                        @if (reportService.pipelineStats()?.estimatedCostUsd) {
+                        ${{ reportService.pipelineStats()!.estimatedCostUsd.toFixed(4) }}
                         } @else {
                         $—
                         }
@@ -157,3 +166,9 @@
     </div>
 
 </div>
+
+@if (tooltipText()) {
+<div class="token-tooltip-overlay" [style.left.px]="tooltipX()" [style.top.px]="tooltipY()">
+    {{ tooltipText() }}
+</div>
+}

@@ -1,6 +1,7 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Report } from '../../../../../core/models/report.model';
+import { AppState } from '../../../../../core/state/app.state';
 
 @Component({
     selector: 'app-topic-intelligence',
@@ -12,6 +13,7 @@ import { Report } from '../../../../../core/models/report.model';
 })
 export class TopicIntelligenceComponent {
     @Input({ required: true }) report!: Report;
+    appState = inject(AppState);
 
     skeletonRows = [0, 1, 2, 3, 4];
 

@@ -1,0 +1,29 @@
+@if (appState.drillDownCluster(); as drill) {
+<div class="drilldown-backdrop" (click)="appState.closeDrillDown()"></div>
+<aside class="drilldown-panel">
+    <div class="drilldown-header">
+        <div class="drilldown-title">
+            <span class="drilldown-icon">🔎</span>
+            <span>{{ drill.label }}</span>
+        </div>
+        <div class="drilldown-meta">{{ messages().length }} messages</div>
+        <button class="drilldown-close" (click)="appState.closeDrillDown()">✕</button>
+    </div>
+    <div class="drilldown-body">
+        @if (!messages().length) {
+        <div class="drilldown-empty">No messages available for this cluster.</div>
+        } @else {
+        @for (msg of messages(); track msg.id) {
+        <div class="msg-row">
+            <div class="msg-time">{{ msg.timestamp | date:'HH:mm' }}</div>
+            <div class="msg-author" [title]="msg.author">{{ msg.author }}</div>
+            <div class="msg-text">{{ msg.text }}</div>
+        </div>
+        }
+        }
+    </div>
+    <div class="drilldown-footer">
+        <button class="drilldown-close-btn" (click)="appState.closeDrillDown()">Close</button>
+    </div>
+</aside>
+}

@@ -8,6 +8,7 @@ import { WhatsAppParser } from './parsers/whatsapp.parser';
 import { Message, FileSource, Timeframe } from '../models/message.model';
 import { Report, ReportCache, Topic, AuthorStat, Insight } from '../models/report.model';
 import { PipelineStep, PipelineStats } from '../models/pipeline.model';
+import { AI_PROVIDER } from '../../shared/const/const';
 
 const INITIAL_STEPS: PipelineStep[] = [
     { label: 'Parse & normalize messages', status: 'pending', type: 'ts' },
@@ -194,8 +195,10 @@ export class ReportService {
             const tfToday: Timeframe = 'today';
             const clustersToday = clustersByTf[tfToday];
             const reportToday = (partials as Record<string, Report | null>)[tfToday];
+            let todayGenInTok = 0;
+            let todayGenOutTok = 0;
             if (clustersToday.length && reportToday) {
-                const final = await this.runStep8And9(
+                const { report: final, totalGenInTok, totalGenOutTok } = await this.runStep8And9(
                     tfToday,
                     clustersToday,
                     reportToday,
@@ -204,12 +207,17 @@ export class ReportService {
                     buckets[tfToday],
                     fileKey
                 );
+                todayGenInTok = totalGenInTok;
+                todayGenOutTok = totalGenOutTok;
                 (partials as Record<string, Report | null>)[tfToday] = final;
                 this.updateCache({ [tfToday]: final } as Partial<ReportCache>);
             }
 
             // ── DONE ──────────────────────────────────────────────────────────
             this.markAllDone();
+            // Use full-file cleanCount for embedding (the API call covers all timeframes),
+            // and actual measured gen tokens from today's Step 8+9 run.
+            const finalEstimatedCost = this.computeActualCost(clean.length, todayGenInTok, todayGenOutTok);
             this.pipelineStats.set({
                 fileName: file.name,
                 fileSource: source,
@@ -220,7 +228,9 @@ export class ReportService {
                 // 4 calls for today: labelClusters (1) + generateVibeInfo (1) + generateSummaries (2)
                 // Yesterday + 7days are lazy — their calls are not included here
                 generativeCalls: clustersByTf['today'].length > 0 ? 4 : 0,
-                estimatedCostUsd: this.estimateCost(clean.length),
+                estimatedCostUsd: finalEstimatedCost,
+                actualGenInTok: todayGenInTok,
+                actualGenOutTok: todayGenOutTok,
                 durationMs: Date.now() - start,
             });
 
@@ -233,7 +243,7 @@ export class ReportService {
         }
     }
 
-    private async labelClusters(clusters: Cluster[], _total: number): Promise<string[]> {
+    private async labelClusters(clusters: Cluster[], _total: number): Promise<{ labels: string[]; inTok: number; outTok: number }> {
         console.log('Labeling clusters with AI:', clusters);
         const lines = clusters.map((c, i) => {
             // Pick up to 3 representative messages: centroid first, then 2 others
@@ -253,12 +263,14 @@ Clusters:
 ---
 ${lines}`;
 
+        const inTok = Math.ceil(prompt.length / 4);
         const raw = await this.ai.complete(prompt);
+        const outTok = Math.ceil(raw.length / 4);
         const cleaned = raw.trim().replace(/^```(?:json)?|```$/gm, '').trim();
-        return JSON.parse(cleaned) as string[];
+        return { labels: JSON.parse(cleaned) as string[], inTok, outTok };
     }
 
-    private async generateVibeInfo(score: number, topicNames: string[]): Promise<{ emoji: string; label: string; description: string }> {
+    private async generateVibeInfo(score: number, topicNames: string[]): Promise<{ emoji: string; label: string; description: string; inTok: number; outTok: number }> {
         console.log('Generating vibe info with AI:', { score, topicNames });
         const prompt = `Overall sentiment score: ${score.toFixed(2)} (range -1 very negative to +1 very positive).
 Top topics: ${topicNames.slice(0, 5).join(', ')}.
@@ -270,12 +282,14 @@ Return a JSON object with exactly these keys:
 
 Return ONLY valid JSON. No markdown. No extra text.`;
 
+        const inTok = Math.ceil(prompt.length / 4);
         const raw = await this.ai.complete(prompt);
+        const outTok = Math.ceil(raw.length / 4);
         const cleaned = raw.trim().replace(/^```(?:json)?|```$/gm, '').trim();
-        return JSON.parse(cleaned) as { emoji: string; label: string; description: string };
+        return { ...JSON.parse(cleaned) as { emoji: string; label: string; description: string }, inTok, outTok };
     }
 
-    private async generateSummaries(report: Report): Promise<[string, string]> {
+    private async generateSummaries(report: Report): Promise<{ exec: string; analyst: string; inTok: number; outTok: number }> {
         console.log('Generating summaries with AI for report:', report);
         const topicsStr = report.topics?.slice(0, 5)
             .map(t => `${t.label} (${t.messageCount} msgs, sentiment ${t.sentimentScore.toFixed(2)})`)
@@ -329,10 +343,13 @@ Sentiment scores use a -1.0 to +1.0 scale computed via cosine similarity against
 Only include values that are present in the input. If a field is missing, skip it entirely — do not estimate or infer.
 Use precise numeric language throughout. 4–6 sentences maximum.`;
 
-        return Promise.all([
+        const inTok = Math.ceil((userPrompt.length + execSystemPrompt.length + analystSystemPrompt.length) / 4);
+        const [exec, analyst] = await Promise.all([
             this.ai.complete(userPrompt, execSystemPrompt),
             this.ai.complete(userPrompt, analystSystemPrompt),
         ]);
+        const outTok = Math.ceil((exec.length + analyst.length) / 4);
+        return { exec, analyst, inTok, outTok };
     }
 
     private buildInsights(
@@ -555,7 +572,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         const daily = this.analytics.getDailyActivity(msgs);
         const tokensRaw = this.analytics.estimateTokens(rawMsgs);
         const tokensFiltered = this.analytics.estimateTokens(msgs);
-        const tokensPayload = Math.round(msgs.length * 12);
+        const tokensPayload = Math.round(msgs.length * 15); // 60 avg chars / 4 chars-per-token — text only (no author overhead)
 
         return {
             timeframe: tf,
@@ -671,16 +688,44 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         return 'stable';
     }
 
+    private computeActualCost(cleanCount: number, actualGenInTok: number, actualGenOutTok: number): number {
+        const isOpenAI = AI_PROVIDER === 'openai';
+        const embPricePerM = isOpenAI ? 0.02 : 0.15;
+        const genInPricePerM = isOpenAI ? 0.15 : 0.10;
+        const genOutPricePerM = isOpenAI ? 0.60 : 0.40;
+
+        const embCost = cleanCount * 15 / 1_000_000 * embPricePerM;
+        const genCost = (actualGenInTok * genInPricePerM + actualGenOutTok * genOutPricePerM) / 1_000_000;
+        return Math.round((embCost + genCost) * 100000) / 100000;
+    }
+
     private estimateCost(cleanCount: number): number {
-        // Gemini: gemini-embedding-001 $0.025/1M tokens
-        // gemini-2.5-flash-lite: $0.075 input / $0.30 output per 1M tokens
-        const tokensPerMsg = 15;
-        const embCost = cleanCount * tokensPerMsg / 1_000_000 * 0.025;
-        const genCallsEstimate = 6; // ~2 per timeframe × 3 timeframes (label + vibe + summaries)
+        // Prices match the active AI_PROVIDER (from const.ts)
+        // OpenAI : text-embedding-3-small $0.02/1M · gpt-4o-mini $0.15 in / $0.60 out per 1M
+        // Gemini : gemini-embedding-001   $0.15/1M · gemini-2.5-flash-lite $0.10 in / $0.40 out per 1M
+        const isOpenAI = AI_PROVIDER === 'openai';
+        const embPricePerM = isOpenAI ? 0.02 : 0.15;
+        const genInPricePerM = isOpenAI ? 0.15 : 0.10;
+        const genOutPricePerM = isOpenAI ? 0.60 : 0.40;
+
+        const tokensPerMsg = 15;  // 60 avg chars ÷ 4
+        const genCalls = 4;   // labelClusters + generateVibeInfo + generateSummaries×2
         const avgInputTokens = 600;
         const avgOutputTokens = 250;
-        const genCost = genCallsEstimate * (avgInputTokens * 0.075 + avgOutputTokens * 0.30) / 1_000_000;
+
+        const embCost = cleanCount * tokensPerMsg / 1_000_000 * embPricePerM;
+        const genCost = genCalls * (avgInputTokens * genInPricePerM + avgOutputTokens * genOutPricePerM) / 1_000_000;
         return Math.round((embCost + genCost) * 100000) / 100000;
+    }
+
+    // ── Drill-down data accessor ──────────────────────────────────────────────
+
+    /**
+     * Returns the raw messages for a specific cluster index and timeframe.
+     * Used by the analyst drill-down panel.
+     */
+    getClusterMessages(tf: Timeframe, clusterIndex: number): import('../models/message.model').Message[] {
+        return this._stageData?.clustersByTf[tf]?.[clusterIndex]?.messages ?? [];
     }
 
     // ── Lazy timeframe analysis ────────────────────────────────────────────────
@@ -726,7 +771,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
             //     tf, clusters, report,
             //     stage.anomaliesByTf[tf], stage.clustersByTf, stage.fileKey,
             // );
-            const final = await this.runStep8And9(
+            const { report: final, totalGenInTok, totalGenOutTok } = await this.runStep8And9(
                 tf,
                 clusters,
                 report,
@@ -737,6 +782,19 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
             );
 
             this.updateCache({ [tf]: final } as Partial<ReportCache>);
+
+            // Update cost estimate with real tokens for this timeframe
+            const stats = this.pipelineStats();
+            if (stats) {
+                const newCost = this.computeActualCost(stats.cleanCount, totalGenInTok, totalGenOutTok);
+                this.pipelineStats.update(s => s ? ({
+                    ...s,
+                    actualGenInTok: totalGenInTok,
+                    actualGenOutTok: totalGenOutTok,
+                    estimatedCostUsd: newCost,
+                }) : s);
+            }
+
             this.markAllDone();
         } catch (err: unknown) {
             this.markStepFailed();
@@ -757,7 +815,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         clustersByTf: Record<Timeframe, Cluster[]>,
         allMsgs: Message[],
         fileKey: string
-    ): Promise<Report> {
+    ): Promise<{ report: Report; totalGenInTok: number; totalGenOutTok: number }> {
         // Sentiment scoring
         const sentimentScores = await Promise.all(
             clusters.map(c => this.embedding.scoreSentiment(c.centroidVector))
@@ -765,8 +823,10 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
 
         // Label clusters
         let topics: Topic[];
+        let labelTok = { inTok: 0, outTok: 0 };
         try {
-            const labels = await this.labelClusters(clusters, report.cleanMessages);
+            const { labels, inTok, outTok } = await this.labelClusters(clusters, report.cleanMessages);
+            labelTok = { inTok, outTok };
             topics = clusters.map((c, i) => ({
                 id: String(i),
                 label: labels[i] ?? `Topic ${i + 1}`,
@@ -792,14 +852,18 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
 
         // Vibe info
         let vibeEmoji = '😐', vibeLabel = 'Neutral', vibeDesc = 'Mixed sentiments across topics.';
+        let vibeTok = { inTok: 0, outTok: 0 };
         try {
             const vibe = await this.generateVibeInfo(overallScore, topics.map(t => t.label));
             vibeEmoji = vibe.emoji;
             vibeLabel = vibe.label;
             vibeDesc = vibe.description;
+            vibeTok = { inTok: vibe.inTok, outTok: vibe.outTok };
         } catch { /* keep defaults */ }
 
-        const cost = this.estimateCost(report.cleanMessages);
+        const actualGenInTok = labelTok.inTok + vibeTok.inTok;
+        const actualGenOutTok = labelTok.outTok + vibeTok.outTok;
+        const cost = this.computeActualCost(report.cleanMessages, actualGenInTok, actualGenOutTok);
         // const labeledInsights = this.buildInsights(anomalies, report.authors, clusters, topics.map(t => t.label));
         const labeledInsights = this.buildInsights(
             anomalies,
@@ -818,13 +882,22 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
 
         // Step 9: summaries
         this.advanceStep(8);
+        let totalGenInTok = actualGenInTok;
+        let totalGenOutTok = actualGenOutTok;
         try {
-            const [summaryExec, summaryAnalyst] = await this.generateSummaries(result);
-            result = { ...result, summaryExec, summaryAnalyst };
+            const { exec: summaryExec, analyst: summaryAnalyst, inTok: sInTok, outTok: sOutTok } = await this.generateSummaries(result);
+            totalGenInTok += sInTok;
+            totalGenOutTok += sOutTok;
+            const finalCost = this.computeActualCost(
+                report.cleanMessages,
+                totalGenInTok,
+                totalGenOutTok
+            );
+            result = { ...result, summaryExec, summaryAnalyst, estimatedCostUsd: finalCost };
         } catch { /* summaries remain null */ }
 
         this.saveToStorage(tf, result, fileKey);
-        return result;
+        return { report: result, totalGenInTok, totalGenOutTok };
     }
 
     // ── localStorage helpers ───────────────────────────────────────────────────

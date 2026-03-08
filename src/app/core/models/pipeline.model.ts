@@ -16,4 +16,8 @@ export interface PipelineStats {
     generativeCalls: number;
     estimatedCostUsd: number;
     durationMs: number;
+    /** Actual input tokens measured from real prompts (all gen calls combined) */
+    actualGenInTok: number;
+    /** Actual output tokens measured from real responses (all gen calls combined) */
+    actualGenOutTok: number;
 }

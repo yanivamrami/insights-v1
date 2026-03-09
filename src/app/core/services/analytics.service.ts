@@ -25,6 +25,7 @@ const NOISE_PATTERNS = [
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
+    private readonly monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     filterNoise(msgs: Message[]): { clean: Message[]; dropped: number } {
         const clean = msgs.filter(m => {
@@ -124,7 +125,7 @@ export class AnalyticsService {
         const dates = msgs.map(m => m.timestamp);
         const min = new Date(Math.min(...dates.map(d => d.getTime())));
         const max = new Date(Math.max(...dates.map(d => d.getTime())));
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const monthNames = this.monthNames;
         if (min.getMonth() === max.getMonth() && min.getFullYear() === max.getFullYear()) {
             return `${min.getDate()}–${max.getDate()} ${monthNames[min.getMonth()]}`;
         }

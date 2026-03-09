@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AuthorStat } from '../../../../../core/models/report.model';
 import { AppState } from '../../../../../core/state/app.state';
 import { ReportService } from '../../../../../core/services/report.service';
@@ -7,7 +6,7 @@ import { ReportService } from '../../../../../core/services/report.service';
 @Component({
     selector: 'app-user-engagement',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './user-engagement.component.html',
     styleUrl: './user-engagement.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

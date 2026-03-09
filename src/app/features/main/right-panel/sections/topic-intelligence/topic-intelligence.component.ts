@@ -1,12 +1,11 @@
 import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Report } from '../../../../../core/models/report.model';
 import { AppState } from '../../../../../core/state/app.state';
 
 @Component({
     selector: 'app-topic-intelligence',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './topic-intelligence.component.html',
     styleUrl: './topic-intelligence.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

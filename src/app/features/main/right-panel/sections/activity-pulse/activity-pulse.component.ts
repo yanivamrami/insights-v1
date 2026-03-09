@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnChanges, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnChanges, AfterViewInit, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Report } from '../../../../../core/models/report.model';
 import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
 import { SectionHelpComponent } from '../../../../../shared/components/section-help/section-help.component';
@@ -11,6 +11,7 @@ Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
     imports: [SectionHelpComponent],
     templateUrl: './activity-pulse.component.html',
     styleUrl: './activity-pulse.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActivityPulseComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input() report!: Report;

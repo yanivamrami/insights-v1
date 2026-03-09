@@ -17,7 +17,7 @@ export class AIService {
         return (this.getProvider()).complete(prompt, systemPrompt);
     }
 
-    getProvider(): IAIProvider {
+    private getProvider(): IAIProvider {
         return AI_PROVIDER === 'gemini'
             ? this.geminiProvider
             : this.openAIProvider;

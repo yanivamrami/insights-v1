@@ -4,11 +4,10 @@ import { IAIProvider } from './ai-provider.interface';
 
 @Injectable({ providedIn: 'root' })
 export class OpenAIProvider implements IAIProvider {
-    private readonly embeddingModel = ['text-embedding-3-small'];
-    private readonly embeddedUrl = 'https://api.openai.com/v1/embeddings';
+    private readonly embeddingModel = 'text-embedding-3-small';
+    private readonly embeddingUrl = 'https://api.openai.com/v1/embeddings';
     private readonly completionsUrl = 'https://api.openai.com/v1/chat/completions';
     private readonly apiKey = environment.openApiKey;
-    private readonly selectedEmbeddedModel = this.embeddingModel[0];
     private readonly generativeModel = 'gpt-4o-mini';
     private readonly BATCH_SIZE = 100;
 
@@ -28,10 +27,10 @@ export class OpenAIProvider implements IAIProvider {
         return chunkResults.flat();
     }
 
-    async embedChunk(texts: string[]): Promise<number[][]> {
-        const url = this.embeddedUrl;
+    private async embedChunk(texts: string[]): Promise<number[][]> {
+        const url = this.embeddingUrl;
         const body = {
-            model: this.selectedEmbeddedModel,
+            model: this.embeddingModel,
             input: texts,
         };
 

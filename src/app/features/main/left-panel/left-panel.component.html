@@ -70,8 +70,7 @@
                 <div class="stat-label">After Filter</div>
                 <div class="stat-value green">{{ appState.currentReport()?.cleanMessages ?? '—' }}</div>
                 @if (appState.currentReport(); as r) {
-                <div class="stat-delta">{{ r.droppedMessages }} noise msgs dropped ({{ r.totalMessages ?
-                    Math.round(r.droppedMessages / r.totalMessages * 100) : 0 }}%)</div>
+                <div class="stat-delta">{{ r.droppedMessages }} noise msgs dropped ({{ droppedPct(r) }}%)</div>
                 } @else {
                 <div class="stat-delta">Upload a file to begin</div>
                 }

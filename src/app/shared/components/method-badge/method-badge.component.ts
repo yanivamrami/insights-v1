@@ -1,12 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-method-badge',
-    standalone: true,
-    imports: [CommonModule],
-    template: `<span class="method-badge" [class]="type">{{ label }}</span>`,
-    styles: [`
+  selector: 'app-method-badge',
+  standalone: true,
+  imports: [],
+  template: `<span class="method-badge" [class]="type">{{ label }}</span>`,
+  styles: [`
     .method-badge {
       font-family: var(--mono);
       font-size: 8px;
@@ -21,9 +20,9 @@ import { CommonModule } from '@angular/common';
   `],
 })
 export class MethodBadgeComponent {
-    @Input() type: 'ts' | 'emb' | 'ai' = 'ts';
+  @Input() type: 'ts' | 'emb' | 'ai' = 'ts';
 
-    get label(): string {
-        return { ts: 'Pure TS', emb: 'Embeddings', ai: 'AI' }[this.type];
-    }
+  get label(): string {
+    return { ts: 'Pure TS', emb: 'Embeddings', ai: 'AI' }[this.type];
+  }
 }

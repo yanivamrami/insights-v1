@@ -8,7 +8,6 @@ export class GeminiProvider implements IAIProvider {
     private readonly embeddingModel = 'gemini-embedding-001';
     private readonly generativeModel = 'gemini-2.5-flash-lite';
     private readonly dimensions = environment.embeddingDimensions;
-    private readonly taskType = environment.embeddingTaskType;
 
     private readonly BATCH_SIZE = 100;
 
@@ -28,13 +27,13 @@ export class GeminiProvider implements IAIProvider {
         return chunkResults.flat();
     }
 
-    async embedChunk(texts: string[]): Promise<number[][]> {
+    private async embedChunk(texts: string[]): Promise<number[][]> {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.embeddingModel}:batchEmbedContents`;
         const body = {
             requests: texts.map(t => ({
                 model: `models/${this.embeddingModel}`,
                 content: { parts: [{ text: t }] },
-                taskType: 'SEMANTIC_SIMILARITY', //this.taskType,
+                taskType: 'SEMANTIC_SIMILARITY',
                 outputDimensionality: this.dimensions,
             })),
         };

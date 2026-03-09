@@ -245,7 +245,7 @@ export class ReportService {
         }
     }
 
-    private async labelClusters(clusters: Cluster[], _total: number): Promise<{ labels: string[]; inTok: number; outTok: number }> {
+    private async labelClusters(clusters: Cluster[]): Promise<{ labels: string[]; inTok: number; outTok: number }> {
         console.log('Labeling clusters with AI:', clusters);
         const lines = clusters.map((c, i) => {
             // Pick up to 3 representative messages: centroid first, then 2 others
@@ -315,14 +315,6 @@ Return ONLY valid JSON. No markdown. No extra text.`;
 
 Write the summary now.`;
 
-        //         const execSystemPrompt = `You are a senior business intelligence analyst briefing a C-level executive.
-        // Your job is to tell them what is happening, why it matters to the business, and what to do about it — in that order.
-        // Always reflect the actual data. If things are going well, say so clearly. If there is risk, name it directly.
-        // Never bury the headline. Lead with the single most important takeaway.
-        // Sentiment scores range from -1.0 (extremely negative) to +1.0 (extremely positive). 0.0 is neutral. Positive scores indicate positive sentiment.
-        // Write in plain English. No jargon, no bullet points, no hedging language like "it appears" or "it seems".
-        // Maximum 4 sentences. Every sentence must earn its place.`;
-
         const execSystemPrompt = `You are a senior business intelligence analyst briefing a C-level executive.
 Your job is to tell them what is happening, why it matters to the business, and what to do about it — in that order.
 Always reflect the actual data. If things are going well, say so clearly. If there is risk, name it directly.
@@ -330,13 +322,6 @@ Never bury the headline. Lead with the single most important takeaway.
 Sentiment scores range from -1.0 (extremely negative) to +1.0 (extremely positive). 0.0 is neutral. Positive scores indicate positive sentiment, negative scores indicate negative sentiment.
 Write in plain English. No jargon, no bullet points, no hedging language like "it appears" or "it seems".
 Maximum 4 sentences. Every sentence must earn its place.`;
-
-        //         const analystSystemPrompt = `You are a data engineer writing a technical audit summary for a fellow analyst.
-        // Your job is to report exactly what the pipeline produced — counts, ratios, scores, distributions — so the analyst can verify and reproduce the results.
-        // Structure your response in this order: (1) ingestion and filtering stats, (2) cluster distribution, (3) sentiment score with methodology note, (4) anomaly details, (5) any data quality flags worth investigating.
-        // Sentiment scores use a -1.0 to +1.0 scale computed via cosine similarity against embedded anchor vectors. Report the raw score, do not interpret it qualitatively.
-        // Only include values that are present in the input. If a field is missing, skip it entirely — do not estimate or infer.
-        // Use precise numeric language throughout. 4–6 sentences maximum.`;
 
         const analystSystemPrompt = `You are a data engineer writing a technical audit summary for a fellow analyst.
 Your job is to report exactly what the pipeline produced — counts, ratios, scores, distributions — so the analyst can verify and reproduce the results.
@@ -610,9 +595,6 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         const anchors = this.embedding.anchors;
         if (!anchors || msgs.length < windowSize) return [];
 
-        // console.log('Timeline anchors present:', !!anchors);
-        // console.log('Messages with embeddings:', msgs.filter(m => m.embedding).length);
-
         const sorted = [...msgs].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
         const timeline: number[] = [];
 
@@ -630,17 +612,9 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
 
             timeline.push(scores.reduce((s, v) => s + v, 0) / scores.length);
         }
-        // console.log('Max consecutive drop:', Math.max(...timeline.map((v, i) => i > 0 ? timeline[i - 1] - v : 0)));
 
         return timeline;
     }
-
-    // private detectSuddenDrop(timeline: number[], threshold = 0.35): boolean {
-    //     for (let i = 1; i < timeline.length; i++) {
-    //         if (timeline[i - 1] - timeline[i] > threshold) return true;
-    //     }
-    //     return false;
-    // }
 
     private detectNegativeTail(timeline: number[]): boolean {
         if (timeline.length < 4) return false;
@@ -705,25 +679,6 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         return Math.round((embCost + genCost) * 100000) / 100000;
     }
 
-    private estimateCost(cleanCount: number): number {
-        // Prices match the active AI_PROVIDER (from const.ts)
-        // OpenAI : text-embedding-3-small $0.02/1M · gpt-4o-mini $0.15 in / $0.60 out per 1M
-        // Gemini : gemini-embedding-001   $0.15/1M · gemini-2.5-flash-lite $0.10 in / $0.40 out per 1M
-        const isOpenAI = AI_PROVIDER === 'openai';
-        const embPricePerM = isOpenAI ? 0.02 : 0.15;
-        const genInPricePerM = isOpenAI ? 0.15 : 0.10;
-        const genOutPricePerM = isOpenAI ? 0.60 : 0.40;
-
-        const tokensPerMsg = 15;  // 60 avg chars ÷ 4
-        const genCalls = 4;   // labelClusters + generateVibeInfo + generateSummaries×2
-        const avgInputTokens = 600;
-        const avgOutputTokens = 250;
-
-        const embCost = cleanCount * tokensPerMsg / 1_000_000 * embPricePerM;
-        const genCost = genCalls * (avgInputTokens * genInPricePerM + avgOutputTokens * genOutPricePerM) / 1_000_000;
-        return Math.round((embCost + genCost) * 100000) / 100000;
-    }
-
     // ── Drill-down data accessor ──────────────────────────────────────────────
 
     /**
@@ -773,10 +728,6 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         this.advanceStep(7);
 
         try {
-            // const final = await this.runStep8And9(
-            //     tf, clusters, report,
-            //     stage.anomaliesByTf[tf], stage.clustersByTf, stage.fileKey,
-            // );
             const { report: final, totalGenInTok, totalGenOutTok } = await this.runStep8And9(
                 tf,
                 clusters,
@@ -831,7 +782,7 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         let topics: Topic[];
         let labelTok = { inTok: 0, outTok: 0 };
         try {
-            const { labels, inTok, outTok } = await this.labelClusters(clusters, report.cleanMessages);
+            const { labels, inTok, outTok } = await this.labelClusters(clusters);
             labelTok = { inTok, outTok };
             topics = clusters.map((c, i) => ({
                 id: String(i),
@@ -870,7 +821,6 @@ Use precise numeric language throughout. 4–6 sentences maximum.`;
         const actualGenInTok = labelTok.inTok + vibeTok.inTok;
         const actualGenOutTok = labelTok.outTok + vibeTok.outTok;
         const cost = this.computeActualCost(report.cleanMessages, actualGenInTok, actualGenOutTok);
-        // const labeledInsights = this.buildInsights(anomalies, report.authors, clusters, topics.map(t => t.label));
         const labeledInsights = this.buildInsights(
             anomalies,
             report.authors,

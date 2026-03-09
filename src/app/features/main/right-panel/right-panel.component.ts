@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AppState } from '../../../core/state/app.state';
 import { ReportService } from '../../../core/services/report.service';
 import { Timeframe } from '../../../core/models/message.model';
@@ -16,7 +15,6 @@ import { AnalystDrilldownComponent } from './sections/analyst-drilldown/analyst-
     selector: 'app-right-panel',
     standalone: true,
     imports: [
-        CommonModule,
         ActivityPulseComponent,
         TopicIntelligenceComponent,
         SentimentEngineComponent,

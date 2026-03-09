@@ -14,7 +14,6 @@ import { MethodBadgeComponent } from '../../../shared/components/method-badge/me
 export class LeftPanelComponent {
     reportService = inject(ReportService);
     appState = inject(AppState);
-    Math = Math;
 
     isDragOver = signal(false);
     fileError = signal<string | null>(null);
@@ -93,8 +92,8 @@ export class LeftPanelComponent {
         this.reportService.analyzeFile(file);
     }
 
-    get fileSizeKb(): string {
-        return '';
+    droppedPct(r: { droppedMessages: number; totalMessages: number }): number {
+        return r.totalMessages ? Math.round(r.droppedMessages / r.totalMessages * 100) : 0;
     }
 
     get isLoaded(): boolean {

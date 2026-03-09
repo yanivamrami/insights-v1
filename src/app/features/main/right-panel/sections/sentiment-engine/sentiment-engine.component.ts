@@ -1,11 +1,10 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Report } from '../../../../../core/models/report.model';
 
 @Component({
     selector: 'app-sentiment-engine',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './sentiment-engine.component.html',
     styleUrl: './sentiment-engine.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,11 +1,10 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Report, Insight } from '../../../../../core/models/report.model';
 
 @Component({
     selector: 'app-deep-insights',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './deep-insights.component.html',
     styleUrl: './deep-insights.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

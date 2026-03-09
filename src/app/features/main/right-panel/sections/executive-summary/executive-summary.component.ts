@@ -1,12 +1,11 @@
 import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Report } from '../../../../../core/models/report.model';
 import { AppState } from '../../../../../core/state/app.state';
 
 @Component({
     selector: 'app-executive-summary',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './executive-summary.component.html',
     styleUrl: './executive-summary.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
